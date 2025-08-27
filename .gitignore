@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# not ready for release
+src/content/textbooks/depths-of-knowledge-vol-1-and-2
+src/content/textbooks/depths-of-knowledge-vol-6
+src/content/textbooks/depths-of-knowledge-vol-8

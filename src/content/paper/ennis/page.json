@@ -1,0 +1,30 @@
+{
+  "title": "Ennis",
+  "slug": "Ennis",
+  "dateCreated": "2017-02-01",
+  "temporalCoverage": "",
+  "displayDate": "2017-02-01",
+  "description": "Paper layering adaption of the textile blocks from Frank Lloyd Wright's Ennis House in Los Angeles, California.",
+  "cover": "13822293-84D2-409C-AC20-A19300F6F791.jpeg",
+  "tags": ["paper layering", "paper", "architecture"],
+  "media": [
+    { 
+      "type": "image",
+      "src": "IMG_5066.jpeg",
+      "alt": "Paper layered Ennis House textile block with brick wall background.",
+      "attribution": "Morris A. Aguilar. 2017.",
+      "caption": "This project is an adaptation of the pattern of the textile blocks that make up the Ennis House at Los Angeles, California."
+    },
+    { 
+      "type": "image",
+      "src": "B7B0C0F7-FAFD-421C-99F5-665FD3D08613.jpeg",
+      "alt": "Sun lit paper layering artwork that emphasizes the depth between the layers of paper.",
+      "attribution": "Morris A. Aguilar. 2017.",
+      "caption": "Each layer was constructed from single sheets of 8 x 11 inch card stock that I cut with an X-Acto knife." }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

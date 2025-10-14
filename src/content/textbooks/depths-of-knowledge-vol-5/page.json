@@ -1,0 +1,30 @@
+{
+  "title": "",
+  "slug": "",
+  "dateCreated": "",
+  "temporalCoverage": "",
+  "displayDate": "",
+  "description": "",
+  "cover": "",
+  "tags": [""],
+  "media": [
+    { 
+      "type": "",
+      "src": "",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2017.",
+      "caption": ""
+    },
+    { 
+      "type": "image",
+      "src": "",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2017.",
+      "caption": "" }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "title": "Walton Manor",
+  "slug": "Walton-Manor",
+  "dateCreated": "2018-04-29",
+  "temporalCoverage": "",
+  "displayDate": "2018-04-29",
+  "description": "For this piece I won an award from the Penn State College of Medicine. I created a layered paper model of Walton Manor located in Hummelstown, PA as part of an activity where I got to learn about a patient's life.",
+  "cover": "13822293-84D2-409C-AC20-A19300F6F791.jpeg",
+  "tags": ["paper layering", "paper", "architecture"],
+  "media": [
+    {
+        "type": "image",
+        "src": "IMG_5067.jpeg",
+        "alt": "Paper layering adaptation of Walton Manor in a picture frame on a brick wall.",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": "The goal of the project was to gift the patient the finshed work and I intended to make it personal. When I learned about the patient's connection to Hummelstown, I sought out the most visually notable building in that area."
+    },
+    {
+        "type": "image",
+        "src": "14BDA6B0-3C9C-4C53-B42E-130256A2E899.jpeg",
+        "alt": "First layer of the paper layering artowork.",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": "As I planned the assembly of this piece, I learned that the brown stone used to build the highly sought-after houses in New York and Washington, DC, originated in Hummelstown quarries." },
+    {
+        "type": "image",
+        "src": "AB0F4518-8FFC-404F-872B-30C9E4A79EA9.jpeg",
+        "alt": "Second layer.",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": "Along the way, I found a schematic of the manor than I used as a reference to make my template that guides where to cut."
+    },
+    {
+        "type": "image",
+        "src": "3231FCD9-6E94-499F-8B12-BFF50DAEB7AC.jpeg",
+        "alt": "Third layer.",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": "For the Manor, I cut each layer by hand with an X-Acto knife from one sheet of 8 x 11 inch card stock."
+    },
+    {
+        "type": "image",
+        "src": "8798BD86-690B-40C7-97C8-07706053B1CF.jpeg",
+        "alt": "Fourth layer",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": "The layers were stacked together to create a 3D effect."
+    },
+    {
+        "type": "image",
+        "src": "75A7A38D-D858-4946-A29D-E124148AC825.jpeg",
+        "alt": "Fifth layer.",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": "Because each layer was cut out of a single sheet each layer is suspended without any use of adhesive."
+    },
+    {
+        "type": "image",
+        "src": "29FD86A7-D54E-4D23-8809-DB1274FF9684.jpeg",
+        "alt": "Sixth layer.",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": "I gifted the work in 2018 and then two year later I revisted the schematics of this project and reproduced this work for my own personal collection."
+    }
+
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

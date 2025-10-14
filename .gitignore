@@ -25,5 +25,8 @@ pnpm-debug.log*
 
 # not ready for release
 src/content/textbooks/depths-of-knowledge-vol-1-and-2
+src/content/textbooks/depths-of-knowledge-vol-4
 src/content/textbooks/depths-of-knowledge-vol-6
 src/content/textbooks/depths-of-knowledge-vol-8
+src/content/paper/window-layers
+src/content/photos/face-masks

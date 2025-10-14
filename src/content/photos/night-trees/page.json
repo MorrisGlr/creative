@@ -1,0 +1,199 @@
+{
+  "title": "Night Trees",
+  "slug": "Night-Trees",
+  "dateCreated": "2020-08-20",
+  "temporalCoverage": "2020/2024",
+  "displayDate": "2020 - 2024",
+  "description": "My collection of trees illuminated by street lamps explores the isolated appearance of trees when the night sky acts as a black backdrop.",
+  "cover": "IMG_0671.jpeg",
+  "tags": ["digital", "photography", "night", "trees"],
+  "media": [
+    {
+        "type": "image",
+        "src": "IMG_0671.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": "What caught my eye was the bright glow of the leaves that were heavily constrasted with the night sky."
+    },
+    {
+        "type": "image",
+        "src": "IMG_0670.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0669.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": "The street light created a blooming effect around the edges of the leaves while the remaining leaves glowed."
+    },
+    {
+        "type": "image",
+        "src": "IMG_0888.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0893.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": "LEDs within the lamps were so bright that trees appeared similarly to a sunny day but the blue sky is absent. It contributes to the feels that something feels off."
+    },
+    {
+        "type": "image",
+        "src": "IMG_0900.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0901.jpeg",
+        "alt": "",
+        "attribution": "In some of my photos in this series, the trees were casting shade but in the middle of the night which is not expected when the sun is not out.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0906.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_5733.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": "One of the few things I could control in each shot is my position relative to the fixed tree and light source."
+    },
+    {
+        "type": "image",
+        "src": "IMG_0962.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0963.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0965.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0969.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": "I chose to avoid a direct line of sight to the street lamp to draw less attention to it, although there are a few exceptions in this collection."
+    },
+    {
+        "type": "image",
+        "src": "IMG_0983.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0984.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0996.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_1026.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": "When I took shots angled upwards towards the sky, the leaves seemed to suspected in space since the branches did not reflect light as well."
+    },
+    {
+        "type": "image",
+        "src": "IMG_2886.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_2887.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_2974.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_3097.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": "Like my other photo series, I am collecting photos of scenes (illuminated trees in this case) that I repeatedly encounter in the everyday."
+    },
+    {
+        "type": "image",
+        "src": "IMG_3099.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_3100.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_3101.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_5732.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "IMG_0915.jpeg",
+        "alt": "",
+        "attribution": "",
+        "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

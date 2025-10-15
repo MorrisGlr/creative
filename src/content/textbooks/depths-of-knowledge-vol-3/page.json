@@ -1,26 +1,55 @@
 {
-  "title": "",
-  "slug": "",
-  "dateCreated": "",
-  "temporalCoverage": "",
-  "displayDate": "",
+  "title": "Depths of Knowledge Vol 3",
+  "slug": "Depths-of-Knowledge-Vol-3",
+  "dateCreated": "2020-05",
+  "temporalCoverage": "2020-05",
+  "displayDate": "2020-05",
   "description": "",
-  "cover": "",
-  "tags": [""],
+  "cover": "IMG_6007.jpeg",
+  "tags": ["textbook", "sculpture", "x-acto", "science", "medicine"],
   "media": [
     { 
-      "type": "",
-      "src": "",
-      "alt": "",
-      "attribution": "Morris A. Aguilar. 2017.",
+      "type": "image",
+      "src": "IMG_2255.jpeg",
+      "alt": "45 degree angle view of the sculpture that was orginally an anatomy textbook.",
+      "attribution": "Morris A. Aguilar. 2020.",
       "caption": ""
     },
     { 
       "type": "image",
-      "src": "",
-      "alt": "",
-      "attribution": "Morris A. Aguilar. 2017.",
-      "caption": "" }
+      "src": "IMG_2247.jpeg",
+      "alt": "Left side of sculpture in isolation.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": ""
+    },
+        { 
+      "type": "image",
+      "src": "IMG_2248.jpeg",
+      "alt": "Right side of sculpture in isolation.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": ""
+    },
+        { 
+      "type": "image",
+      "src": "IMG_5681.jpeg",
+      "alt": "Straight on shot on a fish lens.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": ""
+    },
+        { 
+      "type": "image",
+      "src": "IMG_6003.jpeg",
+      "alt": "Wide angle shot of left side of sculpture.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": ""
+    },
+        { 
+      "type": "image",
+      "src": "IMG_6004.jpeg",
+      "alt": "Wide angle shot of right side of sculpture.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": ""
+    }
   ],
   "related": [],
   "options": {

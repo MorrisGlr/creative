@@ -1,25 +1,81 @@
 {
-  "title": "",
-  "slug": "",
-  "dateCreated": "",
-  "temporalCoverage": "",
-  "displayDate": "",
-  "description": "",
-  "cover": "",
-  "tags": [""],
+  "title": "Depths of Knowledge Vol 5",
+  "slug": "Depths-of-Knowledge-Vol-5",
+  "dateCreated": "2024-10",
+  "temporalCoverage": "2024-01/2024-10",
+  "displayDate": "2024-01/2024-10",
+  "description": "This is a continuation of the series and for the first time I provide work-in-progress photos in addition to a brief video demonstration of the book in its closed form.",
+  "cover": "IMG_6060.jpeg",
+  "tags": ["textbook", "sculpture", "x-acto", "science", "medicine"],
   "media": [
     { 
+      "type": "image",
+      "src": "IMG_6067.jpeg",
+      "alt": "Wide angle straight on shot of textbook sculpture.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": ""
+    },
+    { 
+      "type": "image",
+      "src": "IMG_6065.jpeg",
+      "alt": "Wide angle shot of left side of sculpture.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": ""
+    },
+    { 
+      "type": "image",
+      "src": "IMG_6063.jpeg",
+      "alt": "Shot angled at 45 towards the left side of the sculpture.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": ""
+    },
+    { 
+      "type": "image",
+      "src": "IMG_6066.jpeg",
+      "alt": "Wide angle shot of right side of sculpture.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": ""
+    },
+    { 
+      "type": "image",
+      "src": "IMG_6064.jpeg",
+      "alt": "Shot angled at 45 towards the right side of sculpture.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": ""
+    },
+    { 
+      "type": "image",
+      "src": "IMG_2241.jpeg",
+      "alt": "Work-in-progress photo.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": "This photo displays the textbook in its early stages. Cut pages are flipped to the left and on the right, the cutting template is seen for the next series of cuts."
+    },
+    { 
+      "type": "image",
+      "src": "IMG_2232.jpeg",
+      "alt": "Angled shot on the right edge of the sculpture while was a work in progress.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": "While the piece is in its work in progress stage, one can see the collage of figures at various depths forming."
+    },
+    { 
       "type": "",
-      "src": "",
-      "alt": "",
-      "attribution": "Morris A. Aguilar. 2017.",
+      "src": "IMG_2245.jpeg",
+      "alt": "Angled shot on the right edge of the sculpture showing additional progress while it was work in progress.",
+      "attribution": "Morris A. Aguilar. 2024.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "src/content/textbooks/depths-of-knowledge-vol-5/media/IMG_6040.mov",
+      "alt": "Video of textbook sculpture while it is closed.",
+      "attribution": "Morris A. Aguilar. 2024.",
       "caption": ""
     },
     { 
       "type": "image",
       "src": "",
       "alt": "",
-      "attribution": "Morris A. Aguilar. 2017.",
+      "attribution": "Morris A. Aguilar. 2024.",
       "caption": "" }
   ],
   "related": [],

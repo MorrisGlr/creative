@@ -1,0 +1,80 @@
+{
+  "title": "Klint Kandinsky",
+  "slug": "Klint-Kandinsky",
+  "dateCreated": "2023-10-13",
+  "temporalCoverage": "2023-10",
+  "displayDate": "2023-10-13",
+  "description": "",
+  "cover": "kandinsky_42_grain_8_bigspin_480.mov",
+  "tags": ["algorithm art", "algo art", "creative coding"],
+  "media": [
+    { 
+      "type": "video",
+      "src": "kandinsky_41_grain_8_bigspin_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "kandinsky_39_grain_8_bigspin_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "kandinsky_33_grain_8_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+      { 
+      "type": "video",
+      "src": "kandinsky_31_grain_8_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "kandinsky_26_grain_8_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "kandinsky_24_grain_8_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "kandinsky_21_grain_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "kandinsky_2_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "kandinsky_1_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

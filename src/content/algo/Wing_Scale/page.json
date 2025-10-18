@@ -1,0 +1,59 @@
+{
+  "title": "Wing Scale",
+  "slug": "Wing-Scale",
+  "dateCreated": "2023-11-19",
+  "temporalCoverage": "2023-11",
+  "displayDate": "2023-11-19",
+  "description": "",
+  "cover": "scales_21_final_480.mov",
+  "tags": ["algorithm art", "algo art", "creative coding"],
+  "media": [
+    { 
+      "type": "video",
+      "src": "scales_19_final_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "scales_18_final_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "scales_14_final_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "scales_8_final_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "scales_5_final_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
+    { 
+      "type": "video",
+      "src": "scales_1_final_480.mov",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

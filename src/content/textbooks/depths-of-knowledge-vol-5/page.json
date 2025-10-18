@@ -58,7 +58,7 @@
       "caption": "While the piece is in its work in progress stage, one can see the collage of figures at various depths forming."
     },
     { 
-      "type": "",
+      "type": "image",
       "src": "IMG_2245.jpeg",
       "alt": "Angled shot on the right edge of the sculpture showing additional progress while it was work in progress.",
       "attribution": "Morris A. Aguilar. 2024.",
@@ -66,17 +66,11 @@
     },
     { 
       "type": "video",
-      "src": "src/content/textbooks/depths-of-knowledge-vol-5/media/IMG_6040.mov",
+      "src": "IMG_6040.mov",
       "alt": "Video of textbook sculpture while it is closed.",
       "attribution": "Morris A. Aguilar. 2024.",
       "caption": ""
-    },
-    { 
-      "type": "image",
-      "src": "",
-      "alt": "",
-      "attribution": "Morris A. Aguilar. 2024.",
-      "caption": "" }
+    }
   ],
   "related": [],
   "options": {

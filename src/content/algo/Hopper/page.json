@@ -5,68 +5,68 @@
   "temporalCoverage": "2023-11",
   "displayDate": "2023-11-08",
   "description": "",
-  "cover": "hopper_20_480.mov",
+  "cover": "hopper_20_480.mp4",
   "tags": ["algorithm art", "algo art", "creative coding"],
   "media": [
     { 
       "type": "video",
-      "src": "hopper_18_480.mov",
+      "src": "hopper_18_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_15_480.mov",
+      "src": "hopper_15_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_14_480.mov",
+      "src": "hopper_14_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_13_480.mov",
+      "src": "hopper_13_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_11_480.mov",
+      "src": "hopper_11_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_10_480.mov",
+      "src": "hopper_10_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_7_480.mov",
+      "src": "hopper_7_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_2_480.mov",
+      "src": "hopper_2_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
     { 
       "type": "video",
-      "src": "hopper_1_44ofn_480.mov",
+      "src": "hopper_1_44ofn_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": "" }

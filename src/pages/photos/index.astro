@@ -1,0 +1,32 @@
+---
+// src/pages/photos/index.astro
+import Layout from "../../layouts/Layout.astro";
+import { getAlbums } from "../../scripts/content";
+const albums = getAlbums('photos');
+---
+
+<Layout title="Photography">
+  <h1 class="text-2xl font-semibold mb-6">Photography</h1>
+
+  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {albums.map(a => (
+      <li class="group">
+        <a href={`/photos/${a.slug}/`} class="block">
+          {a.cover ? (
+            <img
+              src={a.cover}
+              alt={a.title}
+              loading="lazy"
+              decoding="async"
+              class="aspect-[3/2] w-full rounded-xl object-cover transition-transform group-hover:scale-[1.02]"
+            />
+          ) : null}
+          <div class="mt-3">
+            <h2 class="text-lg font-medium">{a.title}</h2>
+            {a.description ? <p class="text-sm opacity-70 line-clamp-2">{a.description}</p> : null}
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Layout>

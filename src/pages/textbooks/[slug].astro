@@ -1,0 +1,37 @@
+---
+// src/pages/textbooks/[slug].astro
+import Layout from "../../layouts/Layout.astro";
+import { getAlbum, resolveAlbumMediaUrls } from "../../scripts/content";
+import AlbumMedia from "../../components/AlbumMedia.astro";
+
+const { slug } = Astro.params;
+if (!slug) throw new Error("Missing slug");
+
+const albumRaw = getAlbum('textbooks', slug);
+if (!albumRaw) {
+  // Astro will render your 404 (or you can throw)
+  throw new Error(`Album not found: ${slug}`);
+}
+
+// Resolve media filenames to emitted URLs:
+const album = resolveAlbumMediaUrls('textbooks', slug, albumRaw);
+---
+
+<Layout title={album.title}>
+  <header class="mb-8">
+    <h1 class="text-2xl font-semibold">{album.title}</h1>
+    {album.description ? <p class="opacity-80 mt-2 max-w-prose">{album.description}</p> : null}
+  </header>
+
+  {/* Media stream per your scroll spec */}
+  <section class="space-y-[60vh]">
+    {album.media.map((m, i) => (
+      <AlbumMedia item={m} index={i} bgColorize={album.options?.bgFromDominantColor ?? false} />
+    ))}
+  </section>
+
+  {/* Bottom: links back to section (and later, related albums) */}
+  <footer class="mt-24 border-t pt-6">
+    <a href="/textbooks/" class="underline">More textbook sculptures</a>
+  </footer>
+</Layout>

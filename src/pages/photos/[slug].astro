@@ -4,6 +4,15 @@ import Layout from "../../layouts/Layout.astro";
 import { getAlbum, resolveAlbumMediaUrls } from "../../scripts/content";
 import AlbumMedia from "../../components/AlbumMedia.astro";
 
+import { getAlbums, getAlbum, resolveAlbumMediaUrls } from '../../scripts/content';
+
+export async function getStaticPaths() {
+  return getAlbums('paper').map((album) => ({
+    params: { slug: album.slug },
+    props: { albumSlug: album.slug },
+  }));
+}
+
 const { slug } = Astro.params;
 if (!slug) throw new Error("Missing slug");
 

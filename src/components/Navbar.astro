@@ -1,0 +1,73 @@
+---
+// src/components/NavBar.astro
+const pathname = Astro.url.pathname;
+const links = [
+  { href: '/',           label: 'Home' },
+  { href: '/photos/',    label: 'Photos' },
+  { href: '/textbooks/', label: 'Textbook' },
+  { href: '/algo/',      label: 'Algo' },
+  { href: '/paper/',     label: 'Paper' },
+];
+---
+<nav class="pill-nav" aria-label="Primary">
+  <a class="brand" href="/">MA</a>
+  <ul>
+    {links.map(l => (
+      <li>
+        <a href={l.href} aria-current={pathname.startsWith(l.href) ? 'page' : undefined}>
+          {l.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .pill-nav {
+    position: sticky;
+    top: 12px;
+    z-index: 50;
+    margin: 12px auto 24px;
+    padding: 8px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    border-radius: 9999px;
+    background: color-mix(in oklab, Canvas 70%, transparent);
+    backdrop-filter: blur(10px);
+    border: 1px solid color-mix(in oklab, CanvasText 12%, transparent);
+    box-shadow: 0 6px 20px color-mix(in oklab, CanvasText 10%, transparent);
+  }
+  .pill-nav .brand {
+    display:inline-flex; align-items:center; justify-content:center;
+    width: 36px; height: 36px; border-radius: 9999px;
+    text-decoration:none; font-weight:700;
+    background: color-mix(in oklab, CanvasText 9%, transparent);
+    color: color-mix(in oklab, Canvas 90%, transparent);
+  }
+  .pill-nav ul {
+    display:flex; gap: 4px; list-style:none; margin:0; padding:0;
+  }
+  .pill-nav a[href] {
+    display:inline-block;
+    padding: 8px 14px;
+    text-decoration:none;
+    border-radius: 9999px;
+    color: inherit;
+    border: 1px solid transparent;
+    transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .pill-nav a[href]:hover { transform: translateY(-1px); }
+  .pill-nav a[aria-current="page"] {
+    background: color-mix(in oklab, CanvasText 8%, transparent);
+    border-color: color-mix(in oklab, CanvasText 14%, transparent);
+  }
+
+  @media (max-width: 560px) {
+    .pill-nav { padding: 6px; gap: 4px; }
+    .pill-nav a[href] { padding: 8px 10px; }
+    .pill-nav .brand { width: 32px; height: 32px; }
+  }
+</style>

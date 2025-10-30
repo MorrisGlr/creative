@@ -1,22 +1,32 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+// src/layouts/Layout.astro
+import NavBar from "../components/NavBar.astro";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+const { title = "Site" } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" />
+    <!-- Prefetch helper (runs on every page) -->
+    <script type="module" src="/src/scripts/prefetch.ts"></script>
+    <style>
+      :root { --page-bg: #0b0b0b; }
+      html, body { background: var(--page-bg); transition: background-color 600ms ease; }
+      body { color: CanvasText; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem 4rem; }
+      .skip { position:absolute; left:-9999px; }
+      .skip:focus { left: 12px; top: 12px; background:#fff; color:#000; padding:.5rem .75rem; border-radius:.5rem; z-index:999; }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <NavBar />
+    <div id="main" class="container">
+      <slot />
+    </div>
+  </body>
+</html>

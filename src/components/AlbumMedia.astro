@@ -1,0 +1,103 @@
+---
+// Renders one media item (image|video|model) with:
+// - fade/scale-in on scroll
+// - optional dominant-color background change when it enters view
+import type { MediaItem } from "../scripts/content";
+const { item, index, bgColorize = false } = Astro.props as {
+  item: MediaItem; index: number; bgColorize?: boolean;
+};
+---
+
+<div class="media-block relative mx-auto max-w-screen-md" data-index={index} data-bg={bgColorize ? '1' : '0'}>
+  {item.type === 'image' && (
+    <figure class="opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
+      <img
+        src={(item as any).src}
+        alt={(item as any).alt ?? ''}
+        loading="lazy"
+        decoding="async"
+        class="w-full h-auto rounded-2xl object-cover"
+      />
+      { (item as any).caption && <figcaption class="mt-3 text-sm opacity-80">{(item as any).caption}</figcaption> }
+    </figure>
+  )}
+
+  {item.type === 'video' && (
+    <figure class="opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
+      <video
+        playsinline
+        muted
+        autoplay
+        loop
+        preload="metadata"
+        poster={(item as any).poster ?? ''}
+        class="w-full h-auto rounded-2xl border border-black/10"
+      >
+        {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
+      </video>
+      { (item as any).caption && <figcaption class="mt-3 text-sm opacity-80">{(item as any).caption}</figcaption> }
+    </figure>
+  )}
+
+  {item.type === 'model' && (
+    <>
+      <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+      <model-viewer
+        src={(item as any).src}
+        ios-src={(item as any).usdz ?? undefined}
+        camera-controls
+        auto-rotate
+        ar
+        class="w-full h-[60vh] rounded-2xl bg-black/5"
+        alt={(item as any).alt ?? '3D model'}
+      />
+      { (item as any).caption && <div class="mt-3 text-sm opacity-80">{(item as any).caption}</div> }
+    </>
+  )}
+</div>
+
+<script client:load>
+  // Minimal intersection + dominant color logic (no heavy libs)
+  import FastAverageColor from 'fast-average-color';
+
+  const fac = new FastAverageColor();
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const blocks = Array.from(document.querySelectorAll<HTMLDivElement>('.media-block'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const block = entry.target as HTMLDivElement;
+      const visible = entry.isIntersecting ? '1' : '0';
+      // Toggle the CSS data attribute to trigger fade/scale
+      const figure = block.querySelector('figure, model-viewer');
+      if (figure) figure.setAttribute('data-visible', visible);
+
+      // Optional: change page background to image's dominant color on enter
+      if (visible === '1' && block.dataset.bg === '1') {
+        const img = block.querySelector('img') as HTMLImageElement | null;
+        if (img) {
+          // Wait until image is ready
+          if (img.complete) {
+            const color = fac.getColor(img).hex;
+            document.documentElement.style.setProperty('--page-bg', color);
+          } else {
+            img.addEventListener('load', () => {
+              const color = fac.getColor(img).hex;
+              document.documentElement.style.setProperty('--page-bg', color);
+            }, { once: true });
+          }
+        }
+      }
+    });
+  }, { rootMargin: '0px 0px -20% 0px', threshold: 0.35 });
+
+  if (!prefersReduced) {
+    blocks.forEach((b) => io.observe(b));
+  } else {
+    // Respect reduced motion: just show all
+    blocks.forEach((b) => {
+      const figure = b.querySelector('figure, model-viewer');
+      if (figure) figure.setAttribute('data-visible', '1');
+    });
+  }
+</script>

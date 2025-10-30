@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+:root {
+  --page-bg: #0b0b0b;         /* default background */
+}
+
+html, body {
+  background: var(--page-bg);
+  transition: background-color 600ms ease; /* smooth color morph */
+}
+
+/* optional: safe typography sizing */
+h1, h2 { line-height: 1.2; }
+img, video { display: block; }

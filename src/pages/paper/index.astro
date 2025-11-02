@@ -1,8 +1,11 @@
 ---
 // src/pages/paper/index.astro
 import Layout from "../../layouts/Layout.astro";
-import { getAlbums } from "../../scripts/content";
-const albums = getAlbums('paper');
+import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
+const albums = getAlbums('paper').map((album) =>
+  resolveAlbumMediaUrls('paper', album.slug, album)
+);
+
 ---
 
 <Layout title="Paper Layering">

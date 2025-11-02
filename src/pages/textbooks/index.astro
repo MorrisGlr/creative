@@ -1,8 +1,11 @@
 ---
 // src/pages/textbooks/index.astro
 import Layout from "../../layouts/Layout.astro";
-import { getAlbums } from "../../scripts/content";
-const albums = getAlbums('textbooks');
+import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
+const albums = getAlbums('textbooks').map((album) =>
+  resolveAlbumMediaUrls('textbooks', album.slug, album)
+);
+
 ---
 
 <Layout title="Textbook Sculpture">

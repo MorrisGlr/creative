@@ -44,10 +44,10 @@ const jsonGlobs = {
 // 2) Load ALL media for each section; we’ll filter by slug later.
 //    `import: "default"` returns the emitted URL string for assets.
 const mediaGlobs = {
-  photos: import.meta.glob('../content/photos/*/media/*', { eager: true, import: 'default' }),
-  textbooks: import.meta.glob('../content/textbooks/*/media/*', { eager: true, import: 'default' }),
-  algo: import.meta.glob('../content/algo/*/media/*', { eager: true, import: 'default' }),
-  paper: import.meta.glob('../content/paper/*/media/*', { eager: true, import: 'default' }),
+  photos: import.meta.glob('../content/photos/*/media/*', { eager: true, as: 'url' }),
+  textbooks: import.meta.glob('../content/textbooks/*/media/*', { eager: true, as: 'url' }),
+  algo: import.meta.glob('../content/algo/*/media/*', { eager: true, as: 'url' }),
+  paper: import.meta.glob('../content/paper/*/media/*', { eager: true, as: 'url' }),
 } as const;
 
 function slugFromPath(path: string) {
@@ -87,7 +87,8 @@ export function resolveAlbumMediaUrls(section: Section, slug: string, album: Alb
 
   for (const [path, url] of Object.entries(allAssets)) {
     if (path.includes(`/${slug}/media/`)) {
-      urlByName.set(filenameFromPath(path), String(url));
+      const normalized = typeof url === 'string' ? url : String(url);
+      urlByName.set(filenameFromPath(path), normalized);
     }
   }
 

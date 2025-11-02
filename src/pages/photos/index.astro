@@ -1,8 +1,10 @@
 ---
 // src/pages/photos/index.astro
 import Layout from "../../layouts/Layout.astro";
-import { getAlbums } from "../../scripts/content";
-const albums = getAlbums('photos');
+import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
+const albums = getAlbums('photos').map((album) =>
+  resolveAlbumMediaUrls('photos', album.slug, album)
+);
 ---
 
 <Layout title="Photography">

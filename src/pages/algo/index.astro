@@ -1,8 +1,11 @@
 ---
 // src/pages/algo/index.astro
 import Layout from "../../layouts/Layout.astro";
-import { getAlbums } from "../../scripts/content";
-const albums = getAlbums('algo');
+import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
+const albums = getAlbums('algo').map((album) =>
+  resolveAlbumMediaUrls('algo', album.slug, album)
+);
+
 ---
 
 <Layout title="Algorithm Art">

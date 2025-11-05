@@ -11,10 +11,10 @@ const albums = getAlbums('paper').map((album) =>
 <Layout title="Paper Layering">
   <h1 class="text-2xl font-semibold mb-6">Paper Layering</h1>
 
-  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
     {albums.map(a => (
-      <li class="group">
-        <a href={`/paper/${a.slug}/`} class="block">
+      <li class="group w-full max-w-[22rem]">
+        <a href={`/paper/${a.slug}/`} class="block text-center">
           {a.cover ? (
             <img
               src={a.cover}

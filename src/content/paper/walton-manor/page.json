@@ -5,7 +5,7 @@
   "temporalCoverage": "",
   "displayDate": "2018-04-29",
   "description": "For this piece I won an award from the Penn State College of Medicine. I created a layered paper model of Walton Manor located in Hummelstown, PA as part of an activity where I got to learn about a patient's life.",
-  "cover": "13822293-84D2-409C-AC20-A19300F6F791.jpeg",
+  "cover": "IMG_5067.jpeg",
   "tags": ["paper layering", "paper", "architecture"],
   "media": [
     {
@@ -34,6 +34,13 @@
         "alt": "Third layer.",
         "attribution": "Morris A. Aguilar. 2018.",
         "caption": "For the Manor, I cut each layer by hand with an X-Acto knife from one sheet of 8 x 11 inch card stock."
+    },
+    {
+        "type": "image",
+        "src": "src/content/paper/Walton-Manor/media/3A7E38E9-41CC-4078-B9AB-A641718C35CB.jpeg",
+        "alt": "An additional photo of the third layer with different lighting.",
+        "attribution": "Morris A. Aguilar. 2018.",
+        "caption": ""
     },
     {
         "type": "image",

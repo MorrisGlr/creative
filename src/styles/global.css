@@ -12,3 +12,33 @@ html, body {
 /* optional: safe typography sizing */
 h1, h2 { line-height: 1.2; }
 img, video { display: block; }
+
+.media-shell {
+  width: min(25vw, 300px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.media-frame {
+  width: 100%;
+  position: relative;
+}
+
+.media-frame img,
+.media-frame video,
+.media-frame model-viewer {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 1rem;
+}
+
+.media-caption {
+  max-width: 30ch;
+  text-align: center;
+  opacity: 0.8;
+  font-size: 1.0 rem;
+}

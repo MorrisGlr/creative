@@ -10,10 +10,10 @@ const albums = getAlbums('photos').map((album) =>
 <Layout title="Photography">
   <h1 class="text-2xl font-semibold mb-6">Photography</h1>
 
-  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
     {albums.map(a => (
-      <li class="group">
-        <a href={`/photos/${a.slug}/`} class="block">
+      <li class="group w-full max-w-[22rem]">
+        <a href={`/photos/${a.slug}/`} class="block text-center">
           {a.cover ? (
             <img
               src={a.cover}

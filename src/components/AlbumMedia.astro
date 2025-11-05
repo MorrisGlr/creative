@@ -8,22 +8,22 @@ const { item, index, bgColorize = false } = Astro.props as {
 };
 ---
 
-<div class="media-block relative mx-auto max-w-screen-md" data-index={index} data-bg={bgColorize ? '1' : '0'}>
+<div class="media-block media-shell" data-index={index} data-bg={bgColorize ? '1' : '0'}>
   {item.type === 'image' && (
-    <figure class="opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
+    <figure class="media-frame opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
       <img
         src={(item as any).src}
         alt={(item as any).alt ?? ''}
         loading="lazy"
         decoding="async"
-        class="w-full h-auto rounded-2xl object-cover"
+        class="object-cover"
       />
-      { (item as any).caption && <figcaption class="mt-3 text-sm opacity-80">{(item as any).caption}</figcaption> }
+      { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}
 
   {item.type === 'video' && (
-    <figure class="opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
+    <figure class="media-frame opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
       <video
         playsinline
         muted
@@ -31,16 +31,16 @@ const { item, index, bgColorize = false } = Astro.props as {
         loop
         preload="metadata"
         poster={(item as any).poster ?? ''}
-        class="w-full h-auto rounded-2xl border border-black/10"
+        class="border border-black/10 object-cover"
       >
         {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
       </video>
-      { (item as any).caption && <figcaption class="mt-3 text-sm opacity-80">{(item as any).caption}</figcaption> }
+      { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}
 
   {item.type === 'model' && (
-    <>
+    <figure class="media-frame opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
       <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
       <model-viewer
         src={(item as any).src}
@@ -48,11 +48,11 @@ const { item, index, bgColorize = false } = Astro.props as {
         camera-controls
         auto-rotate
         ar
-        class="w-full h-[60vh] rounded-2xl bg-black/5"
+        class="bg-black/5"
         alt={(item as any).alt ?? '3D model'}
       />
-      { (item as any).caption && <div class="mt-3 text-sm opacity-80">{(item as any).caption}</div> }
-    </>
+      { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
+    </figure>
   )}
 </div>
 

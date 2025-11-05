@@ -9,9 +9,11 @@ type MediaItem =
   | { type: 'image'; src: string; alt?: string; caption?: string }
   | {
       type: 'video';
-      sources: VideoSource[];
+      sources?: VideoSource[];
+      src?: string;
       poster?: string;
       caption?: string;
+      alt?: string;
     }
   | {
       type: 'model';
@@ -99,10 +101,24 @@ export function resolveAlbumMediaUrls(section: Section, slug: string, album: Alb
       return { ...item, src: mapName(item.src)! };
     }
     if (item.type === 'video') {
+      const explicitSources = Array.isArray((item as any).sources)
+        ? (item as any).sources
+        : undefined;
+      const fallbackSrc = (item as any).src;
+
+      const sources = (explicitSources && explicitSources.length > 0)
+        ? explicitSources.map((s: VideoSource) => ({ ...s, src: mapName(s.src)! }))
+        : fallbackSrc
+          ? [{ src: mapName(fallbackSrc)! }]
+          : [];
+
+      const mappedSrc = fallbackSrc ? mapName(fallbackSrc)! : undefined;
+
       return {
         ...item,
-        poster: mapName(item.poster),
-        sources: item.sources.map((s) => ({ ...s, src: mapName(s.src)! })),
+        poster: mapName((item as any).poster),
+        sources,
+        ...(mappedSrc ? { src: mappedSrc } : {}),
       };
     }
     if (item.type === 'model') {

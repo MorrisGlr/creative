@@ -10,15 +10,17 @@ const links = [
 ];
 ---
 <nav class="pill-nav" aria-label="Primary">
-  <a class="brand" href="/">MA</a>
   <ul>
-    {links.map(l => (
-      <li>
-        <a href={l.href} aria-current={pathname.startsWith(l.href) ? 'page' : undefined}>
-          {l.label}
-        </a>
-      </li>
-    ))}
+    {links.map((l) => {
+      const isActive = l.href === '/' ? pathname === '/' : pathname.startsWith(l.href);
+      return (
+        <li>
+          <a href={l.href} aria-current={isActive ? 'page' : undefined}>
+            {l.label}
+          </a>
+        </li>
+      );
+    })}
   </ul>
 </nav>
 
@@ -35,7 +37,7 @@ const links = [
     justify-content: center;
     width: fit-content;
     border-radius: 9999px;
-    background: color-mix(in oklab, Canvas 70%, transparent);
+    background: color-mix(in oklab, Canvas 55%, transparent);
     backdrop-filter: blur(10px);
     border: 1px solid color-mix(in oklab, CanvasText 12%, transparent);
     box-shadow: 0 6px 20px color-mix(in oklab, CanvasText 10%, transparent);

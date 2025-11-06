@@ -10,7 +10,7 @@ const { item, index, bgColorize = false } = Astro.props as {
 
 <div class="media-block media-shell" data-index={index} data-bg={bgColorize ? '1' : '0'}>
   {item.type === 'image' && (
-    <figure class="media-frame opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
+    <figure class="media-frame">
       <img
         src={(item as any).src}
         alt={(item as any).alt ?? ''}
@@ -23,7 +23,7 @@ const { item, index, bgColorize = false } = Astro.props as {
   )}
 
   {item.type === 'video' && (
-    <figure class="media-frame opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
+    <figure class="media-frame">
       <video
         playsinline
         muted
@@ -40,7 +40,7 @@ const { item, index, bgColorize = false } = Astro.props as {
   )}
 
   {item.type === 'model' && (
-    <figure class="media-frame opacity-0 scale-90 transition-all duration-700 will-change-transform data-[visible='1']:opacity-100 data-[visible='1']:scale-75">
+    <figure class="media-frame">
       <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
       <model-viewer
         src={(item as any).src}
@@ -55,49 +55,3 @@ const { item, index, bgColorize = false } = Astro.props as {
     </figure>
   )}
 </div>
-
-<script client:load>
-  // Minimal intersection + dominant color logic (no heavy libs)
-  import FastAverageColor from 'fast-average-color';
-
-  const fac = new FastAverageColor();
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const blocks = Array.from(document.querySelectorAll<HTMLDivElement>('.media-block'));
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      const block = entry.target as HTMLDivElement;
-      const visible = entry.isIntersecting ? '1' : '0';
-      // Toggle the CSS data attribute to trigger fade/scale
-      const figure = block.querySelector('figure, model-viewer');
-      if (figure) figure.setAttribute('data-visible', visible);
-
-      // Optional: change page background to image's dominant color on enter
-      if (visible === '1' && block.dataset.bg === '1') {
-        const img = block.querySelector('img') as HTMLImageElement | null;
-        if (img) {
-          // Wait until image is ready
-          if (img.complete) {
-            const color = fac.getColor(img).hex;
-            document.documentElement.style.setProperty('--page-bg', color);
-          } else {
-            img.addEventListener('load', () => {
-              const color = fac.getColor(img).hex;
-              document.documentElement.style.setProperty('--page-bg', color);
-            }, { once: true });
-          }
-        }
-      }
-    });
-  }, { rootMargin: '0px 0px -20% 0px', threshold: 0.35 });
-
-  if (!prefersReduced) {
-    blocks.forEach((b) => io.observe(b));
-  } else {
-    // Respect reduced motion: just show all
-    blocks.forEach((b) => {
-      const figure = b.querySelector('figure, model-viewer');
-      if (figure) figure.setAttribute('data-visible', '1');
-    });
-  }
-</script>

@@ -2,55 +2,99 @@
 // Renders one media item (image|video|model) with:
 // - fade/scale-in on scroll
 // - optional dominant-color background change when it enters view
-import type { MediaItem } from "../scripts/content";
-const { item, index, bgColorize = false } = Astro.props as {
-  item: MediaItem; index: number; bgColorize?: boolean;
+import type { MediaItem, PhotoMetadata } from "../scripts/content";
+const { item, index, bgColorize = false, showPhotoMetadata = false } = Astro.props as {
+  item: MediaItem; index: number; bgColorize?: boolean; showPhotoMetadata?: boolean;
 };
+const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata | undefined) : undefined;
 ---
 
 <div class="media-block media-shell" data-index={index} data-bg={bgColorize ? '1' : '0'}>
   {item.type === 'image' && (
     <figure class="media-frame">
-      <img
-        src={(item as any).src}
-        alt={(item as any).alt ?? ''}
-        loading="lazy"
-        decoding="async"
-        class="object-cover"
-      />
+      <div class="media-visual">
+        <img
+          src={(item as any).src}
+          alt={(item as any).alt ?? ''}
+          loading="lazy"
+          decoding="async"
+          class="object-cover"
+        />
+        {showPhotoMetadata && imageMeta ? (
+          <div class="photo-meta-panel">
+            {imageMeta.cameraModel && (
+              <p class="photo-meta-line photo-meta-line--highlight">
+                {imageMeta.cameraModel.toUpperCase()}
+              </p>
+            )}
+            {imageMeta.cameraType && (
+              <p class="photo-meta-line photo-meta-line--highlight">
+                CAMERA: {imageMeta.cameraType.toUpperCase()}
+              </p>
+            )}
+            {(imageMeta.cameraModel || imageMeta.cameraType) &&
+            (imageMeta.megapixels ||
+              imageMeta.focalLength ||
+              imageMeta.exposureTime ||
+              imageMeta.aperture ||
+              imageMeta.iso) ? (
+              <div class="photo-meta-spacer" aria-hidden="true"></div>
+            ) : null}
+            {imageMeta.megapixels && (
+              <p class="photo-meta-line">IMAGE SIZE: {imageMeta.megapixels}</p>
+            )}
+            {imageMeta.focalLength && (
+              <p class="photo-meta-line">FOCAL LENGTH: {imageMeta.focalLength}</p>
+            )}
+            {imageMeta.exposureTime && (
+              <p class="photo-meta-line">EXPOSURE TIME: {imageMeta.exposureTime}</p>
+            )}
+            {imageMeta.aperture && (
+              <p class="photo-meta-line">APERTURE: {imageMeta.aperture}</p>
+            )}
+            {imageMeta.iso && (
+              <p class="photo-meta-line">ISO: {imageMeta.iso}</p>
+            )}
+          </div>
+        ) : null}
+      </div>
       { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}
 
   {item.type === 'video' && (
     <figure class="media-frame">
-      <video
-        playsinline
-        muted
-        autoplay
-        loop
-        preload="metadata"
-        poster={(item as any).poster ?? ''}
-        class="border border-black/10 object-cover"
-      >
-        {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
-      </video>
+      <div class="media-visual">
+        <video
+          playsinline
+          muted
+          autoplay
+          loop
+          preload="metadata"
+          poster={(item as any).poster ?? ''}
+          class="border border-black/10 object-cover"
+        >
+          {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
+        </video>
+      </div>
       { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}
 
   {item.type === 'model' && (
     <figure class="media-frame">
-      <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-      <model-viewer
-        src={(item as any).src}
-        ios-src={(item as any).usdz ?? undefined}
-        camera-controls
-        auto-rotate
-        ar
-        class="bg-black/5"
-        alt={(item as any).alt ?? '3D model'}
-      />
+      <div class="media-visual">
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+        <model-viewer
+          src={(item as any).src}
+          ios-src={(item as any).usdz ?? undefined}
+          camera-controls
+          auto-rotate
+          ar
+          class="bg-black/5"
+          alt={(item as any).alt ?? '3D model'}
+        />
+      </div>
       { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}

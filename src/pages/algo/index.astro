@@ -2,8 +2,9 @@
 // src/pages/algo/index.astro
 import Layout from "../../layouts/Layout.astro";
 import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
-const albums = getAlbums('algo').map((album) =>
-  resolveAlbumMediaUrls('algo', album.slug, album)
+const albumsRaw = getAlbums('algo');
+const albums = await Promise.all(
+  albumsRaw.map((album) => resolveAlbumMediaUrls('algo', album.slug, album))
 );
 
 ---

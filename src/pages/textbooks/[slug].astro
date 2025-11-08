@@ -21,7 +21,7 @@ if (!albumRaw) {
 }
 
 // Resolve media filenames to emitted URLs:
-const album = resolveAlbumMediaUrls('textbooks', slug, albumRaw);
+const album = await resolveAlbumMediaUrls('textbooks', slug, albumRaw);
 ---
 
 <Layout title={album.title}>

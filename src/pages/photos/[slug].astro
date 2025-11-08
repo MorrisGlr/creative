@@ -21,7 +21,7 @@ if (!albumRaw) {
 }
 
 // Resolve media filenames to emitted URLs:
-const album = resolveAlbumMediaUrls('photos', slug, albumRaw);
+const album = await resolveAlbumMediaUrls('photos', slug, albumRaw);
 ---
 
 <Layout title={album.title}>
@@ -33,7 +33,12 @@ const album = resolveAlbumMediaUrls('photos', slug, albumRaw);
   {/* Media stream per your scroll spec */}
   <section class="space-y-[60vh]">
     {album.media.map((m, i) => (
-      <AlbumMedia item={m} index={i} bgColorize={album.options?.bgFromDominantColor ?? false} />
+      <AlbumMedia
+        item={m}
+        index={i}
+        bgColorize={album.options?.bgFromDominantColor ?? false}
+        showPhotoMetadata={true}
+      />
     ))}
   </section>
 

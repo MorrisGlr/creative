@@ -22,39 +22,41 @@ const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata |
         />
         {showPhotoMetadata && imageMeta ? (
           <div class="photo-meta-panel">
-            {imageMeta.cameraModel && (
-              <p class="photo-meta-line photo-meta-line--highlight">
-                {imageMeta.cameraModel.toUpperCase()}
-              </p>
-            )}
-            {imageMeta.cameraType && (
-              <p class="photo-meta-line photo-meta-line--highlight">
-                CAMERA: {imageMeta.cameraType.toUpperCase()}
-              </p>
-            )}
-            {(imageMeta.cameraModel || imageMeta.cameraType) &&
-            (imageMeta.megapixels ||
-              imageMeta.focalLength ||
-              imageMeta.exposureTime ||
-              imageMeta.aperture ||
-              imageMeta.iso) ? (
-              <div class="photo-meta-spacer" aria-hidden="true"></div>
-            ) : null}
-            {imageMeta.megapixels && (
-              <p class="photo-meta-line">IMAGE SIZE: {imageMeta.megapixels}</p>
-            )}
-            {imageMeta.focalLength && (
-              <p class="photo-meta-line">FOCAL LENGTH: {imageMeta.focalLength}</p>
-            )}
-            {imageMeta.exposureTime && (
-              <p class="photo-meta-line">EXPOSURE TIME: {imageMeta.exposureTime}</p>
-            )}
-            {imageMeta.aperture && (
-              <p class="photo-meta-line">APERTURE: {imageMeta.aperture}</p>
-            )}
-            {imageMeta.iso && (
-              <p class="photo-meta-line">ISO: {imageMeta.iso}</p>
-            )}
+            <div class="photo-meta-panel__inner">
+              {imageMeta.cameraModel && (
+                <p class="photo-meta-line photo-meta-line--highlight">
+                  {imageMeta.cameraModel.toUpperCase()}
+                </p>
+              )}
+              {imageMeta.cameraType && (
+                <p class="photo-meta-line photo-meta-line--highlight">
+                  CAMERA: {imageMeta.cameraType.toUpperCase()}
+                </p>
+              )}
+              {(imageMeta.cameraModel || imageMeta.cameraType) &&
+              (imageMeta.megapixels ||
+                imageMeta.focalLength ||
+                imageMeta.exposureTime ||
+                imageMeta.aperture ||
+                imageMeta.iso) ? (
+                <div class="photo-meta-spacer" aria-hidden="true"></div>
+              ) : null}
+              {imageMeta.megapixels && (
+                <p class="photo-meta-line">IMAGE SIZE: {imageMeta.megapixels}</p>
+              )}
+              {imageMeta.focalLength && (
+                <p class="photo-meta-line">FOCAL LENGTH: {imageMeta.focalLength}</p>
+              )}
+              {imageMeta.exposureTime && (
+                <p class="photo-meta-line">EXPOSURE TIME: {imageMeta.exposureTime}</p>
+              )}
+              {imageMeta.aperture && (
+                <p class="photo-meta-line">APERTURE: {imageMeta.aperture}</p>
+              )}
+              {imageMeta.iso && (
+                <p class="photo-meta-line">ISO: {imageMeta.iso}</p>
+              )}
+            </div>
           </div>
         ) : null}
       </div>

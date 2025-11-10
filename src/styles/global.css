@@ -72,24 +72,37 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
 }
 
 .photo-meta-panel {
+  --meta-progress: 1;
+  --meta-offset: 0px;
+  --meta-scale: 1;
   background: rgba(0, 0, 0, 0.35); /* adjust alpha 0–1 */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
   padding: 0.75rem 1rem;
   backdrop-filter: blur(6px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  font-size: 0.70rem;
+  font-size: 0.85rem;
   width: min(260px, 70vw);
-  opacity: 1;
-  transform: none;
-  transition: opacity 320ms ease, transform 320ms ease;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  overflow: hidden;
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  transform-origin: bottom right;
+  opacity: calc(0.15 + 0.85 * var(--meta-progress, 1));
+  transform: translate3d(0, var(--meta-offset, 0px), 0) scale(var(--meta-scale, 1));
+  transition: opacity 220ms ease;
+  will-change: transform, opacity;
+}
+
+.photo-meta-panel__inner {
+  transition: opacity 220ms ease;
 }
 
 .media-block[data-visible='0'] .photo-meta-panel {
+  pointer-events: none;
   opacity: 0;
-  transform: translate3d(16px, 16px, 0);
 }
 
 .photo-meta-line {
@@ -112,18 +125,8 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
   height: 0.6rem;
 }
 
-@media (min-width: 768px) {
-  .media-visual .photo-meta-panel {
-    position: absolute;
-    bottom: 1.25rem;
-    right: 1.25rem;
-  }
-}
-
 @media (max-width: 767px) {
   .photo-meta-panel {
-    position: static;
-    margin-top: 0.85rem;
-    width: 100%;
+    --meta-scale: 0.8; /* 80% smaller */
   }
 }

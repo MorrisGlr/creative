@@ -31,7 +31,7 @@ const album = await resolveAlbumMediaUrls('algo', slug, albumRaw);
   </header>
 
   {/* Media stream per your scroll spec */}
-  <section class="space-y-[60vh]">
+  <section class="media-stream space-y-[45vh]">
     {album.media.map((m, i) => (
       <AlbumMedia item={m} index={i} bgColorize={album.options?.bgFromDominantColor ?? false} />
     ))}

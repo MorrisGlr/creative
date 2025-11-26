@@ -1,0 +1,108 @@
+{
+  "title": "USPS",
+  "slug": "USPS",
+  "dateCreated": "2020-11",
+  "temporalCoverage": "2020-11/2020-12",
+  "displayDate": "2020 November - December",
+  "description": "",
+  "cover": "img20250802_12550797.jpg",
+  "tags": ["digital", "photography", "USPS", "mail"],
+  "media": [
+    {
+        "type": "image",
+        "src": "img20250802_12050998.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250802_12070987.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250802_12081112.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250802_12540639.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250803_13262647.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250803_13272315.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250803_13282140.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "",
+        "alt": "",
+        "attribution": "Morris A. Aguilar",
+        "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

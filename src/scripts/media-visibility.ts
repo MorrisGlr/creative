@@ -22,13 +22,34 @@ const initMediaVisibility = () => {
     }
   });
 
+  const prefetchNextMedia = (block: HTMLElement) => {
+    const idx = blocks.indexOf(block);
+    if (idx === -1) return;
+    const next = blocks[idx + 1];
+    if (!next || next.dataset.prefetched === '1') return;
+
+    const img = next.querySelector<HTMLImageElement>('img');
+    if (img?.src) {
+      const preload = new Image();
+      preload.src = img.src;
+      next.dataset.prefetched = '1';
+      return;
+    }
+    const source = next.querySelector<HTMLSourceElement>('video source');
+    if (source?.src) {
+      fetch(source.src).catch(() => {});
+      next.dataset.prefetched = '1';
+    }
+  };
+
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         setVisible(entry.target as HTMLElement, entry.isIntersecting);
+        if (entry.isIntersecting) prefetchNextMedia(entry.target as HTMLElement);
       });
     },
-    { rootMargin: '0px 0px -20% 0px', threshold: 0.3 }
+    { rootMargin: '0px 0px -65% 0px', threshold: 0.05 }
   );
 
   blocks.forEach((block) => io.observe(block));

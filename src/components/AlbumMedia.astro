@@ -18,7 +18,8 @@ const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata |
           alt={(item as any).alt ?? ''}
           loading="lazy"
           decoding="async"
-          class="object-cover"
+          class="object-cover warp-target"
+          data-warp-target
         />
         {showPhotoMetadata && imageMeta ? (
           <div class="photo-meta-panel">
@@ -74,7 +75,8 @@ const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata |
           loop
           preload="metadata"
           poster={(item as any).poster ?? ''}
-          class="border border-black/10 object-cover"
+          class="border border-black/10 object-cover warp-target"
+          data-warp-target
         >
           {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
         </video>

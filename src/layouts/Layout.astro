@@ -15,6 +15,7 @@ const { title = "Site" } = Astro.props;
     <!-- Prefetch helper (runs on every page) -->
     <script type="module" src="/src/scripts/prefetch.ts"></script>
     <script type="module" src="/src/scripts/media-visibility.ts"></script>
+    <script type="module" src="/src/scripts/lens-warp.ts"></script>
     <style>
       :root { --page-bg: #0b0b0b; }
       html, body { background: var(--page-bg); transition: background-color 600ms ease; }
@@ -30,5 +31,63 @@ const { title = "Site" } = Astro.props;
     <div id="main" class="container">
       <slot />
     </div>
+
+    {/* Hidden defs for the scroll-driven warp + chromatic aberration filter */}
+    <svg aria-hidden="true" width="0" height="0" style="position:absolute;width:0;height:0;visibility:hidden;">
+      <filter
+        id="lens-warp"
+        x="-50%" y="-50%" width="200%" height="200%"
+        filterUnits="objectBoundingBox"
+        color-interpolation-filters="sRGB"
+      >
+        {/* Wide, vertical flow map (low frequency, no static) */}
+        <feTurbulence
+          id="warp-stripes"
+          type="turbulence"
+          baseFrequency="0.08 0.0003"
+          numOctaves="1"
+          seed="7"
+          stitchTiles="noStitch"
+          result="stripeNoise"
+        />
+        <feGaussianBlur in="stripeNoise" stdDeviation="2 32" result="stripeSoft" />
+        <feOffset id="warp-stripe-offset" in="stripeSoft" dx="0" dy="0" result="stripeShifted" />
+        <feDisplacementMap
+          id="warp-displace"
+          in="SourceGraphic"
+          in2="stripeShifted"
+          scale="0"
+          xChannelSelector="R"
+          yChannelSelector="G"
+          result="warp"
+        />
+
+        {/* Split channels so we can offset R/B for chromatic aberration */}
+        <feColorMatrix
+          in="warp"
+          type="matrix"
+          values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
+          result="warp-red"
+        />
+        <feColorMatrix
+          in="warp"
+          type="matrix"
+          values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
+          result="warp-green"
+        />
+        <feColorMatrix
+          in="warp"
+          type="matrix"
+          values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
+          result="warp-blue"
+        />
+
+        <feOffset id="warp-red-offset" in="warp-red" dx="0" dy="0" result="warp-red-shift" />
+        <feOffset id="warp-blue-offset" in="warp-blue" dx="0" dy="0" result="warp-blue-shift" />
+
+        <feBlend in="warp-red-shift" in2="warp-green" mode="screen" result="warp-rg" />
+        <feBlend in="warp-rg" in2="warp-blue-shift" mode="screen" result="warp-rgb" />
+      </filter>
+    </svg>
   </body>
 </html>

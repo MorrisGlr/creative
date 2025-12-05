@@ -1,7 +1,12 @@
 const DATA_ATTR = 'data-visible';
+const DATA_META = 'data-meta';
 
 const setVisible = (block: HTMLElement, visible: boolean) => {
   block.setAttribute(DATA_ATTR, visible ? '1' : '0');
+};
+
+const setMetaVisible = (block: HTMLElement, visible: boolean) => {
+  block.setAttribute(DATA_META, visible ? '1' : '0');
 };
 
 const initMediaVisibility = () => {
@@ -13,12 +18,14 @@ const initMediaVisibility = () => {
 
   if (prefersReduced || !('IntersectionObserver' in window)) {
     showAll();
+    blocks.forEach((block) => setMetaVisible(block, true));
     return;
   }
 
   blocks.forEach((block) => {
     if (!block.hasAttribute(DATA_ATTR)) {
       setVisible(block, false);
+      setMetaVisible(block, false);
     }
   });
 
@@ -46,10 +53,14 @@ const initMediaVisibility = () => {
     (entries) => {
       entries.forEach((entry) => {
         setVisible(entry.target as HTMLElement, entry.isIntersecting);
+        setMetaVisible(
+          entry.target as HTMLElement,
+          entry.isIntersecting && entry.intersectionRatio >= 0.2
+        );
         if (entry.isIntersecting) prefetchNextMedia(entry.target as HTMLElement);
       });
     },
-    { rootMargin: '0px 0px -65% 0px', threshold: 0.05 }
+    { rootMargin: '0px 0px -30% 0px', threshold: [0, 0.1, 0.2, 0.4, 0.6, 0.8, 1] }
   );
 
   blocks.forEach((block) => io.observe(block));

@@ -13,9 +13,14 @@ html, body {
   font-family: var(--body-font);
 }
 
-body {
+/* Root scroll container: apply snap to the element that actually scrolls */
+html {
   scroll-snap-type: y mandatory;
-  scroll-padding: 50vh 0;
+  scroll-padding: 0;
+}
+
+body {
+  min-height: 100%;
 }
 
 /* optional: safe typography sizing */
@@ -27,8 +32,8 @@ h1, h2, h3, h4, h5, h6 {
 img, video { display: block; }
 
 .warp-target {
-  filter: url('#lens-warp');
-  will-change: filter;
+  filter: none !important; /* lens aberration disabled */
+  will-change: auto;
   backface-visibility: hidden;
 }
 
@@ -55,12 +60,17 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
 }
 
 .media-stream {
-  scroll-snap-type: y mandatory;
-  scroll-padding: 50vh;
+  scroll-snap-type: none;
+  scroll-padding: 0;
 }
 
 .media-block {
   scroll-snap-align: center;
+  scroll-snap-stop: always;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .media-frame {
@@ -79,6 +89,8 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
   height: auto;
   display: block;
   border-radius: 1rem;
+  max-height: calc(100vh - 4.5rem);
+  object-fit: contain;
 }
 
 .media-visual {
@@ -87,10 +99,10 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
 }
 
 .media-caption {
-  max-width: 60ch;
-  text-align: center;
+  max-width: 80ch;
+  text-align: left;
   opacity: 0.8;
-  font-size: 1.25 rem;
+  font-size: 1.5 rem;
 }
 
 .media-block[data-visible='0'] .media-frame {
@@ -117,9 +129,9 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
   bottom: 1.25rem;
   right: 1.25rem;
   transform-origin: bottom right;
-  opacity: calc(0.15 + 0.85 * var(--meta-progress, 1));
+  opacity: 0;
   transform: translate3d(0, var(--meta-offset, 0px), 0) scale(var(--meta-scale, 1));
-  transition: opacity 220ms ease;
+  transition: opacity 240ms ease 80ms;
   will-change: transform, opacity;
 }
 
@@ -129,7 +141,11 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
 
 .media-block[data-visible='0'] .photo-meta-panel {
   pointer-events: none;
-  opacity: 1;
+  opacity: 0;
+}
+
+.media-block[data-meta='1'] .photo-meta-panel {
+  opacity: calc(0.15 + 0.85 * var(--meta-progress, 1));
 }
 
 .photo-meta-line {
@@ -153,10 +169,6 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
 }
 
 @media (max-width: 767px) {
-  body {
-    scroll-padding: 40vh 0;
-  }
-
   .photo-meta-panel {
     --meta-scale: 0.8; /* 80% smaller */
   }

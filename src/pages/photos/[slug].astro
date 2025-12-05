@@ -31,7 +31,7 @@ const album = await resolveAlbumMediaUrls('photos', slug, albumRaw);
   </header>
 
   {/* Media stream per your scroll spec */}
-  <section class="media-stream space-y-[45vh]">
+  <section class="media-stream space-y-16">
     {album.media.map((m, i) => (
       <AlbumMedia
         item={m}

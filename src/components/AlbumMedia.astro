@@ -114,7 +114,11 @@ const captionFill =
       data-caption-for={index}
       style={captionFill ? `--caption-fill: url("${captionFill}")` : undefined}
     >
-      <p class={`media-caption${captionFill ? ' media-caption--fill' : ''}`} data-split-caption>
+      <p
+        class={`media-caption${captionFill ? ' media-caption--fill' : ''}`}
+        data-split-caption
+        style={captionFill ? `--caption-fill: url("${captionFill}"); background-image: url("${captionFill}")` : undefined}
+      >
         {(item as any).caption}
       </p>
     </div>

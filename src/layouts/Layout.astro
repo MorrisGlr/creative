@@ -44,10 +44,40 @@ const { title = "Site" } = Astro.props;
             bgImage: cs.backgroundImage,
           });
         };
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', logTitleFill, { once: true });
-        } else {
+        const logCaptionFill = () => {
+          const caption = document.querySelector('.media-caption');
+          if (!caption) return;
+          const cs = getComputedStyle(caption);
+          const firstChar = caption.querySelector('.split-char');
+          const textFill = cs.getPropertyValue('-webkit-text-fill-color') || 'n/a';
+          console.info('[caption-fill-debug]', {
+            path: location.pathname,
+            textSample: caption.textContent?.trim().slice(0, 80),
+            classes: caption.className,
+            cssVar: cs.getPropertyValue('--caption-fill'),
+            bgImage: cs.backgroundImage,
+            color: cs.color,
+            textFill,
+          });
+          if (firstChar) {
+            const charStyles = getComputedStyle(firstChar);
+            const charTextFill = charStyles.getPropertyValue('-webkit-text-fill-color') || 'n/a';
+            console.info('[caption-fill-debug:char]', {
+              bgImage: charStyles.backgroundImage,
+              color: charStyles.color,
+              textFill: charTextFill,
+            });
+          }
+        };
+        const runDebugLogs = () => {
           logTitleFill();
+          // small delay to allow caption split/animation classes to apply
+          setTimeout(logCaptionFill, 80);
+        };
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', runDebugLogs, { once: true });
+        } else {
+          runDebugLogs();
         }
       })();
     </script>

@@ -16,10 +16,10 @@ const { title = "Site" } = Astro.props;
     <script type="module" src="/src/scripts/prefetch.ts"></script>
     <script type="module" src="/src/scripts/media-visibility.ts"></script>
     <style>
-      :root { --page-bg: #0b0b0b; }
+      :root { --page-bg: #0b0b0b; --page-gutter: clamp(1rem, 4vw, 2.75rem); }
       html, body { background: var(--page-bg); transition: background-color 600ms ease; }
-      body { color: CanvasText; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-      .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem 4rem; }
+      body { color: CanvasText; font-family: var(--body-font, system-ui, -apple-system, Segoe UI, Roboto, sans-serif); }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--page-gutter) 4rem; }
       .skip { position:absolute; left:-9999px; }
       .skip:focus { left: 12px; top: 12px; background:#fff; color:#000; padding:.5rem .75rem; border-radius:.5rem; z-index:999; }
     </style>
@@ -30,6 +30,27 @@ const { title = "Site" } = Astro.props;
     <div id="main" class="container">
       <slot />
     </div>
+    <script is:inline>
+      (() => {
+        const logTitleFill = () => {
+          const title = document.querySelector('.project-hero__title');
+          if (!title) return;
+          const cs = getComputedStyle(title);
+          console.info('[title-fill-debug]', {
+            path: location.pathname,
+            data: { ...title.dataset },
+            inline: title.getAttribute('style'),
+            cssVar: cs.getPropertyValue('--title-fill'),
+            bgImage: cs.backgroundImage,
+          });
+        };
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', logTitleFill, { once: true });
+        } else {
+          logTitleFill();
+        }
+      })();
+    </script>
 
     {/* Hidden defs for the scroll-driven warp + chromatic aberration filter */}
     <svg aria-hidden="true" width="0" height="0" style="position:absolute;width:0;height:0;visibility:hidden;">

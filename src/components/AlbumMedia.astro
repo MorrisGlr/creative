@@ -7,9 +7,16 @@ const { item, index, bgColorize = false, showPhotoMetadata = false } = Astro.pro
   item: MediaItem; index: number; bgColorize?: boolean; showPhotoMetadata?: boolean;
 };
 const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata | undefined) : undefined;
+const photoMeta = imageMeta ?? {};
+const captionFill =
+  item.type === 'image'
+    ? (item as any).src
+    : item.type === 'video'
+      ? (item as any).poster ?? (item as any).src ?? ((item as any).sources?.[0]?.src)
+      : (item as any).src;
 ---
 
-<div class="media-block media-shell" data-index={index} data-bg={bgColorize ? '1' : '0'}>
+<div class="media-block media-shell" data-index={index} data-bg={bgColorize ? '1' : '0'} data-caption="0">
   {item.type === 'image' && (
     <figure class="media-frame">
       <div class="media-visual">
@@ -21,47 +28,46 @@ const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata |
           class="object-cover warp-target"
           data-warp-target
         />
-        {showPhotoMetadata && imageMeta ? (
+        {showPhotoMetadata ? (
           <div class="photo-meta-panel">
             <div class="photo-meta-panel__inner">
-              {imageMeta.cameraModel && (
+              {photoMeta.cameraModel && (
                 <p class="photo-meta-line photo-meta-line--highlight">
-                  {imageMeta.cameraModel.toUpperCase()}
+                  {photoMeta.cameraModel.toUpperCase()}
                 </p>
               )}
-              {imageMeta.cameraType && (
+              {photoMeta.cameraType && (
                 <p class="photo-meta-line photo-meta-line--highlight">
-                  CAMERA: {imageMeta.cameraType.toUpperCase()}
+                  CAMERA: {photoMeta.cameraType.toUpperCase()}
                 </p>
               )}
-              {(imageMeta.cameraModel || imageMeta.cameraType) &&
-              (imageMeta.megapixels ||
-                imageMeta.focalLength ||
-                imageMeta.exposureTime ||
-                imageMeta.aperture ||
-                imageMeta.iso) ? (
+              {(photoMeta.cameraModel || photoMeta.cameraType) &&
+              (photoMeta.megapixels ||
+                photoMeta.focalLength ||
+                photoMeta.exposureTime ||
+                photoMeta.aperture ||
+                photoMeta.iso) ? (
                 <div class="photo-meta-spacer" aria-hidden="true"></div>
               ) : null}
-              {imageMeta.megapixels && (
-                <p class="photo-meta-line">IMAGE SIZE: {imageMeta.megapixels}</p>
+              {photoMeta.megapixels && (
+                <p class="photo-meta-line">IMAGE SIZE: {photoMeta.megapixels}</p>
               )}
-              {imageMeta.focalLength && (
-                <p class="photo-meta-line">FOCAL LENGTH: {imageMeta.focalLength}</p>
+              {photoMeta.focalLength && (
+                <p class="photo-meta-line">FOCAL LENGTH: {photoMeta.focalLength}</p>
               )}
-              {imageMeta.exposureTime && (
-                <p class="photo-meta-line">EXPOSURE TIME: {imageMeta.exposureTime}</p>
+              {photoMeta.exposureTime && (
+                <p class="photo-meta-line">EXPOSURE TIME: {photoMeta.exposureTime}</p>
               )}
-              {imageMeta.aperture && (
-                <p class="photo-meta-line">APERTURE: {imageMeta.aperture}</p>
+              {photoMeta.aperture && (
+                <p class="photo-meta-line">APERTURE: {photoMeta.aperture}</p>
               )}
-              {imageMeta.iso && (
-                <p class="photo-meta-line">ISO: {imageMeta.iso}</p>
+              {photoMeta.iso && (
+                <p class="photo-meta-line">ISO: {photoMeta.iso}</p>
               )}
             </div>
           </div>
         ) : null}
       </div>
-      { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}
 
@@ -81,7 +87,6 @@ const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata |
           {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
         </video>
       </div>
-      { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}
 
@@ -99,7 +104,18 @@ const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata |
           alt={(item as any).alt ?? '3D model'}
         />
       </div>
-      { (item as any).caption && <figcaption class="media-caption">{(item as any).caption}</figcaption> }
     </figure>
   )}
 </div>
+
+  {(item as any).caption ? (
+    <div
+      class="media-caption-block"
+      data-caption-for={index}
+      style={captionFill ? `--caption-fill: url("${captionFill}")` : undefined}
+    >
+      <p class={`media-caption${captionFill ? ' media-caption--fill' : ''}`} data-split-caption>
+        {(item as any).caption}
+      </p>
+    </div>
+  ) : null}

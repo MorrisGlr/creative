@@ -22,16 +22,60 @@ if (!albumRaw) {
 
 // Resolve media filenames to emitted URLs:
 const album = await resolveAlbumMediaUrls('photos', slug, albumRaw);
+const titleImages = album.media.filter((m: any) => m.type === 'image' && m.src).map((m: any) => m.src);
+const initialFill = titleImages[0] ?? album.cover;
+const titleFillStyle = initialFill
+  ? `--title-fill: url("${initialFill}"); background-image: url("${initialFill}")`
+  : undefined;
 ---
 
 <Layout title={album.title}>
-  <header class="mb-8">
-    <h1 class="text-2xl font-semibold">{album.title}</h1>
-    {album.description ? <p class="opacity-80 mt-2 max-w-prose">{album.description}</p> : null}
-  </header>
+  <section class="project-hero">
+    <p class="project-hero__eyebrow">Project</p>
+    <h1
+      class="project-hero__title"
+      data-split-title
+      data-title-images={JSON.stringify(titleImages)}
+      data-title-fill-url={initialFill ?? ''}
+      style={titleFillStyle}
+    >
+      {album.title}
+    </h1>
+    {album.description ? (
+      <p class="project-hero__description">{album.description}</p>
+    ) : null}
+  </section>
+  <script type="module">
+    const titleEl = document.querySelector('.project-hero__title');
+    if (titleEl) {
+      const imgsRaw = titleEl.dataset.titleImages;
+      if (imgsRaw) {
+        try {
+          const imgs = JSON.parse(imgsRaw);
+          if (Array.isArray(imgs) && imgs.length) {
+            const pick = imgs[Math.floor(Math.random() * imgs.length)];
+            if (pick) {
+              titleEl.style.setProperty('--title-fill', `url("${pick}")`);
+              titleEl.style.backgroundImage = `url("${pick}")`;
+            }
+          }
+        } catch {}
+      }
+      const cs = getComputedStyle(titleEl);
+      console.info('[title-fill]', {
+        page: location.pathname,
+        data: titleEl.dataset,
+        inline: titleEl.getAttribute('style'),
+        cssVar: cs.getPropertyValue('--title-fill'),
+        bgImage: cs.backgroundImage,
+      });
+    } else {
+      console.warn('[title-fill] title element not found on page', location.pathname);
+    }
+  </script>
 
   {/* Media stream per your scroll spec */}
-  <section class="media-stream space-y-16">
+  <section class="media-stream space-y-16 mt-10">
     {album.media.map((m, i) => (
       <AlbumMedia
         item={m}

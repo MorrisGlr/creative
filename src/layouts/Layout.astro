@@ -10,15 +10,30 @@ const { title = "Site" } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
     <title>{title}</title>
     <link rel="icon" href="/favicon.svg" />
     <!-- Prefetch helper (runs on every page) -->
     <script type="module" src="/src/scripts/prefetch.ts"></script>
     <script type="module" src="/src/scripts/media-visibility.ts"></script>
     <style>
-      :root { --page-bg: #0b0b0b; --page-gutter: clamp(1rem, 4vw, 2.75rem); }
-      html, body { background: var(--page-bg); transition: background-color 600ms ease; }
-      body { color: CanvasText; font-family: var(--body-font, system-ui, -apple-system, Segoe UI, Roboto, sans-serif); }
+      :root {
+        --page-bg: #000;
+        --page-gutter: clamp(1rem, 4vw, 2.75rem);
+        color-scheme: dark;
+      }
+      html, body {
+        background: var(--page-bg);
+        background-color: var(--page-bg);
+        transition: background-color 600ms ease;
+        min-height: 100%;
+      }
+      body {
+        min-height: 100vh;
+        min-height: 100dvh;
+        color: CanvasText;
+        font-family: var(--body-font, system-ui, -apple-system, Segoe UI, Roboto, sans-serif);
+      }
       .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--page-gutter) 4rem; }
       .skip { position:absolute; left:-9999px; }
       .skip:focus { left: 12px; top: 12px; background:#fff; color:#000; padding:.5rem .75rem; border-radius:.5rem; z-index:999; }
@@ -32,6 +47,28 @@ const { title = "Site" } = Astro.props;
     </div>
     <script is:inline>
       (() => {
+        const logTitleFont = () => {
+          const title = document.querySelector('.project-hero__title');
+          if (!title) return;
+          const capture = (label = 'immediate') => {
+            const cs = getComputedStyle(title);
+            const sampleChar = title.querySelector('.split-char');
+            const charFont = sampleChar ? getComputedStyle(sampleChar).fontFamily : 'n/a';
+            console.info('[title-font-debug]', {
+              path: location.pathname,
+              label,
+              font: cs.fontFamily,
+              weight: cs.fontWeight,
+              charFont,
+              revealed: title.classList.contains('is-revealed'),
+              text: title.textContent?.trim().slice(0, 80),
+            });
+          };
+          capture('immediate');
+          if (document.fonts?.ready) {
+            document.fonts.ready.then(() => capture('after-fonts-ready'));
+          }
+        };
         const logTitleFill = () => {
           const title = document.querySelector('.project-hero__title');
           if (!title) return;
@@ -70,6 +107,7 @@ const { title = "Site" } = Astro.props;
           }
         };
         const runDebugLogs = () => {
+          logTitleFont();
           logTitleFill();
           // small delay to allow caption split/animation classes to apply
           setTimeout(logCaptionFill, 80);

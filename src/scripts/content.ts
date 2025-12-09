@@ -40,6 +40,8 @@ type MediaItem = ImageItem | VideoItem | ModelItem;
 export interface Album {
   title: string;
   slug: string;
+  displayDate?: string;
+  dateCreated?: string;
   date?: string;
   description?: string;
   cover?: string;

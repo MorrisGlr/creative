@@ -5,6 +5,69 @@ const DATA_CAPTION = 'data-caption';
 const metaShownAt = new WeakMap<HTMLElement, number>();
 const blockSeenAt = new WeakMap<HTMLElement, number>();
 
+const makeScrollDebugger = () => {
+  if (typeof window === 'undefined') return () => {};
+  const flag = (window as any).__SCROLL_DEBUG;
+  const envDefault = Boolean((import.meta as any)?.env?.DEV);
+  const isDebug = typeof flag === 'boolean' ? flag : envDefault;
+  return (label: string, payload?: Record<string, unknown>) => {
+    if (!isDebug) return;
+    const timestamp = performance.now().toFixed(1);
+    console.info(`[scroll-debug] ${label}`, { t: timestamp, ...(payload ?? {}) });
+  };
+};
+const debugScroll = makeScrollDebugger();
+
+type MediaSize = { width: number; height: number };
+
+const getMediaSize = (el: Element): MediaSize | null => {
+  if (el instanceof HTMLImageElement && el.naturalWidth > 0 && el.naturalHeight > 0) {
+    return { width: el.naturalWidth, height: el.naturalHeight };
+  }
+  if (el instanceof HTMLVideoElement && el.videoWidth > 0 && el.videoHeight > 0) {
+    return { width: el.videoWidth, height: el.videoHeight };
+  }
+  const anyEl = el as any;
+  if (typeof anyEl.videoWidth === 'number' && typeof anyEl.videoHeight === 'number') {
+    const { videoWidth, videoHeight } = anyEl as { videoWidth: number; videoHeight: number };
+    if (videoWidth > 0 && videoHeight > 0) return { width: videoWidth, height: videoHeight };
+  }
+  return null;
+};
+
+const describeOrientation = (size: MediaSize | null): 'landscape' | 'portrait' | 'square' | 'unknown' => {
+  if (!size) return 'unknown';
+  if (size.width === size.height) return 'square';
+  return size.width > size.height ? 'landscape' : 'portrait';
+};
+
+let loggedMediaSamples = false;
+const logMediaSamples = (blocks: HTMLElement[]) => {
+  if (loggedMediaSamples) return;
+  loggedMediaSamples = true;
+  requestAnimationFrame(() => {
+    blocks.slice(0, 5).forEach((block) => {
+      const media = block.querySelector<HTMLElement>('img, video, model-viewer');
+      if (!media) return;
+      const rect = media.getBoundingClientRect();
+      const intrinsic = getMediaSize(media) ?? (rect.width && rect.height ? { width: rect.width, height: rect.height } : null);
+      const orientation = describeOrientation(intrinsic);
+      const wrapper = media.closest<HTMLElement>('.media-visual__media') ?? media.parentElement ?? media;
+      const mediaStyle = getComputedStyle(media);
+      const wrapperStyle = getComputedStyle(wrapper);
+      debugScroll('media-shape', {
+        index: block.dataset.index,
+        tag: media.tagName.toLowerCase(),
+        orientation,
+        size: intrinsic,
+        radius: mediaStyle.borderRadius || wrapperStyle.borderRadius,
+        wrapperRadius: wrapperStyle.borderRadius,
+        boxShadow: wrapperStyle.boxShadow || mediaStyle.boxShadow,
+      });
+    });
+  });
+};
+
 const isElementInViewport = (element: HTMLElement) => {
   const rect = element.getBoundingClientRect();
   const viewHeight = window.innerHeight || 1;
@@ -16,12 +79,15 @@ const setVisible = (block: HTMLElement, visible: boolean) => {
 };
 
 const setMetaVisible = (block: HTMLElement, visible: boolean) => {
+  const prev = block.getAttribute(DATA_META) === '1';
+  if (prev === visible) return;
   block.setAttribute(DATA_META, visible ? '1' : '0');
   if (visible) {
     metaShownAt.set(block, performance.now());
   } else {
     metaShownAt.delete(block);
   }
+  debugScroll('meta', { index: block.dataset.index, visible });
 };
 
 const splitText = (target: HTMLElement) => {
@@ -63,20 +129,21 @@ const setCaptionVisible = (block: HTMLElement, visible: boolean) => {
   const caption = captionBlock?.querySelector<HTMLElement>('.media-caption');
   if (!caption) return;
   const splitTarget = caption.querySelector<HTMLElement>('[data-split-caption]') ?? caption;
+  if (!visible && captionBlock && isElementInViewport(captionBlock)) {
+    visible = true;
+  }
+
+  const prev = block.getAttribute(DATA_CAPTION) === '1';
+  block.setAttribute(DATA_CAPTION, visible ? '1' : '0');
   if (visible) {
-    block.setAttribute(DATA_CAPTION, '1');
     splitText(splitTarget);
     requestAnimationFrame(() => caption.classList.add('is-revealed'));
-    return;
+  } else {
+    caption.classList.remove('is-revealed');
   }
-
-  if (captionBlock && isElementInViewport(captionBlock)) {
-    block.setAttribute(DATA_CAPTION, '1');
-    return;
+  if (prev !== visible) {
+    debugScroll('caption', { index: block.dataset.index, visible });
   }
-
-  block.setAttribute(DATA_CAPTION, '0');
-  caption.classList.remove('is-revealed');
 };
 
 const getLeadBlock = (blocks: HTMLElement[]) => {
@@ -133,41 +200,108 @@ const initStepSnapScroll = () => {
     return best;
   };
 
-  const scrollToIndex = (idx: number) => {
-    const target = stops[Math.max(0, Math.min(stops.length - 1, idx))];
-    if (!target) return;
+  const scrollToIndex = (idx: number, direction: number) => {
+    const clamped = Math.max(0, Math.min(stops.length - 1, idx));
+    const target = stops[clamped];
+    if (!target) return null;
     const behavior = prefersReduced ? 'auto' : 'smooth';
-    target.scrollIntoView({ behavior, block: 'start', inline: 'nearest' });
+    debugScroll('snap', {
+      direction: direction > 0 ? 'next' : 'prev',
+      from: idx - direction,
+      to: clamped,
+      behavior,
+      target: target.className,
+    });
+    target.scrollIntoView({ behavior, block: 'center', inline: 'nearest' });
+    return target;
   };
 
-  let locked = false;
-  let unlockTimer: number | undefined;
+  let snapping = false;
+  let lastSnapAt = 0;
+  let lastSnapDirection: number | null = null;
+  let releaseTimer: number | undefined;
+  const QUIET_RELEASE_MS = 80; // wait this long after last wheel/scroll before another snap
+  const MIN_GAP_BETWEEN_SNAPS_MS = 420; // hard minimum gap for same-direction snaps (prevents double-step on long flicks)
+  const MIN_LOCK_MS = 280; // minimum time we stay locked after a snap starts
+  const MAX_LOCK_MS = 700; // hard ceiling before we allow another snap
+  const ALIGN_THRESHOLD = 12; // px from viewport center to consider settled
+  const RESCAN_MS = 32;
+  let activeTarget: HTMLElement | null = null;
   let lastWheelAt = 0;
-  const QUIET_MS = 25; // require this quiet time before another step
 
-  const scheduleUnlock = () => {
-    if (unlockTimer) clearTimeout(unlockTimer);
-    unlockTimer = window.setTimeout(() => { locked = false; }, QUIET_MS);
+  const canRelease = () => {
+    const now = performance.now();
+    const quiet = now - lastWheelAt;
+    const elapsed = now - lastSnapAt;
+    if (quiet < QUIET_RELEASE_MS) return false;
+    if (elapsed < MIN_LOCK_MS) return false;
+    if (!activeTarget) return true;
+    const centerY = viewHeight() / 2;
+    const rect = activeTarget.getBoundingClientRect();
+    const dist = Math.abs(rect.top + rect.height / 2 - centerY);
+    if (dist <= ALIGN_THRESHOLD) return true;
+    if (elapsed >= MAX_LOCK_MS) return true;
+    return false;
+  };
+
+  const scheduleRelease = (reason: string) => {
+    if (!snapping) return;
+    if (releaseTimer) clearTimeout(releaseTimer);
+    releaseTimer = window.setTimeout(() => {
+      if (canRelease()) {
+        snapping = false;
+        releaseTimer = undefined;
+        debugScroll('unlock', { reason });
+      } else {
+        scheduleRelease(`${reason}-retry`);
+      }
+    }, RESCAN_MS);
+    debugScroll('schedule-unlock', { reason, target: activeTarget?.className });
+  };
+
+  const onScroll = () => {
+    if (!snapping) return;
+    scheduleRelease('scroll-quiet');
   };
 
   const onWheel = (event: WheelEvent) => {
     const dy = event.deltaY;
-    if (Math.abs(dy) < 2) return;
-    event.preventDefault();
-    lastWheelAt = performance.now();
-    if (locked) {
-      scheduleUnlock();
+    if (Math.abs(dy) < 1) return;
+    const now = performance.now();
+    lastWheelAt = now;
+    const direction = dy > 0 ? 1 : -1;
+
+    // If the previous snap was very recent in the same direction, treat this as residual inertia.
+    if (!snapping && lastSnapDirection !== null && direction === lastSnapDirection) {
+      const since = now - lastSnapAt;
+      if (since < MIN_GAP_BETWEEN_SNAPS_MS) {
+        event.preventDefault();
+        debugScroll('snap-gap-block', { since: since.toFixed(1), direction });
+        return;
+      }
+    }
+
+    if (snapping) {
+      event.preventDefault();
+      debugScroll('wheel-blocked', { dy, snapping: true });
+      scheduleRelease('wheel-quiet');
       return;
     }
-    locked = true;
+
+    event.preventDefault();
     const current = nearestStop();
     const currentIdx = current ? stops.indexOf(current) : 0;
-    const nextIdx = dy > 0 ? currentIdx + 1 : currentIdx - 1;
-    scrollToIndex(nextIdx);
-    scheduleUnlock();
+    const nextIdx = currentIdx + direction;
+    snapping = true;
+    const target = scrollToIndex(nextIdx, direction);
+    activeTarget = target;
+    lastSnapAt = now;
+    lastSnapDirection = direction;
+    scheduleRelease('after-snap');
   };
 
   window.addEventListener('wheel', onWheel, { passive: false });
+  window.addEventListener('scroll', onScroll, { passive: true });
 };
 
 const initScrollBrake = () => {
@@ -251,12 +385,13 @@ const tryRevealCaption = (blocks: HTMLElement[]) => {
   const shownAt = metaShownAt.get(lead) ?? 0;
   if (performance.now() - shownAt < 260) return;
   setCaptionVisible(lead, true);
-  setMetaVisible(lead, false);
 };
 
 const initMediaVisibility = () => {
   const blocks = Array.from(document.querySelectorAll<HTMLElement>('.media-block'));
   if (!blocks.length) return;
+
+  logMediaSamples(blocks);
 
   const showAll = () => blocks.forEach((block) => {
     setVisible(block, true);
@@ -303,8 +438,7 @@ const initMediaVisibility = () => {
           const block = entry.target as HTMLElement;
           setVisible(block, prefersReduced ? true : entry.isIntersecting);
 
-          const captionActive = block.getAttribute(DATA_CAPTION) === '1';
-          const shouldMeta = entry.isIntersecting && !captionActive;
+          const shouldMeta = entry.isIntersecting;
           setMetaVisible(block, shouldMeta);
 
           if (!entry.isIntersecting) {
@@ -370,9 +504,29 @@ const initMediaVisibility = () => {
   window.addEventListener('wheel', () => tryRevealCaption(blocks), { passive: true });
   window.addEventListener('touchend', () => tryRevealCaption(blocks), { passive: true });
 
+  const logTitleFont = (title: HTMLElement, label: string) => {
+    const cs = getComputedStyle(title);
+    const sampleChar = title.querySelector('.split-char');
+    const charStyles = sampleChar ? getComputedStyle(sampleChar) : null;
+    console.info('[title-font-debug:split]', {
+      label,
+      font: cs.fontFamily,
+      weight: cs.fontWeight,
+      variation: cs.fontVariationSettings,
+      charFont: charStyles?.fontFamily ?? 'n/a',
+      charWeight: charStyles?.fontWeight ?? 'n/a',
+      charVariation: charStyles?.fontVariationSettings ?? 'n/a',
+    });
+  };
+
   document.querySelectorAll<HTMLElement>('[data-split-title]').forEach((title) => {
+    logTitleFont(title, 'before-split');
     splitText(title);
-    requestAnimationFrame(() => title.classList.add('is-revealed'));
+    logTitleFont(title, 'after-split');
+    requestAnimationFrame(() => {
+      title.classList.add('is-revealed');
+      logTitleFont(title, 'after-reveal');
+    });
   });
 
   initStepSnapScroll();

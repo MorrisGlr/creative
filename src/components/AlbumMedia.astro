@@ -20,14 +20,16 @@ const captionFill =
   {item.type === 'image' && (
     <figure class="media-frame">
       <div class="media-visual">
-        <img
-          src={(item as any).src}
-          alt={(item as any).alt ?? ''}
-          loading="lazy"
-          decoding="async"
-          class="object-cover warp-target"
-          data-warp-target
-        />
+        <div class="media-visual__media">
+          <img
+            src={(item as any).src}
+            alt={(item as any).alt ?? ''}
+            loading="lazy"
+            decoding="async"
+            class="object-cover warp-target"
+            data-warp-target
+          />
+        </div>
         {showPhotoMetadata ? (
           <div class="photo-meta-panel">
             <div class="photo-meta-panel__inner">
@@ -74,18 +76,20 @@ const captionFill =
   {item.type === 'video' && (
     <figure class="media-frame">
       <div class="media-visual">
-        <video
-          playsinline
-          muted
-          autoplay
-          loop
-          preload="metadata"
-          poster={(item as any).poster ?? ''}
-          class="border border-black/10 object-cover warp-target"
-          data-warp-target
-        >
-          {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
-        </video>
+        <div class="media-visual__media media-visual__media--video">
+          <video
+            playsinline
+            muted
+            autoplay
+            loop
+            preload="metadata"
+            poster={(item as any).poster ?? ''}
+            class="object-cover warp-target"
+            data-warp-target
+          >
+            {(item as any).sources.map((s: any) => <source src={s.src} type={s.type ?? ''} />)}
+          </video>
+        </div>
       </div>
     </figure>
   )}
@@ -93,16 +97,18 @@ const captionFill =
   {item.type === 'model' && (
     <figure class="media-frame">
       <div class="media-visual">
-        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-        <model-viewer
-          src={(item as any).src}
-          ios-src={(item as any).usdz ?? undefined}
-          camera-controls
-          auto-rotate
-          ar
-          class="bg-black/5"
-          alt={(item as any).alt ?? '3D model'}
-        />
+        <div class="media-visual__media">
+          <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+          <model-viewer
+            src={(item as any).src}
+            ios-src={(item as any).usdz ?? undefined}
+            camera-controls
+            auto-rotate
+            ar
+            class="bg-black/5"
+            alt={(item as any).alt ?? '3D model'}
+          />
+        </div>
       </div>
     </figure>
   )}

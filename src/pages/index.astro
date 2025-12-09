@@ -1,56 +1,226 @@
 ---
 // src/pages/index.astro
 import Layout from "../layouts/Layout.astro";
+import { getAlbums, resolveAlbumMediaUrls } from "../scripts/content";
+import type { Section } from "../scripts/content";
 
-const tiles = [
-  { href: "/photos/",   title: "Photos",   desc: "Film & digital albums" },
-  { href: "/textbooks/",title: "Textbook Sculptures", desc: "Carved textbook sculptures" },
-  { href: "/algo/",     title: "Algorithm Art",     desc: "Animated algorithmic art" },
-  { href: "/paper/",    title: "Paper Layering",    desc: "Paper craft & layering" },
+type CategoryDef = { section: Section; href: string; title: string; desc: string };
+type CategoryData = CategoryDef & {
+  albumPools: { slug: string; images: string[] }[];
+  initialFill?: string;
+};
+
+const categoriesConfig: CategoryDef[] = [
+  { section: "photos",    href: "/photos/",    title: "PHOTOS",    desc: "Film & digital albums" },
+  { section: "textbooks", href: "/textbooks/", title: "TEXTBOOK",  desc: "Carved textbook sculptures" },
+  { section: "algo",      href: "/algo/",      title: "ALGO",      desc: "Animated algorithmic art" },
+  { section: "paper",     href: "/paper/",     title: "PAPER",     desc: "Paper craft & layering" }
 ];
+
+const IMAGE_RE = /\.(apng|avif|gif|jpe?g|png|webp)(\?|$)/i;
+const isImageUrl = (src?: string): src is string => typeof src === "string" && IMAGE_RE.test(src);
+const pickRandom = <T,>(items: T[]): T | undefined =>
+  items.length ? items[Math.floor(Math.random() * items.length)] : undefined;
+
+async function buildCategory(def: CategoryDef): Promise<CategoryData> {
+  const albumsRaw = getAlbums(def.section);
+  const albums = await Promise.all(
+    albumsRaw.map((album) => resolveAlbumMediaUrls(def.section, album.slug, album))
+  );
+
+  const albumPools = albums
+    .map((album) => {
+      const images = album.media
+        .filter((m: any) => m.type === "image" && isImageUrl((m as any).src))
+        .map((m: any) => (m as any).src as string);
+      if (isImageUrl(album.cover)) images.unshift(album.cover);
+      return { slug: album.slug, images };
+    })
+    .filter((entry) => entry.images.length > 0);
+
+  const randomAlbum = pickRandom(albumPools);
+  const initialFill = randomAlbum ? pickRandom(randomAlbum.images) : undefined;
+
+  return { ...def, albumPools, initialFill };
+}
+
+const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildCategory));
 ---
 
 <Layout title="Creative Work">
-  <header class="home-hero">
-    <h1>Creative Work</h1>
-    <p>Explore four worlds.</p>
-  </header>
+  <section class="home-stack" aria-labelledby="home-heading">
+    <header class="home-lede">
+      <p class="home-eyebrow">Creative Work</p>
+    </header>
 
-  <main class="home-grid" aria-label="Sections">
-    {tiles.map(t => (
-      <a class="home-card" href={t.href}>
-        <h2>{t.title}</h2>
-        <p>{t.desc}</p>
-      </a>
-    ))}
-  </main>
+    <nav class="home-links" aria-label="Project categories">
+      {categories.map((cat) => (
+        <a
+          class="home-link"
+          href={cat.href}
+          data-fill-albums={JSON.stringify(cat.albumPools)}
+          style={cat.initialFill ? `--fill-image: url("${cat.initialFill}")` : undefined}
+        >
+          <span class="home-link__label">{cat.title}</span>
+          <span class="home-link__desc">{cat.desc}</span>
+        </a>
+      ))}
+    </nav>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const log = (...args) => console.info('[home-fill]', ...args);
+      const pick = (list) => (Array.isArray(list) && list.length
+        ? list[Math.floor(Math.random() * list.length)]
+        : undefined);
+      const applyFill = (link, img, meta = {}) => {
+        if (!img) return;
+        link.style.setProperty('--fill-image', `url("${img}")`);
+        const label = link.querySelector('.home-link__label');
+        if (label) {
+          label.style.setProperty('--fill-image', `url("${img}")`);
+          label.style.backgroundImage = `url("${img}")`;
+          const cs = getComputedStyle(label);
+          log('computed style', {
+            href: link.getAttribute('href'),
+            img,
+            bgImage: cs.backgroundImage,
+            textFill: cs.getPropertyValue('-webkit-text-fill-color'),
+            ...meta,
+          });
+        }
+      };
+
+      const links = Array.from(document.querySelectorAll('[data-fill-albums]'));
+      log('links found', links.length);
+      links.forEach((link) => {
+        const raw = link.getAttribute('data-fill-albums');
+        if (!raw) {
+          log('no dataset', { href: link.getAttribute('href') });
+          return;
+        }
+        try {
+          const albums = JSON.parse(raw);
+          const pools = Array.isArray(albums)
+            ? albums.filter((a) => Array.isArray(a.images) && a.images.length)
+            : [];
+          if (!pools.length) {
+            log('no image pools', { href: link.getAttribute('href'), pools });
+            return;
+          }
+          const album = pick(pools);
+          const img = album && Array.isArray(album.images) ? pick(album.images) : null;
+          if (img) applyFill(link, img, { album: album?.slug });
+          log('applied', {
+            href: link.getAttribute('href'),
+            pools: pools.length,
+            album: album?.slug,
+            imagesInAlbum: album?.images?.length ?? 0,
+            img,
+            style: link.getAttribute('style'),
+          });
+        } catch (err) {
+          console.warn('[home-fill] unable to parse fill images', err);
+        }
+      });
+    })();
+  </script>
 </Layout>
 
 <style>
-  .home-hero { text-align:center; margin: 4rem auto 2rem; padding: 0 1rem; }
-  .home-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 .5rem; }
-  .home-hero p { opacity: .8; margin: 0 auto; max-width: 60ch; }
+  .home-stack {
+    min-height: calc(92vh - 80px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1.25rem, 3vh, 2rem);
+    padding: clamp(0.5rem, 4vh, 1.75rem) 0;
+  }
 
-  .home-grid {
-    --gap: 1.25rem;
-    display: grid;
-    gap: var(--gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
-    padding: 1rem;
-    max-width: 1100px;
-    margin: 0 auto 4rem;
+  .home-lede { max-width: 40rem; }
+  .home-eyebrow {
+    margin: 0 0 0.35rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: color-mix(in oklab, CanvasText 55%, transparent);
   }
-  .home-card {
-    display: block;
-    border-radius: 9999px; /* pill */
-    padding: 1.25rem 1.5rem;
-    background: color-mix(in oklab, Canvas 80%, transparent);
-    backdrop-filter: blur(8px);
-    border: 1px solid color-mix(in oklab, CanvasText 12%, transparent);
+  .home-lede h1 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    color: color-mix(in oklab, CanvasText 90%, transparent);
+  }
+  .home-subtitle {
+    margin: 0;
+    color: color-mix(in oklab, CanvasText 70%, transparent);
+    max-width: 32rem;
+  }
+
+  .home-links {
+    --fill-fallback: linear-gradient(135deg, #f3f3f3, #a9adb4);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 3vh, 1.6rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-link {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.45rem;
     text-decoration: none;
-    transition: transform .18s ease, background-color .18s ease, border-color .18s ease;
+    color: inherit;
+    outline: none;
   }
-  .home-card:hover { transform: translateY(-2px); }
-  .home-card h2 { margin: 0 0 .25rem; font-size: 1.2rem; }
-  .home-card p { margin: 0; opacity: .75; }
+
+  .home-link__label {
+    font-family: 'Jost', 'Jost Variable', var(--title-font), sans-serif;
+    font-size: clamp(5rem, 12vw, 7.5rem);
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    line-height: 0.9;
+    text-transform: uppercase;
+    display: inline-block;
+    background-image: var(--fill-image, var(--fill-fallback));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px rgba(193, 193, 193, 0.18);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.375);
+  }
+
+  .home-link__desc {
+    font-size: 0.98rem;
+    font-weight: 400;
+    color: color-mix(in oklab, CanvasText 70%, transparent);
+    max-width: 32rem;
+  }
+
+  .home-link:hover .home-link__label,
+  .home-link:focus-visible .home-link__label {
+    filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.35));
+    text-shadow: 0 0 22px rgba(255, 255, 255, 0.45);
+  }
+  .home-link:focus-visible { outline: none; }
+
+  @media (max-width: 640px) {
+    .home-stack {
+      min-height: auto;
+      padding: 0.5rem 0 2rem;
+      gap: 1.25rem;
+    }
+    .home-lede h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
+    .home-link__label {
+      font-size: clamp(3.5rem, 13vw, 4.5rem);
+      letter-spacing: 0.08em;
+    }
+    .home-link__desc { font-size: 0.92rem; }
+  }
 </style>

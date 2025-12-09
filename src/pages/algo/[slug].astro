@@ -25,6 +25,14 @@ const album = await resolveAlbumMediaUrls('algo', slug, albumRaw);
 const titleImages: string[] = [];
 const initialFill = undefined;
 const titleFillStyle = undefined;
+
+const trimmed = (value?: string) => value?.trim() || undefined;
+const displayDate = trimmed(album.displayDate) || trimmed(album.dateCreated) || trimmed(album.date);
+const displayDateSource =
+  trimmed(album.displayDate) ? 'displayDate' :
+  trimmed(album.dateCreated) ? 'dateCreated' :
+  trimmed(album.date) ? 'date' :
+  undefined;
 ---
 
 <Layout title={album.title}>
@@ -39,6 +47,11 @@ const titleFillStyle = undefined;
     >
       {album.title}
     </h1>
+    {displayDate ? (
+      <p class="project-hero__date" data-display-date-source={displayDateSource ?? ''}>
+        {displayDate}
+      </p>
+    ) : null}
     {album.description ? (
       <p class="project-hero__description">{album.description}</p>
     ) : null}
@@ -69,6 +82,17 @@ const titleFillStyle = undefined;
       });
     } else {
       console.warn('[title-fill] title element not found on page', location.pathname);
+    }
+
+    const dateEl = document.querySelector('.project-hero__date');
+    if (dateEl) {
+      console.info('[project-date]', {
+        page: location.pathname,
+        text: dateEl.textContent?.trim(),
+        data: dateEl.dataset,
+      });
+    } else {
+      console.warn('[project-date] date element missing on page', location.pathname);
     }
   </script>
 

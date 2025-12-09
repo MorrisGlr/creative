@@ -50,7 +50,7 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
 <Layout title="Creative Work">
   <section class="home-stack" aria-labelledby="home-heading">
     <header class="home-lede">
-      <p class="home-eyebrow">Creative Work</p>
+      <p class="home-eyebrow">Creative Work by Morris A. Aguilar</p>
     </header>
 
     <nav class="home-links" aria-label="Project categories">
@@ -124,6 +124,41 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
           console.warn('[home-fill] unable to parse fill images', err);
         }
       });
+    })();
+  </script>
+
+  <script is:inline>
+    // Background coverage instrumentation for mobile: logs computed colors/heights on load & resize
+    (() => {
+      const sampleBox = (el) => {
+        if (!el) return null;
+        const cs = getComputedStyle(el);
+        return {
+          bg: cs.backgroundColor,
+          minHeight: cs.minHeight,
+          height: `${el.clientHeight}px`,
+          scrollHeight: `${el.scrollHeight}px`,
+        };
+      };
+      const logBg = (label = 'load') => {
+        const main = document.getElementById('main');
+        const root = document.documentElement;
+        const cs = getComputedStyle(root);
+        console.info('[home-bg-debug]', {
+          label,
+          viewport: { w: window.innerWidth, h: window.innerHeight },
+          pageBgVar: cs.getPropertyValue('--page-bg'),
+          html: sampleBox(root),
+          body: sampleBox(document.body),
+          main: sampleBox(main),
+        });
+      };
+      logBg('load');
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => logBg('resize'), 120);
+      }, { passive: true });
     })();
   </script>
 </Layout>

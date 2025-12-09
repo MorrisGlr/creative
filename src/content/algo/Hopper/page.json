@@ -5,9 +5,16 @@
   "temporalCoverage": "2023-11",
   "displayDate": "2023-11-08",
   "description": "",
-  "cover": "hopper_20_480.mp4",
+  "cover": "hopper_cover.jpg",
   "tags": ["algorithm art", "algo art", "creative coding"],
   "media": [
+    { 
+      "type": "video",
+      "src": "hopper_20_480.mp4",
+      "alt": "",
+      "attribution": "Morris A. Aguilar. 2023.",
+      "caption": ""
+    },
     { 
       "type": "video",
       "src": "hopper_18_480.mp4",

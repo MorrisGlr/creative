@@ -106,11 +106,88 @@ const { title = "Site" } = Astro.props;
             });
           }
         };
+        const logMediaAttribution = () => {
+          const blocks = Array.from(document.querySelectorAll('.media-block'));
+          if (!blocks.length) return;
+          const summary = blocks.map((block) => {
+            const attribution = block.querySelector('.media-attribution')?.textContent?.trim() ?? '';
+            let mediaSrc = '';
+            const img = block.querySelector('img');
+            if (img instanceof HTMLImageElement) {
+              mediaSrc = img.currentSrc || img.src || '';
+            }
+            if (!mediaSrc) {
+              const video = block.querySelector('video');
+              if (video instanceof HTMLVideoElement) {
+                mediaSrc = video.currentSrc || video.src || '';
+                if (!mediaSrc) {
+                  const source = video.querySelector('source');
+                  mediaSrc = source?.src || source?.getAttribute?.('src') || '';
+                }
+                if (!mediaSrc) {
+                  mediaSrc = video.getAttribute('poster') || '';
+                }
+              }
+            }
+            if (!mediaSrc) {
+              const model = block.querySelector('model-viewer');
+              mediaSrc = model?.getAttribute('src') || '';
+            }
+            return {
+              index: block.dataset.index ?? '',
+              hasAttribution: Boolean(attribution),
+              attribution,
+              mediaSrc,
+            };
+          });
+          const withAttr = summary.filter((entry) => entry.hasAttribution);
+          const withoutAttr = summary.filter((entry) => !entry.hasAttribution);
+          console.info('[media-attribution]', {
+            page: location.pathname,
+            total: summary.length,
+            withAttribution: withAttr.length,
+            withoutAttribution: withoutAttr.length,
+            sampleWith: withAttr.slice(0, 2),
+            sampleWithout: withoutAttr.slice(0, 2),
+          });
+          if (!withAttr.length) {
+            console.warn('[media-attribution] no attribution rendered on this page', { page: location.pathname });
+          }
+        };
+        const logMediaAttributionVisibility = () => {
+          const attributions = Array.from(document.querySelectorAll<HTMLElement>('.media-attribution'));
+          if (!attributions.length) return;
+          const visible = attributions.filter((el) => {
+            const rect = el.getBoundingClientRect();
+            return rect.bottom > 0 && rect.top < (window.innerHeight || 1);
+          });
+          const samples = attributions.slice(0, 3).map((el) => {
+            const rect = el.getBoundingClientRect();
+            const cs = getComputedStyle(el);
+            return {
+              text: el.textContent?.trim() ?? '',
+              top: Math.round(rect.top),
+              bottom: Math.round(rect.bottom),
+              height: Math.round(rect.height),
+              color: cs.color,
+              fontSize: cs.fontSize,
+              visibleInViewport: rect.bottom > 0 && rect.top < (window.innerHeight || 1),
+            };
+          });
+          console.info('[media-attribution-visibility]', {
+            page: location.pathname,
+            total: attributions.length,
+            visibleCount: visible.length,
+            samples,
+          });
+        };
         const runDebugLogs = () => {
           logTitleFont();
           logTitleFill();
           // small delay to allow caption split/animation classes to apply
           setTimeout(logCaptionFill, 80);
+          setTimeout(logMediaAttribution, 0);
+          setTimeout(logMediaAttributionVisibility, 0);
         };
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', runDebugLogs, { once: true });

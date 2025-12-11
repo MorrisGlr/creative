@@ -19,7 +19,14 @@ export interface PhotoMetadata {
 }
 
 type VideoSource = { src: string; type?: string };
-type ImageItem = { type: 'image'; src: string; alt?: string; caption?: string; meta?: PhotoMetadata };
+type ImageItem = {
+  type: 'image';
+  src: string;
+  alt?: string;
+  caption?: string;
+  attribution?: string;
+  meta?: PhotoMetadata;
+};
 type VideoItem = {
   type: 'video';
   sources?: VideoSource[];
@@ -27,6 +34,7 @@ type VideoItem = {
   poster?: string;
   caption?: string;
   alt?: string;
+  attribution?: string;
 };
 type ModelItem = {
   type: 'model';
@@ -34,6 +42,7 @@ type ModelItem = {
   usdz?: string; // ios
   caption?: string;
   alt?: string;
+  attribution?: string;
 };
 type MediaItem = ImageItem | VideoItem | ModelItem;
 

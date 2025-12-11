@@ -6,6 +6,10 @@
   --heading-font: 'League Spartan', sans-serif;
   --title-font: 'Jost Variable', 'Jost', 'League Spartan', sans-serif;
   --body-font: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --project-accent-font: var(--body-font);
+  --project-accent-size: 0.9rem;
+  --project-accent-letter-spacing: 0.42em;
+  --project-accent-color: color-mix(in oklab, CanvasText 75%, transparent);
   color-scheme: dark;
 }
 
@@ -75,10 +79,11 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
 }
 
 .project-hero__eyebrow {
-  font-size: 0.9rem;
-  letter-spacing: 0.42em;
+  font-family: var(--project-accent-font);
+  font-size: var(--project-accent-size);
+  letter-spacing: var(--project-accent-letter-spacing);
   text-transform: uppercase;
-  color: color-mix(in oklab, CanvasText 75%, transparent);
+  color: var(--project-accent-color);
 }
 
 .project-hero__title {
@@ -215,6 +220,10 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
 }
 
 .media-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
   width: 100%;
   max-width: 100%;
   position: relative;
@@ -255,6 +264,18 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
   object-fit: contain;
   border-radius: inherit;
   box-shadow: none;
+}
+
+.media-attribution {
+  margin: 0;
+  align-self: flex-start;
+  text-align: left;
+  font-family: var(--project-accent-font);
+  font-size: var(--project-accent-size);
+  letter-spacing: var(--project-accent-letter-spacing);
+  line-height: 1.4;
+  color: var(--project-accent-color);
+  text-transform: none;
 }
 
 .media-caption-block {

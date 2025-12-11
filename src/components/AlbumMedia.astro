@@ -8,6 +8,9 @@ const { item, index, bgColorize = false, showPhotoMetadata = false } = Astro.pro
 };
 const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata | undefined) : undefined;
 const photoMeta = imageMeta ?? {};
+const attributionText =
+  typeof (item as any).attribution === 'string' ? (item as any).attribution.trim() : '';
+const hasAttribution = Boolean(attributionText);
 const captionFill =
   item.type === 'image'
     ? (item as any).src
@@ -16,7 +19,14 @@ const captionFill =
       : (item as any).src;
 ---
 
-<div class="media-block media-shell" data-index={index} data-bg={bgColorize ? '1' : '0'} data-caption="0">
+<div
+  class="media-block media-shell"
+  data-index={index}
+  data-bg={bgColorize ? '1' : '0'}
+  data-caption="0"
+  data-attribution={hasAttribution ? '1' : '0'}
+  data-attribution-text={hasAttribution ? attributionText : undefined}
+>
   {item.type === 'image' && (
     <figure class="media-frame">
       <div class="media-visual">
@@ -70,6 +80,9 @@ const captionFill =
           </div>
         ) : null}
       </div>
+      {hasAttribution ? (
+        <figcaption class="media-attribution">{attributionText}</figcaption>
+      ) : null}
     </figure>
   )}
 
@@ -91,6 +104,9 @@ const captionFill =
           </video>
         </div>
       </div>
+      {hasAttribution ? (
+        <figcaption class="media-attribution">{attributionText}</figcaption>
+      ) : null}
     </figure>
   )}
 
@@ -110,6 +126,9 @@ const captionFill =
           />
         </div>
       </div>
+      {hasAttribution ? (
+        <figcaption class="media-attribution">{attributionText}</figcaption>
+      ) : null}
     </figure>
   )}
 </div>

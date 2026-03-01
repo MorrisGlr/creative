@@ -2,6 +2,7 @@
 // src/pages/textbooks/[slug].astro
 import Layout from "../../layouts/Layout.astro";
 import AlbumMedia from "../../components/AlbumMedia.astro";
+import CatalogPlaceholderCard from "../../components/CatalogPlaceholderCard.astro";
 import { getAlbums, getAlbum, resolveAlbumMediaUrls } from '../../scripts/content';
 
 export async function getStaticPaths() {
@@ -97,12 +98,33 @@ const displayDateSource =
     }
   </script>
 
-  {/* Media stream per your scroll spec */}
-  <section class="media-stream space-y-16 mt-10">
-    {album.media.map((m, i) => (
-      <AlbumMedia item={m} index={i} bgColorize={album.options?.bgFromDominantColor ?? false} />
-    ))}
-  </section>
+  {album.placeholder?.enabled ? (
+    <CatalogPlaceholderCard album={album} />
+  ) : (
+    <section class="media-stream space-y-16 mt-10">
+      {album.media.map((m, i) => (
+        <AlbumMedia item={m} index={i} bgColorize={album.options?.bgFromDominantColor ?? false} />
+      ))}
+    </section>
+  )}
+
+  {import.meta.env.DEV && album.placeholder?.enabled ? (
+    <script
+      is:inline
+      define:vars={{
+        section: 'textbooks',
+        slug: album.slug,
+        placeholderMeta: album.placeholder,
+      }}
+    >
+      console.info('[placeholder-page]', {
+        section,
+        slug,
+        mode: 'catalog-card',
+        placeholder: placeholderMeta,
+      });
+    </script>
+  ) : null}
 
   {/* Bottom: links back to section (and later, related albums) */}
   <footer class="mt-24 border-t pt-6">

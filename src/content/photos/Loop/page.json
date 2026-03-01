@@ -1,0 +1,157 @@
+{
+  "title": "Loop",
+  "slug": "Loop",
+  "dateCreated": "2025-11",
+  "temporalCoverage": "2025-11-27/2025-11-28",
+  "displayDate": "Nov 27-28 2025",
+  "description": "",
+  "cover": "DSC03373.jpg",
+  "tags": ["digital", "photography", "Chicago", "architecture"],
+  "media": [
+    {
+        "type": "image",
+        "src": "DSC03373.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03162.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03214.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03359.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03160.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03163.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03215.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03216.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03168.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03172.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03175.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03184.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03187.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03191.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03193.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03350.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03351.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03352.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03354.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03357.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Nov 2025.",
+        "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

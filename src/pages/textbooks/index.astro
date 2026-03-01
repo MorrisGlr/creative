@@ -6,6 +6,19 @@ const albumsRaw = getAlbums('textbooks');
 const albums = await Promise.all(
   albumsRaw.map((album) => resolveAlbumMediaUrls('textbooks', album.slug, album))
 );
+const placeholderSlugs = albums
+  .filter((album) => album.placeholder?.enabled)
+  .map((album) => album.slug);
+const placeholderStyle = (album: (typeof albums)[number]) => {
+  const design = album.placeholder?.design;
+  if (!design) return undefined;
+  return [
+    `--placeholder-bg: ${design.palette.paper}`,
+    `--placeholder-ink: ${design.palette.ink}`,
+    `--placeholder-accent: ${design.palette.accent}`,
+    `--placeholder-shadow: ${design.palette.shadow}`,
+  ].join(';');
+};
 
 ---
 
@@ -16,21 +29,58 @@ const albums = await Promise.all(
     {albums.map(a => (
       <li class="group w-full max-w-[22rem]">
         <a href={`/textbooks/${a.slug}/`} class="block text-center">
-          {a.cover ? (
-            <img
-              src={a.cover}
-              alt={a.title}
-              loading="lazy"
-              decoding="async"
-              class="aspect-[3/2] w-full rounded-xl object-cover transition-transform group-hover:scale-[1.02]"
-            />
-          ) : null}
-          <div class="mt-3">
-            <h2 class="text-lg font-medium">{a.title}</h2>
-            {a.description ? <p class="text-sm opacity-70 line-clamp-2">{a.description}</p> : null}
-          </div>
+          {a.placeholder?.enabled ? (
+            <article
+              class={`catalog-tile catalog-tile--${a.placeholder.design.posterVariant}`}
+              style={placeholderStyle(a)}
+            >
+              <div class="catalog-tile__thumb">
+                {a.cover ? (
+                  <img
+                    src={a.cover}
+                    alt={`Placeholder geometry for ${a.title}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : null}
+                <span class="catalog-tile__badge">Catalog Placeholder</span>
+              </div>
+              <div class="catalog-tile__meta mt-3">
+                <h2 class="text-lg font-medium">{a.title}</h2>
+                <p class="catalog-tile__teaser text-sm">
+                  {a.placeholder.year} • {a.placeholder.medium} • {a.placeholder.dimensions}
+                </p>
+              </div>
+            </article>
+          ) : (
+            <>
+              {a.cover ? (
+                <img
+                  src={a.cover}
+                  alt={a.title}
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[3/2] w-full rounded-xl object-cover transition-transform group-hover:scale-[1.02]"
+                />
+              ) : null}
+              <div class="mt-3">
+                <h2 class="text-lg font-medium">{a.title}</h2>
+                {a.description ? <p class="text-sm opacity-70 line-clamp-2">{a.description}</p> : null}
+              </div>
+            </>
+          )}
         </a>
       </li>
     ))}
   </ul>
+
+  {import.meta.env.DEV ? (
+    <script is:inline define:vars={{ section: 'textbooks', placeholderSlugs }}>
+      console.info('[placeholder-grid]', {
+        section,
+        count: placeholderSlugs.length,
+        slugs: placeholderSlugs,
+      });
+    </script>
+  ) : null}
 </Layout>

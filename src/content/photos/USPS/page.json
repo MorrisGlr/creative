@@ -4,92 +4,113 @@
   "dateCreated": "2020-11",
   "temporalCoverage": "2020-11/2020-12",
   "displayDate": "2020 November - December",
-  "description": "",
+  "description": "In 2020, I chose the post office in State College, PA as my subject. At the time, I was experimenting with low-light film photography using my fully analog Canon F-1 camera.",
   "cover": "img20250802_12550797.jpg",
-  "tags": ["digital", "photography", "USPS", "mail"],
+  "tags": ["film", "photography", "USPS", "mail"],
   "media": [
     {
         "type": "image",
         "src": "img20250802_12050998.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250802_12070987.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250802_12081112.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250802_12041348.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250802_12060874.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "img20250802_12550797.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250802_12540639.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_13262647.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_13272315.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_13282140.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_13292114.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_15381549.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_15391219.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_15401080.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     },
     {
         "type": "image",
         "src": "img20250803_15411086.jpg",
         "alt": "",
-        "attribution": "Morris A. Aguilar",
+        "attribution": "Morris A. Aguilar. Fall 2020.",
         "caption": ""
     }
   ],

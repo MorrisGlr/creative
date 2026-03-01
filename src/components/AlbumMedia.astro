@@ -8,6 +8,18 @@ const { item, index, bgColorize = false, showPhotoMetadata = false } = Astro.pro
 };
 const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata | undefined) : undefined;
 const photoMeta = imageMeta ?? {};
+const lensLine =
+  photoMeta.lensMake && photoMeta.lensModel
+    ? `${photoMeta.lensMake} ${photoMeta.lensModel}`.trim()
+    : photoMeta.lensModel ?? photoMeta.lensMake;
+const hasHeader = Boolean(photoMeta.cameraMake || photoMeta.cameraModel || photoMeta.cameraType || lensLine);
+const hasDetails = Boolean(
+  photoMeta.megapixels ||
+    photoMeta.focalLength ||
+    photoMeta.exposureTime ||
+    photoMeta.aperture ||
+    photoMeta.iso
+);
 const attributionText =
   typeof (item as any).attribution === 'string' ? (item as any).attribution.trim() : '';
 const hasAttribution = Boolean(attributionText);
@@ -43,6 +55,11 @@ const captionFill =
         {showPhotoMetadata ? (
           <div class="photo-meta-panel">
             <div class="photo-meta-panel__inner">
+              {photoMeta.cameraMake && (
+                <p class="photo-meta-line photo-meta-line--highlight">
+                  {photoMeta.cameraMake.toUpperCase()}
+                </p>
+              )}
               {photoMeta.cameraModel && (
                 <p class="photo-meta-line photo-meta-line--highlight">
                   {photoMeta.cameraModel.toUpperCase()}
@@ -53,12 +70,10 @@ const captionFill =
                   CAMERA: {photoMeta.cameraType.toUpperCase()}
                 </p>
               )}
-              {(photoMeta.cameraModel || photoMeta.cameraType) &&
-              (photoMeta.megapixels ||
-                photoMeta.focalLength ||
-                photoMeta.exposureTime ||
-                photoMeta.aperture ||
-                photoMeta.iso) ? (
+              {lensLine && (
+                <p class="photo-meta-line">LENS: {lensLine}</p>
+              )}
+              {hasHeader && hasDetails ? (
                 <div class="photo-meta-spacer" aria-hidden="true"></div>
               ) : null}
               {photoMeta.megapixels && (

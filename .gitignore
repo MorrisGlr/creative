@@ -29,6 +29,12 @@ src/content/textbooks/depths-of-knowledge-vol-4
 src/content/textbooks/depths-of-knowledge-vol-6
 src/content/textbooks/depths-of-knowledge-vol-7
 src/content/textbooks/depths-of-knowledge-vol-8
+src/content/textbooks/Depths-of-Knowledge-Vol-9
 src/content/paper/window-layers
+src/content/paper/Fortune
 src/content/photos/face-masks
-src/content/photos/fortune
+src/content/photos/USPS
+src/content/photos/Haystacks
+
+# python scripts
+src/img_resize.py

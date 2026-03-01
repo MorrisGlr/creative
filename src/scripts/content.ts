@@ -68,6 +68,7 @@ export interface AlbumPlaceholder {
 export interface Album {
   title: string;
   slug: string;
+  _dirSlug?: string;
   displayDate?: string;
   dateCreated?: string;
   date?: string;
@@ -106,6 +107,10 @@ function slugFromPath(path: string) {
 
 function filenameFromPath(path: string) {
   return path.split('/').pop()!;
+}
+
+function normalizeSlugKey(value?: string): string {
+  return value?.trim().toLowerCase() ?? '';
 }
 
 const PLACEHOLDER_DEBUG = import.meta.env.DEV;
@@ -211,6 +216,7 @@ function buildPlaceholderAlbum(entry: PlaceholderProject): Album & { _section: S
   return {
     title: entry.title,
     slug: entry.slug,
+    _dirSlug: entry.slug,
     displayDate: entry.year,
     dateCreated: entry.sortDate,
     date: entry.sortDate,
@@ -537,8 +543,9 @@ export function getAlbums(section: Section): (Album & { _section: Section })[] {
   for (const [path, mod] of Object.entries(entries)) {
     // @ts-ignore - JSON default export
     const data: Album = (mod as any).default || (mod as any);
-    const slug = data.slug || slugFromPath(path);
-    albumsBySlug.set(slug, { ...data, slug, _section: section });
+    const dirSlug = slugFromPath(path);
+    const slug = data.slug || dirSlug;
+    albumsBySlug.set(slug, { ...data, slug, _dirSlug: dirSlug, _section: section });
   }
 
   for (const entry of placeholderProjects) {
@@ -574,13 +581,16 @@ export function getAlbum(section: Section, slug: string): (Album & { _section: S
 
 export async function resolveAlbumMediaUrls(section: Section, slug: string, album: Album): Promise<Album> {
   const allAssets = mediaGlobs[section]; // e.g. keys like '../content/photos/sf-street/media/01.jpg'
+  const mediaDirSlugKey = normalizeSlugKey(album._dirSlug ?? slug);
   // Build a small map: filename -> emitted URL + source path for THIS slug only
   const assetInfo = new Map<string, { url: string; sourcePath: string }>();
   for (const [path, url] of Object.entries(allAssets)) {
-    if (path.includes(`/${slug}/media/`)) {
-      const normalized = typeof url === 'string' ? url : String(url);
-      assetInfo.set(filenameFromPath(path), { url: normalized, sourcePath: path });
-    }
+    const segments = path.split('/');
+    const mediaIndex = segments.lastIndexOf('media');
+    const assetDirSlug = mediaIndex > 0 ? segments[mediaIndex - 1] : '';
+    if (normalizeSlugKey(assetDirSlug) !== mediaDirSlugKey) continue;
+    const normalized = typeof url === 'string' ? url : String(url);
+    assetInfo.set(filenameFromPath(path), { url: normalized, sourcePath: path });
   }
 
   const getAssetInfo = (name?: string) => {

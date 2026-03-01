@@ -2,6 +2,7 @@
 // src/pages/paper/index.astro
 import Layout from "../../layouts/Layout.astro";
 import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
+import { withBase } from '../../scripts/paths';
 const albumsRaw = getAlbums('paper');
 const albums = await Promise.all(
   albumsRaw.map((album) => resolveAlbumMediaUrls('paper', album.slug, album))
@@ -28,7 +29,7 @@ const placeholderStyle = (album: (typeof albums)[number]) => {
   <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
     {albums.map(a => (
       <li class="group w-full max-w-[22rem]">
-        <a href={`/paper/${a.slug}/`} class="block text-center">
+        <a href={withBase(`/paper/${a.slug}/`)} class="block text-center">
           {a.placeholder?.enabled ? (
             <article
               class={`catalog-tile catalog-tile--${a.placeholder.design.posterVariant}`}

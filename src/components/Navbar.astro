@@ -1,18 +1,25 @@
 ---
 // src/components/NavBar.astro
-const pathname = Astro.url.pathname;
+import { normalizePathname, withBase } from "../scripts/paths";
+
+const pathname = normalizePathname(Astro.url.pathname);
+const homeHref = withBase("/");
 const links = [
-  { href: '/',           label: 'Home' },
-  { href: '/photos/',    label: 'Photos' },
-  { href: '/textbooks/', label: 'Textbook' },
-  { href: '/algo/',      label: 'Algo' },
-  { href: '/paper/',     label: 'Paper' },
+  { href: homeHref,                label: 'Home' },
+  { href: withBase('/photos/'),    label: 'Photos' },
+  { href: withBase('/textbooks/'), label: 'Textbook' },
+  { href: withBase('/algo/'),      label: 'Algo' },
+  { href: withBase('/paper/'),     label: 'Paper' },
 ];
 ---
 <nav class="pill-nav" aria-label="Primary">
   <ul>
     {links.map((l) => {
-      const isActive = l.href === '/' ? pathname === '/' : pathname.startsWith(l.href);
+      const normalizedHref = normalizePathname(l.href);
+      const isHome = normalizedHref === normalizePathname(homeHref);
+      const isActive = isHome
+        ? pathname === normalizedHref
+        : pathname === normalizedHref || pathname.startsWith(`${normalizedHref}/`);
       return (
         <li>
           <a href={l.href} aria-current={isActive ? 'page' : undefined}>

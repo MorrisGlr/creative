@@ -1,6 +1,7 @@
 ---
 // src/layouts/Layout.astro
 import NavBar from "../components/Navbar.astro";
+import { withBase } from "../scripts/paths";
 import "../styles/global.css";
 
 const { title = "Site" } = Astro.props;
@@ -12,10 +13,10 @@ const { title = "Site" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <title>{title}</title>
-    <link rel="icon" href="/favicon.svg" />
+    <link rel="icon" href={withBase("/favicon.svg")} />
     <!-- Prefetch helper (runs on every page) -->
-    <script type="module" src="/src/scripts/prefetch.ts"></script>
-    <script type="module" src="/src/scripts/media-visibility.ts"></script>
+    <script type="module" src={withBase("/src/scripts/prefetch.ts")}></script>
+    <script type="module" src={withBase("/src/scripts/media-visibility.ts")}></script>
     <style>
       :root {
         --page-bg: #000;

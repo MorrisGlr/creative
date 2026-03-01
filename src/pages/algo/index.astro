@@ -2,6 +2,7 @@
 // src/pages/algo/index.astro
 import Layout from "../../layouts/Layout.astro";
 import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
+import { withBase } from '../../scripts/paths';
 const albumsRaw = getAlbums('algo');
 const albums = await Promise.all(
   albumsRaw.map((album) => resolveAlbumMediaUrls('algo', album.slug, album))
@@ -15,7 +16,7 @@ const albums = await Promise.all(
   <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
     {albums.map(a => (
       <li class="group w-full max-w-[22rem]">
-        <a href={`/algo/${a.slug}/`} class="block text-center">
+        <a href={withBase(`/algo/${a.slug}/`)} class="block text-center">
           {a.cover ? (
             a.cover.match(/\.(mp4|webm|mov)$/i) ? (
               <video

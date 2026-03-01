@@ -4,6 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import AlbumMedia from "../../components/AlbumMedia.astro";
 import CatalogPlaceholderCard from "../../components/CatalogPlaceholderCard.astro";
 import { getAlbums, getAlbum, resolveAlbumMediaUrls } from '../../scripts/content';
+import { withBase } from '../../scripts/paths';
 
 export async function getStaticPaths() {
   return getAlbums('photos').map((album) => ({
@@ -133,6 +134,6 @@ const displayDateSource =
 
   {/* Bottom: links back to section (and later, related albums) */}
   <footer class="mt-24 border-t pt-6">
-    <a href="/photos/" class="underline">More photography albums</a>
+    <a href={withBase("/photos/")} class="underline">More photography albums</a>
   </footer>
 </Layout>

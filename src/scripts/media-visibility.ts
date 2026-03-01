@@ -387,6 +387,35 @@ const tryRevealCaption = (blocks: HTMLElement[]) => {
   setCaptionVisible(lead, true);
 };
 
+let lastAttributionLeadIndex: string | null = null;
+const logLeadAttributionVisibility = (blocks: HTMLElement[]) => {
+  const lead = getLeadBlock(blocks);
+  if (!lead) return;
+  const leadIndex = lead.dataset.index ?? null;
+  if (leadIndex && lastAttributionLeadIndex === leadIndex) return;
+  lastAttributionLeadIndex = leadIndex;
+
+  const attribution = lead.querySelector<HTMLElement>('.media-attribution');
+  const viewHeight = window.innerHeight || 1;
+  if (!attribution) {
+    debugScroll('attribution', { index: leadIndex, present: false });
+    return;
+  }
+  const rect = attribution.getBoundingClientRect();
+  const visible = rect.bottom > 0 && rect.top < viewHeight;
+  debugScroll('attribution', {
+    index: leadIndex,
+    present: true,
+    visible,
+    rect: {
+      top: Math.round(rect.top),
+      bottom: Math.round(rect.bottom),
+      height: Math.round(rect.height),
+    },
+    text: attribution.textContent?.trim().slice(0, 100),
+  });
+};
+
 const initMediaVisibility = () => {
   const blocks = Array.from(document.querySelectorAll<HTMLElement>('.media-block'));
   if (!blocks.length) return;
@@ -498,6 +527,7 @@ const initMediaVisibility = () => {
     lastScrollY = window.scrollY;
     if (delta < SCROLL_DELTA) return;
     tryRevealCaption(blocks);
+    logLeadAttributionVisibility(blocks);
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });

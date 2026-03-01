@@ -1,0 +1,24 @@
+{
+  "title": "Keeping It Together",
+  "slug": "Keeping It Together",
+  "dateCreated": "2025-11",
+  "temporalCoverage": "",
+  "displayDate": "March 2025",
+  "description": "",
+  "cover": "DSC03373.jpg",
+  "tags": ["digital", "photography", "medicine"],
+  "media": [
+    {
+        "type": "image",
+        "src": "Morris_Aguilar_mandarin_sutures_Albany_Ethics.jpeg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. March 2025.",
+        "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

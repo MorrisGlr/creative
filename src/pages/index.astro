@@ -193,7 +193,7 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
   }
 
   .home-links {
-    --fill-fallback: linear-gradient(135deg, #f3f3f3, #a9adb4);
+    --fill-fallback: linear-gradient(135deg, #f3f3f31f, #a9adb41f);
     display: flex;
     flex-direction: column;
     gap: clamp(1rem, 3vh, 1.6rem);
@@ -225,10 +225,10 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
     background-repeat: no-repeat;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1px rgba(193, 193, 193, 0.18);
+    -webkit-text-stroke: 1px rgba(193, 193, 193, 0.163);
     -webkit-background-clip: text;
     background-clip: text;
-    text-shadow: 0 0 6px rgba(255, 255, 255, 0.375);
+    text-shadow: none;
   }
 
   .home-link__desc {
@@ -240,8 +240,8 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
 
   .home-link:hover .home-link__label,
   .home-link:focus-visible .home-link__label {
-    filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.35));
-    text-shadow: 0 0 22px rgba(255, 255, 255, 0.45);
+    filter: none;
+    text-shadow: none;
   }
   .home-link:focus-visible { outline: none; }
 

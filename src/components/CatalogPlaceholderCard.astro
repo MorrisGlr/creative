@@ -1,0 +1,57 @@
+---
+import type { Album } from "../scripts/content";
+
+const { album } = Astro.props as { album: Album };
+const placeholder = album.placeholder;
+
+if (!placeholder?.enabled) {
+  throw new Error("CatalogPlaceholderCard requires a placeholder-enabled album.");
+}
+
+const patternSrc = album.cover ?? "";
+const styleVars = [
+  `--catalog-bg: ${placeholder.design.palette.paper}`,
+  `--catalog-ink: ${placeholder.design.palette.ink}`,
+  `--catalog-accent: ${placeholder.design.palette.accent}`,
+  `--catalog-shadow: ${placeholder.design.palette.shadow}`,
+].join(";");
+---
+
+<section class="catalog-card-wrap" aria-label="Catalog placeholder">
+  <article
+    class={`catalog-card catalog-card--${placeholder.design.posterVariant}`}
+    style={styleVars}
+    data-placeholder-slug={album.slug}
+  >
+    <p class="catalog-card__label">Catalog Placeholder</p>
+
+    <div class="catalog-card__pattern" aria-hidden="true">
+      {patternSrc ? (
+        <img src={patternSrc} alt="" loading="lazy" decoding="async" />
+      ) : (
+        <div class="catalog-card__pattern-fallback"></div>
+      )}
+    </div>
+
+    <div class="catalog-card__poster">
+      <h2 class="catalog-card__title">{album.title}</h2>
+      <dl class="catalog-card__facts">
+        <div class="catalog-card__fact">
+          <dt>Year</dt>
+          <dd>{placeholder.year}</dd>
+        </div>
+        <div class="catalog-card__fact">
+          <dt>Medium</dt>
+          <dd>{placeholder.medium}</dd>
+        </div>
+        <div class="catalog-card__fact">
+          <dt>Dimensions</dt>
+          <dd>{placeholder.dimensions}</dd>
+        </div>
+      </dl>
+      <p class="catalog-card__note">
+        Documentation withheld pending submission consideration. This entry uses a designed stand-in while the original work remains unpublished.
+      </p>
+    </div>
+  </article>
+</section>

@@ -1,4 +1,4 @@
-# Morris Aguilar - Creative Portfolio
+# Creative Portfolio
 
 I built this portfolio as a living archive of my creative work across photography, textbook sculpture, paper layering, and algorithmic art. I designed it for people who want to browse the work visually first, while still understanding the ideas and process behind each series.
 

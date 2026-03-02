@@ -4,7 +4,7 @@
   "dateCreated": "2025-11",
   "temporalCoverage": "",
   "displayDate": "March 2025",
-  "description": "",
+  "description": "This piece involving sutured mandarins was an accepted art submission for the 2025 Albany Medical Ethics Conference.",
   "cover": "Morris_Aguilar_mandarin_sutures_Albany_Ethics.jpeg",
   "tags": ["digital", "photography", "medicine"],
   "media": [
@@ -13,7 +13,28 @@
         "src": "Morris_Aguilar_mandarin_sutures_Albany_Ethics.jpeg",
         "alt": "",
         "attribution": "Morris A. Aguilar. March 2025.",
-        "caption": ""
+        "caption": "During my medical training, I was practicing my suturing technique for my surgery rotation."
+    },
+    {
+        "type": "image",
+        "src": "Morris_Aguilar_mandarin_sutures_Albany_Ethics_crop_1.jpeg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. March 2025.",
+        "caption": "While it is not a one-to-one comparison with human tissue, the mandarin has different textures and varying resistance to the driving needle."
+    },
+    {
+        "type": "image",
+        "src": "Morris_Aguilar_mandarin_sutures_Albany_Ethics_crop_2.jpeg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. March 2025.",
+        "caption": "I thought of reassembling the outer rind and juicy segments of a peeled mandarin with a surgical needle and thread."
+    },
+    {
+        "type": "image",
+        "src": "Morris_Aguilar_mandarin_sutures_Albany_Ethics_crop_3.jpeg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. March 2025.",
+        "caption": "Although I was able to put the mandarin back together, a gap between its original and final forms remained."
     }
   ],
   "related": [],

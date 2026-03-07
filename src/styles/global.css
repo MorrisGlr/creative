@@ -387,7 +387,7 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
   bottom: 1.25rem;
   right: 1.25rem;
   transform-origin: bottom right;
-  opacity: 0;
+  opacity: 1;
   transform: translate3d(0, var(--meta-offset, 0px), 0) scale(var(--meta-scale, 1));
   transition: opacity 240ms ease 80ms;
   will-change: transform, opacity;
@@ -398,12 +398,16 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
   transition: none;
 }
 
-.media-block[data-visible='0'] .photo-meta-panel {
+html[data-media-visibility-booted='1'] .photo-meta-panel {
+  opacity: 0;
+}
+
+html[data-media-visibility-booted='1'] .media-block[data-visible='0'] .photo-meta-panel {
   pointer-events: none;
   opacity: 0;
 }
 
-.media-block[data-meta='1'] .photo-meta-panel {
+html[data-media-visibility-booted='1'] .media-block[data-meta='1'] .photo-meta-panel {
   opacity: calc(0.15 + 0.85 * var(--meta-progress, 1));
 }
 

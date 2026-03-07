@@ -1,9 +1,17 @@
 const DATA_ATTR = 'data-visible';
 const DATA_META = 'data-meta';
 const DATA_CAPTION = 'data-caption';
+const BOOT_ATTR = 'data-media-visibility-booted';
+const isDevRuntime = Boolean((import.meta as any)?.env?.DEV);
 
 const metaShownAt = new WeakMap<HTMLElement, number>();
 const blockSeenAt = new WeakMap<HTMLElement, number>();
+let hasLoggedFirstMetaActivation = false;
+
+const logMediaVisibilityDebug = (label: string, payload?: Record<string, unknown>) => {
+  if (!isDevRuntime) return;
+  console.info(`[media-visibility] ${label}`, payload ?? {});
+};
 
 const makeScrollDebugger = () => {
   if (typeof window === 'undefined') return () => {};
@@ -84,6 +92,13 @@ const setMetaVisible = (block: HTMLElement, visible: boolean) => {
   block.setAttribute(DATA_META, visible ? '1' : '0');
   if (visible) {
     metaShownAt.set(block, performance.now());
+    if (!hasLoggedFirstMetaActivation) {
+      hasLoggedFirstMetaActivation = true;
+      logMediaVisibilityDebug('first-meta-activation', {
+        path: location.pathname,
+        index: block.dataset.index,
+      });
+    }
   } else {
     metaShownAt.delete(block);
   }
@@ -418,6 +433,12 @@ const logLeadAttributionVisibility = (blocks: HTMLElement[]) => {
 
 const initMediaVisibility = () => {
   const blocks = Array.from(document.querySelectorAll<HTMLElement>('.media-block'));
+  const metaPanelCount = document.querySelectorAll('.photo-meta-panel').length;
+  logMediaVisibilityDebug('init', {
+    path: location.pathname,
+    mediaBlocks: blocks.length,
+    metaPanels: metaPanelCount,
+  });
   if (!blocks.length) return;
 
   logMediaSamples(blocks);
@@ -535,6 +556,7 @@ const initMediaVisibility = () => {
   window.addEventListener('touchend', () => tryRevealCaption(blocks), { passive: true });
 
   const logTitleFont = (title: HTMLElement, label: string) => {
+    if (!isDevRuntime) return;
     const cs = getComputedStyle(title);
     const sampleChar = title.querySelector('.split-char');
     const charStyles = sampleChar ? getComputedStyle(sampleChar) : null;
@@ -564,6 +586,8 @@ const initMediaVisibility = () => {
 };
 
 if (typeof window !== 'undefined') {
+  document.documentElement.setAttribute(BOOT_ATTR, '1');
+  logMediaVisibilityDebug('boot', { path: location.pathname });
   if ((window as any).__mediaVisibilityInitialized) {
     initMediaVisibility();
   } else {

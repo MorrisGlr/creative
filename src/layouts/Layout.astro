@@ -15,8 +15,10 @@ const { title = "Site" } = Astro.props;
     <title>{title}</title>
     <link rel="icon" href={withBase("/favicon.svg")} />
     <!-- Prefetch helper (runs on every page) -->
-    <script type="module" src={withBase("/src/scripts/prefetch.ts")}></script>
-    <script type="module" src={withBase("/src/scripts/media-visibility.ts")}></script>
+    <script>
+      import "../scripts/prefetch";
+      import "../scripts/media-visibility";
+    </script>
     <style>
       :root {
         --page-bg: #000;
@@ -46,8 +48,9 @@ const { title = "Site" } = Astro.props;
     <div id="main" class="container">
       <slot />
     </div>
-    <script is:inline>
+    <script is:inline define:vars={{ layoutDebug: import.meta.env.DEV }}>
       (() => {
+        if (!layoutDebug) return;
         const logTitleFont = () => {
           const title = document.querySelector('.project-hero__title');
           if (!title) return;
@@ -156,7 +159,7 @@ const { title = "Site" } = Astro.props;
           }
         };
         const logMediaAttributionVisibility = () => {
-          const attributions = Array.from(document.querySelectorAll<HTMLElement>('.media-attribution'));
+          const attributions = Array.from(document.querySelectorAll('.media-attribution'));
           if (!attributions.length) return;
           const visible = attributions.filter((el) => {
             const rect = el.getBoundingClientRect();
@@ -194,6 +197,43 @@ const { title = "Site" } = Astro.props;
           document.addEventListener('DOMContentLoaded', runDebugLogs, { once: true });
         } else {
           runDebugLogs();
+        }
+      })();
+    </script>
+    <script is:inline define:vars={{ isDev: import.meta.env.DEV }}>
+      (() => {
+        const BOOT_ATTR = 'data-media-visibility-booted';
+        const CHECK_DELAY_MS = 2200;
+
+        const runHealthCheck = () => {
+          const hasPhotoMetaPanel = document.querySelector('.photo-meta-panel') !== null;
+          if (!hasPhotoMetaPanel) return;
+
+          const booted = document.documentElement.getAttribute(BOOT_ATTR) === '1';
+          if (isDev) {
+            console.info('[photo-meta-health]', {
+              path: location.pathname,
+              hasPhotoMetaPanel,
+              booted,
+            });
+            return;
+          }
+
+          if (!booted) {
+            console.warn('[photo-meta-health] media visibility script did not initialize', {
+              path: location.pathname,
+            });
+          }
+        };
+
+        const schedule = () => {
+          window.setTimeout(runHealthCheck, CHECK_DELAY_MS);
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', schedule, { once: true });
+        } else {
+          schedule();
         }
       })();
     </script>

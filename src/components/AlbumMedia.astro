@@ -14,8 +14,7 @@ const lensLine =
     : photoMeta.lensModel ?? photoMeta.lensMake;
 const hasHeader = Boolean(photoMeta.cameraMake || photoMeta.cameraModel || photoMeta.cameraType || lensLine);
 const hasDetails = Boolean(
-  photoMeta.megapixels ||
-    photoMeta.focalLength ||
+  photoMeta.focalLength ||
     photoMeta.exposureTime ||
     photoMeta.aperture ||
     photoMeta.iso
@@ -76,9 +75,6 @@ const captionFill =
               {hasHeader && hasDetails ? (
                 <div class="photo-meta-spacer" aria-hidden="true"></div>
               ) : null}
-              {photoMeta.megapixels && (
-                <p class="photo-meta-line">IMAGE SIZE: {photoMeta.megapixels}</p>
-              )}
               {photoMeta.focalLength && (
                 <p class="photo-meta-line">FOCAL LENGTH: {photoMeta.focalLength}</p>
               )}

@@ -39,5 +39,10 @@ src/content/photos/Haystacks
 # python scripts
 src/img_resize.py
 
+# generated OG image (built by prebuild script)
+public/og-default.png
+
 CLAUDE.md
 SPEC.md
+.claude
+CHANGELOG.md

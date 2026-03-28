@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/morris/github_projects/creative log --oneline -15)",
+      "WebSearch",
+      "Bash(grep -E \"\\\\.\\(workflow|yml|yaml\\)$\")"
+    ]
+  }
+}

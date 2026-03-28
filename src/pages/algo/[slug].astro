@@ -34,9 +34,14 @@ const displayDateSource =
   trimmed(album.dateCreated) ? 'dateCreated' :
   trimmed(album.date) ? 'date' :
   undefined;
+
+const firstImageSrc = album.media.find((m: any) => m.type === 'image' && m.src)?.src;
+const ogImage = (firstImageSrc && Astro.site)
+  ? new URL(firstImageSrc, Astro.site).href
+  : undefined;
 ---
 
-<Layout title={album.title}>
+<Layout title={album.title} description={album.description} ogImage={ogImage}>
   <section class="project-hero">
     <p class="project-hero__eyebrow">Project</p>
     <h1

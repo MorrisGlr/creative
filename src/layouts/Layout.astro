@@ -4,7 +4,29 @@ import NavBar from "../components/Navbar.astro";
 import { withBase } from "../scripts/paths";
 import "../styles/global.css";
 
-const { title = "Site" } = Astro.props;
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const SITE_TITLE = "Morris Aguilar — Artist Portfolio";
+const SITE_DESCRIPTION = "Portfolio of Morris Aguilar — photography, sculpture, generative art, and paper works exploring structure, knowledge, and form.";
+
+const {
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  ogImage,
+} = Astro.props;
+
+const canonicalUrl = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : Astro.url.pathname;
+
+const defaultOgImage = Astro.site
+  ? new URL(withBase('/og-default.png'), Astro.site).href
+  : withBase('/og-default.png');
+const resolvedOgImage = ogImage || defaultOgImage;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +35,17 @@ const { title = "Site" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href={withBase("/favicon.svg")} />
     <!-- Prefetch helper (runs on every page) -->
     <script>

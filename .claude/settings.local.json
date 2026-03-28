@@ -3,7 +3,16 @@
     "allow": [
       "Bash(git -C /Users/morris/github_projects/creative log --oneline -15)",
       "WebSearch",
-      "Bash(grep -E \"\\\\.\\(workflow|yml|yaml\\)$\")"
+      "Bash(grep -E \"\\\\.\\(workflow|yml|yaml\\)$\")",
+      "Bash(ls -la /Users/morris/github_projects/creative/astro.config.*)",
+      "Bash(npm install:*)",
+      "Bash(curl -sL \"https://fonts.google.com/download?family=League+Spartan\" -o /tmp/league-spartan.zip)",
+      "Bash(unzip -o /tmp/league-spartan.zip -d /tmp/league-spartan/)",
+      "Read(//tmp/league-spartan/**)",
+      "Read(//tmp/**)",
+      "Bash(curl -sL \"https://fonts.gstatic.com/s/leaguespartan/v15/kJEnBuEW6A0lliaV_m88ja5Twtx8BWhtkDVmjZvMGYPpBA.ttf\" -o /Users/morris/github_projects/creative/src/assets/fonts/LeagueSpartan-Bold.ttf)",
+      "Bash(node:*)",
+      "Bash(npm run:*)"
     ]
   }
 }

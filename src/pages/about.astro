@@ -1,0 +1,168 @@
+---
+// src/pages/about.astro
+import Layout from "../layouts/Layout.astro";
+import { withBase } from "../scripts/paths";
+---
+
+<Layout
+  title="About — Morris Aguilar"
+  description="Artist statement by Morris Aguilar — photographer, sculptor, and generative artist working across photography, textbook sculpture, paper layering, and algorithmic art."
+>
+  <article class="about">
+    <header class="about__header">
+      <p class="about__eyebrow">Artist Statement</p>
+      <h1 class="about__name">Morris A. Aguilar</h1>
+    </header>
+
+    <section class="about__statement" aria-label="Artist statement">
+      <p>There is always a system first. I design the conditions and then wait for what arrives incidentally within them.</p>
+      <p>
+        Each medium I work in has its own constraints, and I choose media in which those constraints become the subject. In my paper sculptures, shadow defines the form rather than draftsmanship: layers of hand-cut cardstock stacked without glue, where shifting light determines what is visible. In my carved textbook volumes, page numbers mark the depth at which figures survive the X-Acto knife; months of work through Harrison's Internal Medicine, preserving illustrations that hold the tension between scientific objectivity and the human body underneath. In my photography, the subject must cross my path; I do not seek it out. In my algorithmic work, I write the rules and surrender execution to randomness. Across all four, the relationship between intention and emergence is central.
+      </p>
+      <p>
+        I see myself as a curator of conditions. My role is to build the system and then exercise judgment: which figure is worth preserving, which moment worth photographing, which frame worth holding. This uses chance as a constraint rather than an obstacle, reflecting how discovery in both art and science can hinge on encounter rather than pursuit.
+      </p>
+      <p>
+        I completed an MD-PhD, and that sensibility inflects everything I make, not as subject matter, but as a way of attending. "The art of medicine" names the zone where objective method runs out and best judgment begins. My practice lives there: in the tension between control and surrender, the visible and the hidden, the clinical and the personal.
+      </p>
+      <p>The work is slow to make. It asks the same of the viewer: to attend to what arrives, and to return.</p>
+    </section>
+
+    <section class="about__bio" aria-label="Selected exhibitions">
+      <h2 class="about__section-label">Selected Exhibitions</h2>
+      <ul class="about__list">
+        <li>
+          <span class="about__item-year">2025</span>
+          <span><em>Keeping It Together</em> — Albany Medical Ethics Conference</span>
+        </li>
+      </ul>
+    </section>
+
+    <nav class="about__work-links" aria-label="View work by section">
+      <h2 class="about__section-label">Work</h2>
+      <ul class="about__list about__list--links">
+        <li><a href={withBase('/photos/')}>Photos</a></li>
+        <li><a href={withBase('/textbooks/')}>Textbook Sculpture</a></li>
+        <li><a href={withBase('/algo/')}>Algorithmic Art</a></li>
+        <li><a href={withBase('/paper/')}>Paper Layering</a></li>
+      </ul>
+    </nav>
+  </article>
+</Layout>
+
+<style>
+  .about {
+    max-width: 44rem;
+    padding-top: clamp(2rem, 6vh, 4rem);
+    padding-bottom: 6rem;
+  }
+
+  .about__header {
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .about__eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, CanvasText 45%, transparent);
+  }
+
+  .about__name {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: color-mix(in oklab, CanvasText 90%, transparent);
+  }
+
+  .about__statement {
+    margin-bottom: clamp(3rem, 8vh, 5rem);
+  }
+
+  .about__statement p {
+    margin: 0 0 1.6em;
+    font-size: clamp(1rem, 1.8vw, 1.1rem);
+    line-height: 1.8;
+    color: color-mix(in oklab, CanvasText 82%, transparent);
+    max-width: 38rem;
+  }
+
+  .about__statement p:first-child {
+    font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+    font-weight: 500;
+    color: color-mix(in oklab, CanvasText 92%, transparent);
+    letter-spacing: 0.01em;
+    margin-bottom: 1.8em;
+  }
+
+  .about__statement em {
+    font-style: italic;
+    color: color-mix(in oklab, CanvasText 90%, transparent);
+  }
+
+  .about__section-label {
+    margin: 0 0 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, CanvasText 40%, transparent);
+    font-weight: 400;
+  }
+
+  .about__bio {
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .about__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .about__list li {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.95rem;
+    color: color-mix(in oklab, CanvasText 72%, transparent);
+    line-height: 1.5;
+  }
+
+  .about__item-year {
+    flex-shrink: 0;
+    color: color-mix(in oklab, CanvasText 40%, transparent);
+    font-variant-numeric: tabular-nums;
+    min-width: 2.5rem;
+  }
+
+  .about__list--links li {
+    gap: 0;
+  }
+
+  .about__list--links a {
+    color: color-mix(in oklab, CanvasText 72%, transparent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, CanvasText 18%, transparent);
+    padding-bottom: 1px;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+
+  .about__list--links a:hover {
+    color: color-mix(in oklab, CanvasText 95%, transparent);
+    border-color: color-mix(in oklab, CanvasText 50%, transparent);
+  }
+
+  @media (max-width: 640px) {
+    .about__statement p {
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    .about__statement p:first-child {
+      font-size: 1.15rem;
+    }
+  }
+</style>

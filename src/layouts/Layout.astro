@@ -47,6 +47,7 @@ const resolvedOgImage = ogImage || defaultOgImage;
     <meta name="twitter:image" content={resolvedOgImage} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" href={withBase("/favicon.svg")} />
+    <slot name="head" />
     <!-- Prefetch helper (runs on every page) -->
     <script>
       import "../scripts/prefetch";

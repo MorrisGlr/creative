@@ -46,21 +46,6 @@ export const placeholderProjects: PlaceholderProject[] = [
   },
   {
     section: 'textbooks',
-    slug: 'Depths-of-Knowledge-Vol-4',
-    title: 'Depths of Knowledge Vol 4',
-    year: '2020',
-    medium: textbooks,
-    dimensions: 'TBD',
-    sortDate: '2020-01-01',
-    gitignorePath: 'src/content/textbooks/depths-of-knowledge-vol-4',
-    design: {
-      seed: 27,
-      posterVariant: 'split',
-      palette: { paper: '#241B21', ink: '#F2DCE8', accent: '#D64B66', shadow: '#120C10' },
-    },
-  },
-  {
-    section: 'textbooks',
     slug: 'Depths-of-Knowledge-Vol-6',
     title: 'Depths of Knowledge Vol 6',
     year: '2020',

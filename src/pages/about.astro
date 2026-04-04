@@ -2,12 +2,28 @@
 // src/pages/about.astro
 import Layout from "../layouts/Layout.astro";
 import { withBase } from "../scripts/paths";
+import social from "../content/social.json";
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Morris Aguilar",
+  "url": Astro.site?.href,
+  "jobTitle": "Artist",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Chicago",
+    "addressRegion": "IL"
+  },
+  "sameAs": [social.linkedin, social.github].filter(Boolean),
+};
 ---
 
 <Layout
   title="About — Morris Aguilar"
   description="Artist statement by Morris Aguilar — photographer, sculptor, and generative artist working across photography, textbook sculpture, paper layering, and algorithmic art."
 >
+  <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(personJsonLd)} />
   <article class="about">
     <header class="about__header">
       <p class="about__eyebrow">Artist Statement</p>

@@ -42,9 +42,24 @@ const isPlaceholder = album.placeholder?.enabled;
 const ogImage = (!isPlaceholder && firstImageSrc && Astro.site)
   ? new URL(firstImageSrc, Astro.site).href
   : undefined;
+
+const visualArtworkJsonLd = !isPlaceholder ? {
+  "@context": "https://schema.org",
+  "@type": "VisualArtwork",
+  "name": album.title,
+  ...(album.dateCreated && { dateCreated: album.dateCreated }),
+  ...((album as any).medium && { artMedium: (album as any).medium }),
+  ...((album as any).dimensions?.width && { width: (album as any).dimensions.width }),
+  ...((album as any).dimensions?.height && { height: (album as any).dimensions.height }),
+  ...(ogImage && { image: ogImage }),
+  "creator": { "@type": "Person", "name": "Morris Aguilar" },
+} : null;
 ---
 
 <Layout title={album.title} description={album.description} ogImage={ogImage}>
+  {visualArtworkJsonLd && (
+    <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(visualArtworkJsonLd)} />
+  )}
   <section class="project-hero">
     <p class="project-hero__eyebrow">Project</p>
     <h1

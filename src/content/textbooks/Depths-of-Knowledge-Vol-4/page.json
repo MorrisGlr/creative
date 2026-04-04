@@ -1,0 +1,52 @@
+{
+  "title": "Depths of Knowledge Vol 4",
+  "slug": "Depths-of-Knowledge-Vol-4",
+  "dateCreated": "2020",
+  "temporalCoverage": "",
+  "displayDate": "2020",
+  "description": "In this fourth volume of this series, I describe my practical approach to selecting figures before the cutting process begins.",
+  "cover": "IMG_6059.jpeg",
+  "tags": ["textbook", "sculpture", "x-acto", "science", "medicine"],
+  "media": [
+    { 
+      "type": "image",
+      "src": "IMG_6009.jpeg",
+      "alt": "Straight on wide angle shot of the textbook sculpture.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": "I began the process by flipping through the pages of the textbook and noting the page number (i.e., depth) of the figures. "
+    },
+    { 
+      "type": "image",
+      "src": "IMG_6010.jpeg",
+      "alt": "Wide angle lens shot from the bottom edge of the book tilted at 45 degrees.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": "As I progressed through the pages I was aware of the positioning of each figure so that they would not completely overlap and having variable depth."
+    },
+        { 
+      "type": "image",
+      "src": "IMG_6068.jpeg",
+      "alt": "Wide angle lens shot from the left edge of the book tilted at 45 degrees.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": "Unlike traditional collage, the figures were positioned by depth according to the page number where each image is found in the book."
+    },
+        { 
+      "type": "image",
+      "src": "IMG_6069.jpeg",
+      "alt": "Wide angle lens shot from the right edge of the book tilted at 45 degrees.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": ""
+    },
+        { 
+      "type": "image",
+      "src": "IMG_6070.jpeg",
+      "alt": "Wide angle lens shot from the top edge of the book tilted at 45 degrees.",
+      "attribution": "Morris A. Aguilar. 2020.",
+      "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

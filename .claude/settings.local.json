@@ -12,7 +12,10 @@
       "Read(//tmp/**)",
       "Bash(curl -sL \"https://fonts.gstatic.com/s/leaguespartan/v15/kJEnBuEW6A0lliaV_m88ja5Twtx8BWhtkDVmjZvMGYPpBA.ttf\" -o /Users/morris/github_projects/creative/src/assets/fonts/LeagueSpartan-Bold.ttf)",
       "Bash(node:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(grep -l \"VisualArtwork\" /Users/morris/github_projects/creative/dist/textbooks/*/index.html)",
+      "Bash(grep -L \"VisualArtwork\" /Users/morris/github_projects/creative/dist/textbooks/*/index.html)",
+      "Bash(npm test:*)"
     ]
   }
 }

@@ -1,8 +1,19 @@
+# Morris Aguilar — Creative Portfolio
+
 [![Deploy](https://github.com/MorrisGlr/creative/actions/workflows/deploy.yml/badge.svg)](https://github.com/MorrisGlr/creative/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-# Creative Portfolio
+**→ [View the live portfolio](https://morrisglr.github.io/creative/)**
 
-I built this portfolio as a living archive of my creative work across photography, textbook sculpture, paper layering, and algorithmic art. I designed it for people who want to browse the work visually first, while still understanding the ideas and process behind each series.
+<img src=".github/screenshot_live_site.png" alt="Live portfolio screenshot" width="700" />
+
+A living archive of creative work across four media: **film and digital photography**,
+**carved textbook sculptures**, **algorithmic and generative art**, and **layered paper works**.
+
+There is always a system first. Each medium has its own constraints, and I choose media
+in which those constraints become the subject. [Read the full artist statement →](https://morrisglr.github.io/creative/about/)
+
+---
 
 ## Why I Built This
 
@@ -130,6 +141,12 @@ This site deploys to GitHub Pages through `.github/workflows/deploy.yml`.
 Configured production URL:
 
 - `https://morrisglr.github.io/creative/`
+
+## Licensing
+
+The **code and architecture** of this site are available under the [MIT License](LICENSE). You are free to fork and adapt the Astro template for your own portfolio.
+
+The **artwork and content** — all images, videos, the artist statement, and project descriptions — are licensed under [CC BY-NC 4.0](LICENSE-CONTENT). They may not be reproduced for commercial purposes. See [LICENSE-CONTENT](LICENSE-CONTENT) for details.
 
 ## Notes
 

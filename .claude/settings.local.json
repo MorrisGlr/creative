@@ -15,7 +15,11 @@
       "Bash(npm run:*)",
       "Bash(grep -l \"VisualArtwork\" /Users/morris/github_projects/creative/dist/textbooks/*/index.html)",
       "Bash(grep -L \"VisualArtwork\" /Users/morris/github_projects/creative/dist/textbooks/*/index.html)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(grep -l \"og:\" /Users/morris/github_projects/creative/src/components/*.astro)",
+      "Bash(grep -l \"og:\" /Users/morris/github_projects/creative/src/pages/*.astro)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('scripts',{}\\), indent=2\\)\\)\")",
+      "Bash(sips:*)"
     ]
   }
 }

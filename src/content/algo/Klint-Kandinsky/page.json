@@ -4,16 +4,16 @@
   "dateCreated": "2023-10-13",
   "temporalCoverage": "2023-10",
   "displayDate": "2023-10-13",
-  "description": "",
+  "description": "Inspired by the pioneering works of Wassily Kandinsky and Hilma af Klint, this project uses p5.js to dynamically generate artwork that captures the essence of abstract painting with a contemporary twist. In the animation, colorful shapes appear to populate a 2D plane, but the point of view rotates to reveal that the shapes have variable depth and occupy 3D space.",
   "cover": "kk_cover.jpg",
   "tags": ["algorithm art", "algo art", "creative coding"],
   "media": [
-    { 
+    {
       "type": "video",
       "src": "kandinsky_41_grain_8_bigspin_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
-      "caption": ""
+      "caption": "The algorithmic approach pays homage to the masters of abstract painting and explores the possibilities that emerge when art intersects with technology."
     },
     { 
       "type": "video",
@@ -22,12 +22,12 @@
       "attribution": "Morris A. Aguilar. 2023.",
       "caption": ""
     },
-    { 
+    {
       "type": "video",
       "src": "kandinsky_33_grain_8_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
-      "caption": ""
+      "caption": "Kandinsky and af Klint were known for their use of vibrant colors and geometric forms. This work is a testament to their enduring influence and an exploration of how their visionary approaches to abstraction can be reinterpreted in the digital age."
     },
       { 
       "type": "video",

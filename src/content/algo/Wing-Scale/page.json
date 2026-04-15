@@ -4,16 +4,16 @@
   "dateCreated": "2023-11-19",
   "temporalCoverage": "2023-11",
   "displayDate": "2023-11-19",
-  "description": "",
+  "description": "An algorithmic visualization of butterfly and moth wing microstructure, rendered in real-time with Three.js. ~4,500 individually modeled scales oscillate in a standing wave, with structural coloration and iridescence modeled through custom GLSL shaders.",
   "cover": "scales_cover.jpg",
   "tags": ["algorithm art", "algo art", "creative coding"],
   "media": [
-    { 
+    {
       "type": "video",
       "src": "scales_19_final_480.mp4",
       "alt": "",
       "attribution": "Morris A. Aguilar. 2023.",
-      "caption": ""
+      "caption": "Lepidopteran scales that are usually invisible to the naked eye can collectively produce the appearance of fluid motion, much like pixels resolving into image at distance."
     },
     { 
       "type": "video",

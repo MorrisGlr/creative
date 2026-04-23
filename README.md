@@ -1,6 +1,7 @@
 # Morris Aguilar — Creative Portfolio
 
 [![Deploy](https://github.com/MorrisGlr/creative/actions/workflows/deploy.yml/badge.svg)](https://github.com/MorrisGlr/creative/actions/workflows/deploy.yml)
+[![codecov](https://codecov.io/gh/MorrisGlr/creative/branch/main/graph/badge.svg)](https://codecov.io/gh/MorrisGlr/creative)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **→ [View the live portfolio](https://morrisglr.github.io/creative/)**

@@ -271,6 +271,10 @@ describe('splitMakeAndModel', () => {
   it('returns empty object for empty string', () => {
     expect(splitMakeAndModel('')).toEqual({});
   });
+
+  it('returns just model when first token does not start with a letter', () => {
+    expect(splitMakeAndModel('123abc def')).toEqual({ model: '123abc def' });
+  });
 });
 
 describe('pickCameraFromText', () => {
@@ -324,6 +328,10 @@ describe('approximateIphoneFocal', () => {
 
   it('returns undefined when no type and no physical', () => {
     expect(approximateIphoneFocal(undefined, undefined)).toBeUndefined();
+  });
+
+  it('uses physical focal length when camera type is undefined but physical is provided', () => {
+    expect(approximateIphoneFocal(undefined, 4)).toBe(28);
   });
 });
 

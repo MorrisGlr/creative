@@ -41,6 +41,9 @@ src/img_resize.py
 # generated OG image (built by prebuild script)
 public/og-default.png
 
+# color extraction cache (populated on first dev/build run, survives restarts)
+.color-cache.json
+
 CLAUDE.md
 SPEC.md
 .claude

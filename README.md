@@ -32,6 +32,8 @@ Each project page is designed with a consistent structure:
 - A media stream that lets the work unfold sequentially.
 - A shared visual language that keeps the portfolio coherent while allowing each series to feel distinct.
 
+Each image surfaces its own color vocabulary — a thin bar of dominant tones extracted from the photograph itself, placed beneath it. The palette comes from the image, not from an editorial choice, so it shifts with every work.
+
 For unreleased work, I use catalog placeholders labeled `Held for Submission`. These are intentionally designed cards rather than empty pages, so visitors can understand that a project exists in the series even when the full work cannot be published yet.
 
 ## What "Held for Submission" Means
@@ -75,6 +77,7 @@ This site is a static Astro 5 project with a content-driven architecture:
 - `src/content/placeholders.ts` defines placeholder projects and their visual tokens.
 - Tailwind is configured through the Vite plugin in `astro.config.mjs`.
 - Base-aware path helpers are used so links and assets work on GitHub Pages under `/creative`.
+- Dominant color palettes are extracted from each image at build time using `node-vibrant`, disk-cached in `.color-cache.json` so only the first build per image pays the extraction cost. `sharp` reads natural image dimensions so the palette bar width matches the actual rendered pixel width of the image rather than the container — portrait images on wide screens narrow the bar correctly.
 
 ## Local Development
 
@@ -126,10 +129,12 @@ Minimal example:
   ],
   "options": {
     "parallax": true,
-    "bgFromDominantColor": true
+    "bgFromDominantColor": true  // transitions the page background as images scroll into view
   }
 }
 ```
+
+The dominant-color palette bar (the thin strip of extracted tones beneath each image) is automatic for the `photos`, `textbooks`, and `paper` sections — it has no `page.json` option and cannot be disabled per project.
 
 ## Deployment
 

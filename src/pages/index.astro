@@ -26,7 +26,7 @@ const pickRandom = <T,>(items: T[]): T | undefined =>
 async function buildCategory(def: CategoryDef): Promise<CategoryData> {
   const albumsRaw = getAlbums(def.section);
   const albums = await Promise.all(
-    albumsRaw.map((album) => resolveAlbumMediaUrls(def.section, album.slug, album))
+    albumsRaw.map((album) => resolveAlbumMediaUrls(def.section, album.slug, album, { coverOnly: true }))
   );
 
   const albumPools = albums

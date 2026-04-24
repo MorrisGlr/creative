@@ -11,6 +11,7 @@ import {
   type PlaceholderDesign,
   type PlaceholderProject,
 } from '../content/placeholders';
+import { extractDominantColors } from './color-utils';
 import {
   type Section,
   slugFromPath,
@@ -54,6 +55,7 @@ type ImageItem = {
   caption?: string;
   attribution?: string;
   meta?: PhotoMetadata;
+  dominantColors?: string[];
 };
 type VideoItem = {
   type: 'video';
@@ -440,7 +442,12 @@ export function getAlbum(section: Section, slug: string): (Album & { _section: S
   return getAlbums(section).find((a) => a.slug === slug);
 }
 
-export async function resolveAlbumMediaUrls(section: Section, slug: string, album: Album): Promise<Album> {
+export async function resolveAlbumMediaUrls(
+  section: Section,
+  slug: string,
+  album: Album,
+  opts: { coverOnly?: boolean } = {},
+): Promise<Album> {
   const allAssets = mediaGlobs[section]; // e.g. keys like '../content/photos/sf-street/media/01.jpg'
   const mediaDirSlugKey = normalizeSlugKey(album._dirSlug ?? slug);
   // Build a small map: filename -> emitted URL + source path for THIS slug only
@@ -463,11 +470,22 @@ export async function resolveAlbumMediaUrls(section: Section, slug: string, albu
     return getAssetInfo(name)?.url ?? name;
   };
 
+  // Fast path: index/home pages only need the cover URL, not full per-image processing.
+  // Skips all EXIF and color extraction — eliminates the main dev-mode slowness.
+  if (opts.coverOnly) {
+    return { ...album, cover: mapUrl(album.cover), media: [] };
+  }
+
   const media = await Promise.all(album.media.map(async (item) => {
     if (item.type === 'image') {
       const info = getAssetInfo(item.src);
-      const meta = section === 'photos' ? await readPhotoMetadata(info?.sourcePath) : undefined;
-      return { ...item, src: info?.url ?? item.src, meta };
+      const [meta, dominantColors] = section === 'photos'
+        ? await Promise.all([
+            readPhotoMetadata(info?.sourcePath),
+            extractDominantColors(info?.sourcePath),
+          ])
+        : [undefined, undefined];
+      return { ...item, src: info?.url ?? item.src, meta, ...(dominantColors ? { dominantColors } : {}) };
     }
     if (item.type === 'video') {
       const explicitSources = Array.isArray((item as any).sources)

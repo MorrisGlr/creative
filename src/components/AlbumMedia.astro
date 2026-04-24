@@ -3,11 +3,14 @@
 // - fade/scale-in on scroll
 // - optional dominant-color background change when it enters view
 import type { MediaItem, PhotoMetadata } from "../scripts/content";
-const { item, index, bgColorize = false, showPhotoMetadata = false } = Astro.props as {
-  item: MediaItem; index: number; bgColorize?: boolean; showPhotoMetadata?: boolean;
+const { item, index, bgColorize = false, showPhotoMetadata = false, showColorPalette = false } = Astro.props as {
+  item: MediaItem; index: number; bgColorize?: boolean; showPhotoMetadata?: boolean; showColorPalette?: boolean;
 };
 const imageMeta = item.type === 'image' ? ((item as any).meta as PhotoMetadata | undefined) : undefined;
 const dominantColors: string[] | undefined = item.type === 'image' ? (item as any).dominantColors : undefined;
+const imageWidth: number | undefined = item.type === 'image' ? (item as any).imageWidth : undefined;
+const imageHeight: number | undefined = item.type === 'image' ? (item as any).imageHeight : undefined;
+const hasImageDimensions = Boolean(imageWidth && imageHeight);
 const photoMeta = imageMeta ?? {};
 const lensLine =
   photoMeta.lensMake && photoMeta.lensModel
@@ -38,81 +41,78 @@ const captionFill =
   data-caption="0"
   data-attribution={hasAttribution ? '1' : '0'}
   data-attribution-text={hasAttribution ? attributionText : undefined}
-  data-palette={showPhotoMetadata && dominantColors && dominantColors.length > 0 ? '1' : '0'}
+  data-palette={showColorPalette && dominantColors && dominantColors.length > 0 ? '1' : '0'}
 >
   {item.type === 'image' && (
     <figure class="media-frame">
       <div class="media-visual">
-        <div class="media-visual__media">
-          <img
-            src={(item as any).src}
-            alt={(item as any).alt ?? ''}
-            loading="lazy"
-            decoding="async"
-            class="object-cover warp-target"
-            data-warp-target
-          />
-        </div>
-        {showPhotoMetadata ? (
-          <div class="photo-meta-panel">
-            <div class="photo-meta-panel__inner">
-              {photoMeta.cameraMake && (
-                <p class="photo-meta-line photo-meta-line--highlight">
-                  {photoMeta.cameraMake.toUpperCase()}
-                </p>
-              )}
-              {photoMeta.cameraModel && (
-                <p class="photo-meta-line photo-meta-line--highlight">
-                  {photoMeta.cameraModel.toUpperCase()}
-                </p>
-              )}
-              {photoMeta.cameraType && (
-                <p class="photo-meta-line photo-meta-line--highlight">
-                  CAMERA: {photoMeta.cameraType.toUpperCase()}
-                </p>
-              )}
-              {lensLine && (
-                <p class="photo-meta-line">LENS: {lensLine}</p>
-              )}
-              {hasHeader && hasDetails ? (
-                <div class="photo-meta-spacer" aria-hidden="true"></div>
-              ) : null}
-              {photoMeta.focalLength && (
-                <p class="photo-meta-line">FOCAL LENGTH: {photoMeta.focalLength}</p>
-              )}
-              {photoMeta.exposureTime && (
-                <p class="photo-meta-line">EXPOSURE TIME: {photoMeta.exposureTime}</p>
-              )}
-              {photoMeta.aperture && (
-                <p class="photo-meta-line">APERTURE: {photoMeta.aperture}</p>
-              )}
-              {photoMeta.iso && (
-                <p class="photo-meta-line">ISO: {photoMeta.iso}</p>
-              )}
-            </div>
+        <div
+          class="media-image-group"
+          data-has-dims={hasImageDimensions ? '1' : '0'}
+          style={hasImageDimensions ? `--img-w: ${imageWidth}; --img-h: ${imageHeight}` : undefined}
+        >
+          <div class="media-visual__media">
+            <img
+              src={(item as any).src}
+              alt={(item as any).alt ?? ''}
+              loading="lazy"
+              decoding="async"
+              class="object-cover warp-target"
+              data-warp-target
+            />
           </div>
-        ) : null}
-      </div>
-      {((showPhotoMetadata && dominantColors && dominantColors.length > 0) || hasAttribution) ? (
-        <div class="media-info-strip">
-          {showPhotoMetadata && dominantColors && dominantColors.length > 0 ? (
-            <div class="photo-color-palette">
+          {showPhotoMetadata ? (
+            <div class="photo-meta-panel">
+              <div class="photo-meta-panel__inner">
+                {photoMeta.cameraMake && (
+                  <p class="photo-meta-line photo-meta-line--highlight">
+                    {photoMeta.cameraMake.toUpperCase()}
+                  </p>
+                )}
+                {photoMeta.cameraModel && (
+                  <p class="photo-meta-line photo-meta-line--highlight">
+                    {photoMeta.cameraModel.toUpperCase()}
+                  </p>
+                )}
+                {photoMeta.cameraType && (
+                  <p class="photo-meta-line photo-meta-line--highlight">
+                    CAMERA: {photoMeta.cameraType.toUpperCase()}
+                  </p>
+                )}
+                {lensLine && (
+                  <p class="photo-meta-line">LENS: {lensLine}</p>
+                )}
+                {hasHeader && hasDetails ? (
+                  <div class="photo-meta-spacer" aria-hidden="true"></div>
+                ) : null}
+                {photoMeta.focalLength && (
+                  <p class="photo-meta-line">FOCAL LENGTH: {photoMeta.focalLength}</p>
+                )}
+                {photoMeta.exposureTime && (
+                  <p class="photo-meta-line">EXPOSURE TIME: {photoMeta.exposureTime}</p>
+                )}
+                {photoMeta.aperture && (
+                  <p class="photo-meta-line">APERTURE: {photoMeta.aperture}</p>
+                )}
+                {photoMeta.iso && (
+                  <p class="photo-meta-line">ISO: {photoMeta.iso}</p>
+                )}
+              </div>
+            </div>
+          ) : null}
+          {showColorPalette && dominantColors && dominantColors.length > 0 ? (
+            <div class="color-palette-bar" aria-label="Dominant colors">
               {dominantColors.map((hex) => (
-                <div class="photo-color-swatch">
-                  <span
-                    class="photo-color-swatch__circle"
-                    style={`background-color: ${hex}`}
-                    aria-hidden="true"
-                  />
-                  <span class="photo-color-swatch__hex">{hex.toUpperCase()}</span>
+                <div class="color-palette-band" style={`background-color: ${hex}`}>
+                  <span class="color-palette-hex">{hex.toUpperCase()}</span>
                 </div>
               ))}
             </div>
           ) : null}
-          {hasAttribution ? (
-            <figcaption class="media-attribution">{attributionText}</figcaption>
-          ) : null}
         </div>
+      </div>
+      {hasAttribution ? (
+        <figcaption class="media-attribution">{attributionText}</figcaption>
       ) : null}
     </figure>
   )}

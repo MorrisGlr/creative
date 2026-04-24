@@ -11,7 +11,7 @@ import {
   type PlaceholderDesign,
   type PlaceholderProject,
 } from '../content/placeholders';
-import { extractDominantColors } from './color-utils';
+import { extractDominantColors, readImageDimensions } from './color-utils';
 import {
   type Section,
   slugFromPath,
@@ -56,6 +56,8 @@ type ImageItem = {
   attribution?: string;
   meta?: PhotoMetadata;
   dominantColors?: string[];
+  imageWidth?: number;
+  imageHeight?: number;
 };
 type VideoItem = {
   type: 'video';
@@ -479,13 +481,26 @@ export async function resolveAlbumMediaUrls(
   const media = await Promise.all(album.media.map(async (item) => {
     if (item.type === 'image') {
       const info = getAssetInfo(item.src);
-      const [meta, dominantColors] = section === 'photos'
+      const hasColorPalette = section === 'photos' || section === 'textbooks' || section === 'paper';
+      const [meta, dominantColors, dims] = section === 'photos'
         ? await Promise.all([
             readPhotoMetadata(info?.sourcePath),
             extractDominantColors(info?.sourcePath),
+            readImageDimensions(info?.sourcePath),
           ])
-        : [undefined, undefined];
-      return { ...item, src: info?.url ?? item.src, meta, ...(dominantColors ? { dominantColors } : {}) };
+        : hasColorPalette
+          ? [undefined, ...(await Promise.all([
+              extractDominantColors(info?.sourcePath),
+              readImageDimensions(info?.sourcePath),
+            ]))]
+          : [undefined, undefined, undefined];
+      return {
+        ...item,
+        src: info?.url ?? item.src,
+        meta,
+        ...(dominantColors ? { dominantColors } : {}),
+        ...(dims ? { imageWidth: dims.width, imageHeight: dims.height } : {}),
+      };
     }
     if (item.type === 'video') {
       const explicitSources = Array.isArray((item as any).sources)

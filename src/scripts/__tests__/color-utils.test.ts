@@ -20,6 +20,12 @@ const { mockExistsSync, mockReadFileSync, mockWriteFileSync } = vi.hoisted(() =>
   return { mockExistsSync, mockReadFileSync, mockWriteFileSync };
 });
 
+const { mockSharpMetadata, mockSharpInstance } = vi.hoisted(() => {
+  const mockSharpMetadata = vi.fn(() => Promise.resolve({ width: 1600, height: 1067 }));
+  const mockSharpInstance = vi.fn(() => ({ metadata: mockSharpMetadata }));
+  return { mockSharpMetadata, mockSharpInstance };
+});
+
 vi.mock('node-vibrant/node', () => ({
   Vibrant: { from: mockFrom },
 }));
@@ -35,10 +41,15 @@ vi.mock('node:fs', () => ({
   writeFileSync: mockWriteFileSync,
 }));
 
+vi.mock('sharp', () => ({
+  default: mockSharpInstance,
+}));
+
 import {
   SWATCH_PRIORITY,
   selectSwatchColors,
   extractDominantColors,
+  readImageDimensions,
   _resetCacheForTesting,
 } from '../color-utils';
 
@@ -317,5 +328,58 @@ describe('disk cache', () => {
     const result = await extractDominantColors(KEY);
     expect(result).toEqual(CACHED);
     expect(mockFrom).not.toHaveBeenCalled();
+  });
+});
+
+// ─── readImageDimensions ──────────────────────────────────────────────────────
+
+describe('readImageDimensions', () => {
+  beforeEach(() => {
+    mockSharpInstance.mockClear();
+    mockSharpMetadata.mockClear();
+  });
+
+  it('returns null when assetKey is undefined', async () => {
+    const result = await readImageDimensions(undefined);
+    expect(result).toBeNull();
+    expect(mockSharpInstance).not.toHaveBeenCalled();
+  });
+
+  it('calls sharp with the resolved absolute file path', async () => {
+    await readImageDimensions('../content/photos/Night-Trees/media/IMG_0671.jpeg');
+    expect(mockSharpInstance).toHaveBeenCalledOnce();
+    const calledPath: string = mockSharpInstance.mock.calls[0][0];
+    expect(calledPath.startsWith('/')).toBe(true);
+    expect(calledPath).toContain('IMG_0671.jpeg');
+  });
+
+  it('returns width and height when sharp metadata resolves both', async () => {
+    mockSharpMetadata.mockResolvedValueOnce({ width: 4000, height: 3000 });
+    const result = await readImageDimensions('../content/photos/Loop/media/DSC03191.jpg');
+    expect(result).toEqual({ width: 4000, height: 3000 });
+  });
+
+  it('returns null when sharp metadata is missing width', async () => {
+    mockSharpMetadata.mockResolvedValueOnce({ width: undefined, height: 3000 });
+    const result = await readImageDimensions('../content/photos/Loop/media/DSC03191.jpg');
+    expect(result).toBeNull();
+  });
+
+  it('returns null when sharp metadata is missing height', async () => {
+    mockSharpMetadata.mockResolvedValueOnce({ width: 4000, height: undefined });
+    const result = await readImageDimensions('../content/photos/Loop/media/DSC03191.jpg');
+    expect(result).toBeNull();
+  });
+
+  it('returns null when sharp throws', async () => {
+    mockSharpInstance.mockImplementationOnce(() => { throw new Error('unsupported format'); });
+    const result = await readImageDimensions('../content/photos/Loop/media/DSC03191.jpg');
+    expect(result).toBeNull();
+  });
+
+  it('returns null when metadata() rejects', async () => {
+    mockSharpMetadata.mockRejectedValueOnce(new Error('corrupt file'));
+    const result = await readImageDimensions('../content/photos/Loop/media/DSC03191.jpg');
+    expect(result).toBeNull();
   });
 });

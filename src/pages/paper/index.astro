@@ -5,7 +5,7 @@ import { getAlbums, resolveAlbumMediaUrls } from '../../scripts/content';
 import { withBase } from '../../scripts/paths';
 const albumsRaw = getAlbums('paper');
 const albums = await Promise.all(
-  albumsRaw.map((album) => resolveAlbumMediaUrls('paper', album.slug, album))
+  albumsRaw.map((album) => resolveAlbumMediaUrls('paper', album.slug, album, { coverOnly: true }))
 );
 const placeholderSlugs = albums
   .filter((album) => album.placeholder?.enabled)

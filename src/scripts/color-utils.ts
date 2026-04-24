@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { Vibrant } from 'node-vibrant/node';
+import sharp from 'sharp';
 import type { Palette } from '@vibrant/color';
 
 // Priority order picks visually distinct swatches: saturated first, then muted variants.
@@ -60,6 +61,22 @@ function writeCache(cache: Record<string, string[]>): void {
 // Exported only for test isolation — do not call in production code.
 export function _resetCacheForTesting(): void {
   colorCache = null;
+}
+
+// ─── Image dimensions ─────────────────────────────────────────────────────────
+
+export async function readImageDimensions(
+  assetKey?: string,
+): Promise<{ width: number; height: number } | null> {
+  if (!assetKey) return null;
+  try {
+    const filePath = path.resolve(process.cwd(), 'src/scripts', assetKey);
+    const meta = await sharp(filePath).metadata();
+    if (meta.width && meta.height) return { width: meta.width, height: meta.height };
+    return null;
+  } catch {
+    return null;
+  }
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────

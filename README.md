@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/MorrisGlr/creative/branch/main/graph/badge.svg)](https://codecov.io/gh/MorrisGlr/creative)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**→ [View the live portfolio](https://morrisglr.github.io/creative/)**
+**→ [View the live portfolio](https://mementomorris.art/)**
 
 <img src=".github/screenshot_live_site.png" alt="Live portfolio screenshot" width="700" />
 

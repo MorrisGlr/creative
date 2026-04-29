@@ -148,22 +148,6 @@ const institutionalLinks = [
   </script>
 
   <script is:inline>
-    // Size .home-stack to exactly fill the viewport below the navbar.
-    // Avoids position:fixed, which Safari breaks when html has scroll-snap-type.
-    (() => {
-      const fit = () => {
-        const stack = document.querySelector('.home-stack');
-        if (!stack || window.innerWidth <= 640) return;
-        const top = stack.getBoundingClientRect().top;
-        const available = window.innerHeight - top;
-        if (available > 200) stack.style.minHeight = available + 'px';
-      };
-      requestAnimationFrame(fit);
-      window.addEventListener('resize', fit, { passive: true });
-    })();
-  </script>
-
-  <script is:inline>
     // Background coverage instrumentation for mobile: logs computed colors/heights on load & resize
     (() => {
       const sampleBox = (el) => {
@@ -204,6 +188,12 @@ const institutionalLinks = [
     display: flex;
     flex-direction: column;
     padding: clamp(0.5rem, 4vh, 1.75rem) 0;
+  }
+
+  @media (min-width: 641px) {
+    .home-stack {
+      min-height: calc(100dvh - 88px);
+    }
   }
 
   .home-main {

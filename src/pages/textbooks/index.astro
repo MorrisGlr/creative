@@ -7,6 +7,8 @@ const albumsRaw = getAlbums('textbooks');
 const albums = await Promise.all(
   albumsRaw.map((album) => resolveAlbumMediaUrls('textbooks', album.slug, album, { coverOnly: true }))
 );
+const firstRealIdx = albums.findIndex(a => !a.placeholder?.enabled && a.cover);
+const firstCoverUrl = firstRealIdx >= 0 ? albums[firstRealIdx].cover : undefined;
 const placeholderSlugs = albums
   .filter((album) => album.placeholder?.enabled)
   .map((album) => album.slug);
@@ -24,10 +26,13 @@ const placeholderStyle = (album: (typeof albums)[number]) => {
 ---
 
 <Layout title="Textbook Sculpture — Morris Aguilar" description="Carved textbook sculptures by Morris Aguilar.">
+  {firstCoverUrl && (
+    <link slot="head" rel="preload" as="image" href={firstCoverUrl} />
+  )}
   <h1 class="text-2xl font-semibold mb-6">Textbook Sculpture</h1>
 
   <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
-    {albums.map(a => (
+    {albums.map((a, i) => (
       <li class="group w-full max-w-[22rem]">
         <a href={withBase(`/textbooks/${a.slug}/`)} class="block text-center">
           {a.placeholder?.enabled ? (
@@ -59,8 +64,9 @@ const placeholderStyle = (album: (typeof albums)[number]) => {
                 <img
                   src={a.cover}
                   alt={a.title}
-                  loading="lazy"
-                  decoding="async"
+                  loading={i === firstRealIdx ? "eager" : "lazy"}
+                  fetchpriority={i === firstRealIdx ? "high" : undefined}
+                  decoding={i === firstRealIdx ? "sync" : "async"}
                   class="aspect-[3/2] w-full rounded-xl object-cover transition-transform group-hover:scale-[1.02]"
                 />
               ) : null}

@@ -5,6 +5,9 @@
 // The footer is the only navigation path to About, Contact, and CV pages
 // (per SPEC section 8). These tests guard against a footer that stops rendering
 // or loses its links after a template change.
+//
+// Note: base path is '/' (custom domain mementomorris.art). Tests assert
+// links start with '/' not '/creative/' — update if base path changes again.
 
 import { describe, it, expect } from 'vitest';
 import { existsSync, readFileSync } from 'fs';
@@ -54,7 +57,7 @@ for (const page of pagesToCheck) {
         .toArray()
         .map((el) => $!(el).attr('href') ?? '');
       const aboutHref = hrefs.find((href) => href.includes('/about'));
-      expect(aboutHref).toMatch(/^\/creative\//);
+      expect(aboutHref).toMatch(/^\//);
     });
   });
 }
@@ -71,7 +74,7 @@ describe('footer — Contact link (when page is built)', () => {
       .toArray()
       .map((el) => $(el).attr('href') ?? '');
     const contactHref = hrefs.find((href) => href.includes('/contact'));
-    expect(contactHref).toMatch(/^\/creative\//);
+    expect(contactHref).toMatch(/^\//);
   });
 });
 
@@ -84,6 +87,6 @@ describe('footer — CV link (when page is built)', () => {
       .toArray()
       .map((el) => $(el).attr('href') ?? '');
     const cvHref = hrefs.find((href) => href.includes('/cv'));
-    expect(cvHref).toMatch(/^\/creative\//);
+    expect(cvHref).toMatch(/^\//);
   });
 });

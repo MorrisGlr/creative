@@ -46,27 +46,46 @@ async function buildCategory(def: CategoryDef): Promise<CategoryData> {
 }
 
 const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildCategory));
+
+const existingPages = import.meta.glob('../pages/*.astro');
+const institutionalLinks = [
+  { slug: 'about',   label: 'About' },
+  { slug: 'contact', label: 'Contact' },
+  { slug: 'cv',      label: 'Artist CV' },
+].filter(({ slug }) =>
+  Object.keys(existingPages).some((key) => key === `../pages/${slug}.astro`)
+);
 ---
 
 <Layout>
   <section class="home-stack" aria-labelledby="home-heading">
-    <header class="home-lede">
-      <p class="home-eyebrow">Creative Work by Morris A. Aguilar, Ph.D.</p>
-    </header>
+    <div class="home-main">
+      <header class="home-lede">
+        <p class="home-eyebrow">Creative Work by Morris A. Aguilar, Ph.D.</p>
+      </header>
 
-    <nav class="home-links" aria-label="Project categories">
-      {categories.map((cat) => (
-        <a
-          class="home-link"
-          href={cat.href}
-          data-fill-albums={JSON.stringify(cat.albumPools)}
-          style={cat.initialFill ? `--fill-image: url("${cat.initialFill}")` : undefined}
-        >
-          <span class="home-link__label">{cat.title}</span>
-          <span class="home-link__desc">{cat.desc}</span>
-        </a>
-      ))}
-    </nav>
+      <nav class="home-links" aria-label="Project categories">
+        {categories.map((cat) => (
+          <a
+            class="home-link"
+            href={cat.href}
+            data-fill-albums={JSON.stringify(cat.albumPools)}
+            style={cat.initialFill ? `--fill-image: url("${cat.initialFill}")` : undefined}
+          >
+            <span class="home-link__label">{cat.title}</span>
+            <span class="home-link__desc">{cat.desc}</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    {institutionalLinks.length > 0 && (
+      <nav class="home-institutional" aria-label="About and CV">
+        {institutionalLinks.map(({ slug, label }) => (
+          <a href={withBase(`/${slug}/`)} class="home-institutional__link">{label}</a>
+        ))}
+      </nav>
+    )}
   </section>
 
   <script is:inline>
@@ -129,6 +148,22 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
   </script>
 
   <script is:inline>
+    // Size .home-stack to exactly fill the viewport below the navbar.
+    // Avoids position:fixed, which Safari breaks when html has scroll-snap-type.
+    (() => {
+      const fit = () => {
+        const stack = document.querySelector('.home-stack');
+        if (!stack || window.innerWidth <= 640) return;
+        const top = stack.getBoundingClientRect().top;
+        const available = window.innerHeight - top;
+        if (available > 200) stack.style.minHeight = available + 'px';
+      };
+      requestAnimationFrame(fit);
+      window.addEventListener('resize', fit, { passive: true });
+    })();
+  </script>
+
+  <script is:inline>
     // Background coverage instrumentation for mobile: logs computed colors/heights on load & resize
     (() => {
       const sampleBox = (el) => {
@@ -166,12 +201,38 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
 
 <style>
   .home-stack {
-    min-height: calc(92vh - 80px);
+    display: flex;
+    flex-direction: column;
+    padding: clamp(0.5rem, 4vh, 1.75rem) 0;
+  }
+
+  .home-main {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: clamp(1.25rem, 3vh, 2rem);
-    padding: clamp(0.5rem, 4vh, 1.75rem) 0;
+  }
+
+  .home-institutional {
+    display: flex;
+    gap: 1.75rem;
+    align-items: center;
+    padding-bottom: 1.75rem;
+    padding-top: 2rem;
+  }
+
+  .home-institutional__link {
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: color-mix(in oklab, CanvasText 38%, transparent);
+    transition: color 0.18s ease;
+  }
+
+  .home-institutional__link:hover {
+    color: color-mix(in oklab, CanvasText 80%, transparent);
   }
 
   .home-lede { max-width: 40rem; }
@@ -248,10 +309,19 @@ const categories: CategoryData[] = await Promise.all(categoriesConfig.map(buildC
 
   @media (max-width: 640px) {
     .home-stack {
-      min-height: auto;
       padding: 0.5rem 0 2rem;
+    }
+
+    .home-main {
+      flex: none;
+      justify-content: flex-start;
       gap: 1.25rem;
     }
+
+    .home-institutional {
+      display: none;
+    }
+
     .home-lede h1 { font-size: clamp(1.5rem, 6vw, 2rem); }
     .home-link__label {
       font-size: clamp(3.5rem, 13vw, 4.5rem);

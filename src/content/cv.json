@@ -1,0 +1,34 @@
+{
+  "education": [
+    {
+      "degree": "M.D.-Ph.D., Bioinformatics and Clinical Medicine",
+      "institution": "Penn State College of Medicine",
+      "years": "–2026"
+    }
+  ],
+  "exhibitions": [
+    {
+      "title": "Depths of Knowledge Vol. 4",
+      "venue": "Albany Medical Ethics Conference",
+      "year": "2026"
+    },
+    {
+      "title": "Keeping It Together",
+      "venue": "Albany Medical Ethics Conference",
+      "year": "2025"
+    },
+    {
+      "title": "Walton Manor",
+      "venue": "John W. Combs Memorial Award for Medical Students, Art Award — Penn State College of Medicine",
+      "year": "2018"
+    }
+  ],
+  "publications": [
+    {
+      "title": "Depths of Knowledge Vol. 5",
+      "venue": "Health Humanities Journal of UNC-Chapel Hill",
+      "year": "2025"
+    }
+  ],
+  "forthcoming": []
+}

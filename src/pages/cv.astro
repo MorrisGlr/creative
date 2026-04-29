@@ -1,0 +1,198 @@
+---
+// src/pages/cv.astro
+import Layout from "../layouts/Layout.astro";
+import { withBase } from "../scripts/paths";
+import cv from "../content/cv.json";
+---
+
+<Layout
+  title="Artist CV — Morris Aguilar"
+  description="Curriculum vitae of Morris Aguilar — artist working in photography, textbook sculpture, algorithmic art, and paper layering."
+>
+  <article class="cv">
+    <a href={withBase('/about/')} class="cv__back">← About</a>
+
+    <header class="cv__header">
+      <p class="cv__eyebrow">Curriculum Vitae</p>
+      <h1 class="cv__name">Morris A. Aguilar</h1>
+    </header>
+
+    <section class="cv__section" aria-label="Education">
+      <h2 class="cv__section-label">Education</h2>
+      <ul class="cv__list">
+        {cv.education.map((entry) => (
+          <li>
+            <span class="cv__year">{entry.years}</span>
+            <span class="cv__detail">
+              <span class="cv__title">{entry.degree}</span>
+              <span class="cv__venue">{entry.institution}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="cv__section" aria-label="Selected Exhibitions">
+      <h2 class="cv__section-label">Selected Exhibitions</h2>
+      <ul class="cv__list">
+        {cv.exhibitions.map((entry) => (
+          <li>
+            <span class="cv__year">{entry.year}</span>
+            <span class="cv__detail">
+              <em class="cv__title">{entry.title}</em>
+              <span class="cv__venue">{entry.venue}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="cv__section" aria-label="Publications">
+      <h2 class="cv__section-label">Publications</h2>
+      <ul class="cv__list">
+        {cv.publications.map((entry) => (
+          <li>
+            <span class="cv__year">{entry.year}</span>
+            <span class="cv__detail">
+              <em class="cv__title">{entry.title}</em>
+              <span class="cv__venue">{entry.venue}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {cv.forthcoming.length > 0 && (
+      <section class="cv__section" aria-label="Forthcoming">
+        <h2 class="cv__section-label">Forthcoming</h2>
+        <ul class="cv__list">
+          {(cv.forthcoming as { title: string; venue: string; year: string }[]).map((entry) => (
+            <li>
+              <span class="cv__year">{entry.year}</span>
+              <span class="cv__detail">
+                <em class="cv__title">{entry.title}</em>
+                <span class="cv__venue">{entry.venue}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</Layout>
+
+<style>
+  .cv {
+    max-width: 44rem;
+    padding-top: clamp(2rem, 6vh, 4rem);
+    padding-bottom: 6rem;
+  }
+
+  .cv__back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    color: color-mix(in oklab, CanvasText 40%, transparent);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+
+  .cv__back:hover {
+    color: color-mix(in oklab, CanvasText 80%, transparent);
+  }
+
+  .cv__header {
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .cv__eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, CanvasText 45%, transparent);
+  }
+
+  .cv__name {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: color-mix(in oklab, CanvasText 90%, transparent);
+  }
+
+  .cv__section {
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .cv__section-label {
+    margin: 0 0 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, CanvasText 40%, transparent);
+    font-weight: 400;
+  }
+
+  .cv__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cv__list li {
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid color-mix(in oklab, CanvasText 10%, transparent);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .cv__list li:last-child {
+    border-bottom: 1px solid color-mix(in oklab, CanvasText 10%, transparent);
+  }
+
+  .cv__year {
+    flex-shrink: 0;
+    min-width: 3rem;
+    font-size: 0.88rem;
+    color: color-mix(in oklab, CanvasText 40%, transparent);
+    font-variant-numeric: tabular-nums;
+    padding-top: 0.1em;
+  }
+
+  .cv__detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .cv__title {
+    font-size: 0.95rem;
+    color: color-mix(in oklab, CanvasText 82%, transparent);
+    font-style: normal;
+    line-height: 1.4;
+  }
+
+  .cv__list em.cv__title {
+    font-style: italic;
+  }
+
+  .cv__venue {
+    font-size: 0.85rem;
+    color: color-mix(in oklab, CanvasText 45%, transparent);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 640px) {
+    .cv__list li {
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .cv__year {
+      font-size: 0.8rem;
+    }
+  }
+</style>

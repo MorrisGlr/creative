@@ -1,0 +1,167 @@
+---
+// src/pages/contact.astro
+import Layout from "../layouts/Layout.astro";
+import { withBase } from "../scripts/paths";
+import social from "../content/social.json";
+
+const socialLinks = (
+  [
+    social.linkedin ? { label: "LinkedIn", url: social.linkedin } : null,
+    social.github   ? { label: "GitHub",   url: social.github }   : null,
+  ] as const
+).filter((x): x is { label: string; url: string } => x !== null);
+---
+
+<Layout
+  title="Contact — Morris Aguilar"
+  description="Get in touch with Morris Aguilar — artist working in photography, textbook sculpture, algorithmic art, and paper layering."
+>
+  <article class="contact">
+    <a href={withBase('/about/')} class="contact__back">← About</a>
+
+    <header class="contact__header">
+      <p class="contact__eyebrow">Contact</p>
+      <h1 class="contact__name">Morris A. Aguilar</h1>
+    </header>
+
+    <p class="contact__intro">
+      Open to curatorial conversations, institutional partnerships, and
+      collaborative work across art, medicine, and technology.
+    </p>
+
+    <section class="contact__section" aria-label="Email">
+      <h2 class="contact__section-label">Email</h2>
+      <a data-email href="#" class="contact__email-link">
+        studio [at] mementomorris [dot] art
+      </a>
+      <script is:inline>
+        (function () {
+          var addr = 'studio' + '@' + 'mementomorris' + '.' + 'art';
+          var link = document.querySelector('[data-email]');
+          if (link) {
+            link.href = 'mailto:' + addr;
+            link.textContent = addr;
+          }
+        })();
+      </script>
+    </section>
+
+    {socialLinks.length > 0 && (
+      <section class="contact__section" aria-label="Elsewhere">
+        <h2 class="contact__section-label">Elsewhere</h2>
+        <ul class="contact__social-list">
+          {socialLinks.map(({ label, url }) => (
+            <li>
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact__social-link"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</Layout>
+
+<style>
+  .contact {
+    max-width: 44rem;
+    padding-top: clamp(2rem, 6vh, 4rem);
+    padding-bottom: 6rem;
+  }
+
+  .contact__back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    color: color-mix(in oklab, CanvasText 40%, transparent);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+
+  .contact__back:hover {
+    color: color-mix(in oklab, CanvasText 80%, transparent);
+  }
+
+  .contact__header {
+    margin-bottom: clamp(2rem, 5vh, 3rem);
+  }
+
+  .contact__eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, CanvasText 45%, transparent);
+  }
+
+  .contact__name {
+    margin: 0;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: color-mix(in oklab, CanvasText 90%, transparent);
+  }
+
+  .contact__intro {
+    margin: 0 0 clamp(2.5rem, 6vh, 4rem);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: color-mix(in oklab, CanvasText 68%, transparent);
+    max-width: 36rem;
+  }
+
+  .contact__section {
+    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  .contact__section-label {
+    margin: 0 0 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, CanvasText 40%, transparent);
+    font-weight: 400;
+  }
+
+  .contact__email-link {
+    display: inline-block;
+    font-size: 1.05rem;
+    color: color-mix(in oklab, CanvasText 82%, transparent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, CanvasText 22%, transparent);
+    padding-bottom: 0.1em;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+
+  .contact__email-link:hover {
+    color: color-mix(in oklab, CanvasText 96%, transparent);
+    border-bottom-color: color-mix(in oklab, CanvasText 55%, transparent);
+  }
+
+  .contact__social-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact__social-link {
+    font-size: 0.95rem;
+    color: color-mix(in oklab, CanvasText 65%, transparent);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+
+  .contact__social-link:hover {
+    color: color-mix(in oklab, CanvasText 90%, transparent);
+  }
+</style>

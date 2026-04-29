@@ -36,6 +36,12 @@ describe('LCP: catalog index pages', () => {
         expect(href).toMatch(/\/_astro\//);
       });
 
+      it('preload link points to a WebP asset', () => {
+        const preload = $('head link[rel="preload"][as="image"]').first();
+        expect(preload.attr('href')).toMatch(/\.webp$/);
+        expect(preload.attr('type')).toBe('image/webp');
+      });
+
       it('has exactly one eager-loaded cover image (the LCP candidate)', () => {
         const eagerImgs = $('img[loading="eager"]');
         expect(eagerImgs.length).toBe(1);
@@ -54,6 +60,17 @@ describe('LCP: catalog index pages', () => {
       it('all other cover images remain lazy', () => {
         const lazyImgs = $('img[loading="lazy"]');
         expect(lazyImgs.length).toBeGreaterThan(0);
+      });
+
+      it('real cover images are wrapped in <picture> with a WebP <source>', () => {
+        const webpSources = $('picture source[type="image/webp"]');
+        expect(webpSources.length).toBeGreaterThan(0);
+      });
+
+      it('eager image is inside a <picture> element', () => {
+        const eagerImg = $('img[loading="eager"]');
+        const parent = eagerImg.parent();
+        expect(parent.is('picture')).toBe(true);
       });
     });
   }

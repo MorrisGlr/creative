@@ -52,14 +52,19 @@ const captionFill =
           style={hasImageDimensions ? `--img-w: ${imageWidth}; --img-h: ${imageHeight}` : undefined}
         >
           <div class="media-visual__media">
-            <img
-              src={(item as any).src}
-              alt={(item as any).alt ?? ''}
-              loading="lazy"
-              decoding="async"
-              class="object-cover warp-target"
-              data-warp-target
-            />
+            <picture>
+              {(item as any).webpSrc && (
+                <source type="image/webp" srcset={(item as any).webpSrc} />
+              )}
+              <img
+                src={(item as any).src}
+                alt={(item as any).alt ?? ''}
+                loading="lazy"
+                decoding="async"
+                class="object-cover warp-target"
+                data-warp-target
+              />
+            </picture>
           </div>
           {showPhotoMetadata ? (
             <div class="photo-meta-panel">

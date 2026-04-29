@@ -1,8 +1,10 @@
 ---
 // src/pages/about.astro
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { withBase } from "../scripts/paths";
 import social from "../content/social.json";
+import profilePhoto from "../assets/profile.jpg";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -25,58 +27,99 @@ const personJsonLd = {
 >
   <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(personJsonLd)} />
   <article class="about">
-    <header class="about__header">
-      <p class="about__eyebrow">Artist Statement</p>
-      <h1 class="about__name">Morris A. Aguilar</h1>
-    </header>
+    <aside class="about__sidebar">
+      <Image
+        src={profilePhoto}
+        alt="Portrait of Morris A. Aguilar, artist and M.D.-Ph.D."
+        width={260}
+        height={260}
+        class="about__portrait"
+        loading="eager"
+      />
+    </aside>
 
-    <section class="about__statement" aria-label="Artist statement">
-      <p>There is always a system first. I design the conditions and then wait for what arrives incidentally within them.</p>
-      <p>
-        Each medium I work in has its own constraints, and I choose media in which those constraints become the subject. In my paper sculptures, shadow defines the form rather than draftsmanship: layers of hand-cut cardstock stacked without glue, where shifting light determines what is visible. In my carved textbook volumes, page numbers mark the depth at which figures survive the X-Acto knife; months of work through Harrison's Internal Medicine, preserving illustrations that hold the tension between scientific objectivity and the human body underneath. In my photography, the subject must cross my path; I do not seek it out. In my algorithmic work, I write the rules and surrender execution to randomness. Across all four, the relationship between intention and emergence is central.
-      </p>
-      <p>
-        I see myself as a curator of conditions. My role is to build the system and then exercise judgment: which figure is worth preserving, which moment worth photographing, which frame worth holding. This uses chance as a constraint rather than an obstacle, reflecting how discovery in both art and science can hinge on encounter rather than pursuit.
-      </p>
-      <p>
-        I completed an MD-PhD, and that sensibility inflects everything I make, not as subject matter, but as a way of attending. "The art of medicine" names the zone where objective method runs out and best judgment begins. My practice lives there: in the tension between control and surrender, the visible and the hidden, the clinical and the personal.
-      </p>
-      <p>The work is slow to make. It asks the same of the viewer: to attend to what arrives, and to return.</p>
-    </section>
+    <div class="about__content">
+      <header class="about__header">
+        <p class="about__eyebrow">Artist Statement</p>
+        <h1 class="about__name">Morris A. Aguilar</h1>
+      </header>
 
-    <section class="about__bio" aria-label="Selected publications, exhibitions, and awards.">
-      <h2 class="about__section-label">Selected Publications and Exhibitions</h2>
-      <ul class="about__list">
-        <li>
-          <span class="about__item-year">2026</span>
-          <span><em>Depths of Knowledge Vol. 4</em> — Albany Medical Ethics Conference</span>
-          <span class="about__item-year">2025</span>
-          <span><em>Depths of Knowledge Vol. 5</em> — Health Humanities Journal of UNC-Chapel Hill</span>
-          <span class="about__item-year">2025</span>
-          <span><em>Keeping It Together</em> — Albany Medical Ethics Conference</span>
-          <span class="about__item-year">2018</span>
-          <span><em>Walton Manor</em> — John W. Combs Memorial Award for Medical Students, Art Award, Penn State College of Medicine</span>
-        </li>
-      </ul>
-    </section>
+      <section class="about__statement" aria-label="Artist statement">
+        <p>There is always a system first. I design the conditions and then wait for what arrives incidentally within them.</p>
+        <p>
+          Each medium I work in has its own constraints, and I choose media in which those constraints become the subject. In my paper sculptures, shadow defines the form rather than draftsmanship: layers of hand-cut cardstock stacked without glue, where shifting light determines what is visible. In my carved textbook volumes, page numbers mark the depth at which figures survive the X-Acto knife; months of work through Harrison's Internal Medicine, preserving illustrations that hold the tension between scientific objectivity and the human body underneath. In my photography, the subject must cross my path; I do not seek it out. In my algorithmic work, I write the rules and surrender execution to randomness. Across all four, the relationship between intention and emergence is central.
+        </p>
+        <p>
+          I see myself as a curator of conditions. My role is to build the system and then exercise judgment: which figure is worth preserving, which moment worth photographing, which frame worth holding. This uses chance as a constraint rather than an obstacle, reflecting how discovery in both art and science can hinge on encounter rather than pursuit.
+        </p>
+        <p>
+          I completed an MD-PhD, and that sensibility inflects everything I make, not as subject matter, but as a way of attending. "The art of medicine" names the zone where objective method runs out and best judgment begins. My practice lives there: in the tension between control and surrender, the visible and the hidden, the clinical and the personal.
+        </p>
+        <p>The work is slow to make. It asks the same of the viewer: to attend to what arrives, and to return.</p>
+      </section>
 
-    <nav class="about__work-links" aria-label="View work by section">
-      <h2 class="about__section-label">Work</h2>
-      <ul class="about__list about__list--links">
-        <li><a href={withBase('/photos/')}>Photos</a></li>
-        <li><a href={withBase('/textbooks/')}>Textbook Sculpture</a></li>
-        <li><a href={withBase('/algo/')}>Algorithmic Art</a></li>
-        <li><a href={withBase('/paper/')}>Paper Layering</a></li>
-      </ul>
-    </nav>
+      <section class="about__bio" aria-label="Selected publications, exhibitions, and awards.">
+        <h2 class="about__section-label">Selected Publications and Exhibitions</h2>
+        <ul class="about__list about__list--bio">
+          <li>
+            <span class="about__item-year">2026</span>
+            <span><em>Depths of Knowledge Vol. 4</em> — Albany Medical Ethics Conference</span>
+          </li>
+          <li>
+            <span class="about__item-year">2025</span>
+            <span><em>Depths of Knowledge Vol. 5</em> — Health Humanities Journal of UNC-Chapel Hill</span>
+          </li>
+          <li>
+            <span class="about__item-year">2025</span>
+            <span><em>Keeping It Together</em> — Albany Medical Ethics Conference</span>
+          </li>
+          <li>
+            <span class="about__item-year">2018</span>
+            <span><em>Walton Manor</em> — John W. Combs Memorial Award for Medical Students, Art Award, Penn State College of Medicine</span>
+          </li>
+        </ul>
+        <a href={withBase('/cv/')} class="about__cv-link">Full CV →</a>
+      </section>
+
+      <nav class="about__work-links" aria-label="View work by section">
+        <h2 class="about__section-label">Work</h2>
+        <ul class="about__list about__list--links">
+          <li><a href={withBase('/photos/')}>Photos</a></li>
+          <li><a href={withBase('/textbooks/')}>Textbook Sculpture</a></li>
+          <li><a href={withBase('/algo/')}>Algorithmic Art</a></li>
+          <li><a href={withBase('/paper/')}>Paper Layering</a></li>
+        </ul>
+      </nav>
+    </div>
   </article>
 </Layout>
 
 <style>
   .about {
-    max-width: 44rem;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    column-gap: 3.5rem;
+    align-items: start;
+    max-width: 66rem;
     padding-top: clamp(2rem, 6vh, 4rem);
     padding-bottom: 6rem;
+  }
+
+  .about__sidebar {
+    /* left column — grid places it automatically */
+  }
+
+  .about__portrait {
+    position: sticky;
+    top: 2rem;
+    width: 260px;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .about__content {
+    min-width: 0;
   }
 
   .about__header {
@@ -143,7 +186,7 @@ const personJsonLd = {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0;
   }
 
   .about__list li {
@@ -151,7 +194,34 @@ const personJsonLd = {
     gap: 1.5rem;
     font-size: 0.95rem;
     color: color-mix(in oklab, CanvasText 72%, transparent);
-    line-height: 1.5;
+    line-height: 1.6;
+  }
+
+  .about__list--bio li {
+    border-top: 1px solid color-mix(in oklab, CanvasText 10%, transparent);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .about__list--bio li:last-child {
+    border-bottom: 1px solid color-mix(in oklab, CanvasText 10%, transparent);
+  }
+
+  .about__cv-link {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    color: color-mix(in oklab, CanvasText 45%, transparent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, CanvasText 18%, transparent);
+    padding-bottom: 1px;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+
+  .about__cv-link:hover {
+    color: color-mix(in oklab, CanvasText 85%, transparent);
+    border-color: color-mix(in oklab, CanvasText 45%, transparent);
   }
 
   .about__item-year {
@@ -179,10 +249,22 @@ const personJsonLd = {
   }
 
   @media (max-width: 640px) {
+    .about {
+      display: block;
+    }
+
+    .about__portrait {
+      position: static;
+      width: 200px;
+      height: 200px;
+      margin-bottom: 1.75rem;
+    }
+
     .about__statement p {
       font-size: 1rem;
       line-height: 1.75;
     }
+
     .about__statement p:first-child {
       font-size: 1.15rem;
     }

@@ -162,6 +162,43 @@ body, p, span, li, figcaption, .media-caption, .photo-meta-line {
   margin: 0;
 }
 
+.project-hero__demo-link {
+  display: inline-block;
+  font-size: var(--project-accent-size);
+  letter-spacing: var(--project-accent-letter-spacing);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--project-accent-color);
+  transition: color 0.18s ease;
+}
+
+.project-hero__demo-link:hover {
+  color: CanvasText;
+}
+
+.algo-process-note {
+  margin-top: 3rem;
+  margin-bottom: 0;
+  font-family: var(--project-accent-font);
+  font-size: var(--project-accent-size);
+  letter-spacing: var(--project-accent-letter-spacing);
+  text-transform: uppercase;
+  color: var(--project-accent-color);
+}
+
+.project-back-link {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: color-mix(in oklab, CanvasText 45%, transparent);
+  transition: color 0.18s ease;
+}
+
+.project-back-link:hover {
+  color: color-mix(in oklab, CanvasText 85%, transparent);
+}
+
 .split-char {
   display: inline-block;
   transform: translateY(115%);

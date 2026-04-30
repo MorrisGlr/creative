@@ -2,6 +2,7 @@
 // src/layouts/Layout.astro
 import NavBar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
+import GalleryNav from "../components/GalleryNav.astro";
 import { withBase } from "../scripts/paths";
 import "../styles/global.css";
 
@@ -53,6 +54,7 @@ const resolvedOgImage = ogImage || defaultOgImage;
     <script>
       import "../scripts/prefetch";
       import "../scripts/media-visibility";
+      import "../scripts/keyboard-nav";
     </script>
     <style>
       :root {
@@ -80,6 +82,7 @@ const resolvedOgImage = ogImage || defaultOgImage;
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <NavBar />
+    <GalleryNav />
     <div id="main" class="container">
       <slot />
     </div>

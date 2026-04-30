@@ -35,6 +35,7 @@ const displayDateSource =
   trimmed(album.date) ? 'date' :
   undefined;
 
+const demoUrl = (album as any).demoUrl as string | undefined;
 const firstImageSrc = album.media.find((m: any) => m.type === 'image' && m.src)?.src;
 const isPlaceholder = album.placeholder?.enabled;
 const ogImage = (!isPlaceholder && firstImageSrc && Astro.site)
@@ -77,6 +78,16 @@ const visualArtworkJsonLd = !isPlaceholder ? {
     {album.description ? (
       <p class="project-hero__description">{album.description}</p>
     ) : null}
+    {demoUrl ? (
+      <a
+        href={demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="project-hero__demo-link"
+      >
+        View live demo ↗
+      </a>
+    ) : null}
   </section>
   <script type="module">
     const titleEl = document.querySelector('.project-hero__title');
@@ -118,6 +129,12 @@ const visualArtworkJsonLd = !isPlaceholder ? {
     }
   </script>
 
+  {demoUrl ? (
+    <p class="algo-process-note">
+      Development Sequence
+    </p>
+  ) : null}
+
   {/* Media stream per your scroll spec */}
   <section class="media-stream space-y-16 mt-10">
     {album.media.map((m, i) => (
@@ -126,7 +143,17 @@ const visualArtworkJsonLd = !isPlaceholder ? {
   </section>
 
   {/* Bottom: links back to section (and later, related albums) */}
-  <footer class="mt-24 border-t pt-6">
-    <a href={withBase("/algo/")} class="underline">More algorithm art projects</a>
+  <footer class="mt-24 border-t pt-6 flex flex-wrap items-center gap-6">
+    <a href={withBase("/algo/")} class="project-back-link">More algorithm art projects</a>
+    {demoUrl ? (
+      <a
+        href={demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="project-back-link"
+      >
+        Open live demo ↗
+      </a>
+    ) : null}
   </footer>
 </Layout>

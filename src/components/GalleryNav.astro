@@ -1,0 +1,19 @@
+---
+// GalleryNav.astro — Fixed keyboard + click navigation panel (desktop only).
+// Rendered on every page; the keyboard-nav.ts script hides it when no stops exist.
+---
+<nav class="gallery-nav" aria-label="Gallery navigation" data-gallery-nav>
+  <button class="gallery-nav__arrow" data-dir="up" aria-label="Previous item">
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <polyline points="2,11 8,5 14,11" />
+    </svg>
+  </button>
+
+  <div class="gallery-nav__dots" role="list" aria-label="Gallery progress"></div>
+
+  <button class="gallery-nav__arrow" data-dir="down" aria-label="Next item">
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <polyline points="2,5 8,11 14,5" />
+    </svg>
+  </button>
+</nav>

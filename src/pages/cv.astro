@@ -55,6 +55,9 @@ import cv from "../content/cv.json";
             <span class="cv__year">{entry.year}</span>
             <span class="cv__detail">
               <em class="cv__title">{entry.title}</em>
+              {(entry as any).medium ? (
+                <span class="cv__medium">{(entry as any).medium}</span>
+              ) : null}
               <span class="cv__venue">{entry.venue}</span>
             </span>
           </li>
@@ -177,6 +180,13 @@ import cv from "../content/cv.json";
 
   .cv__list em.cv__title {
     font-style: italic;
+  }
+
+  .cv__medium {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: color-mix(in oklab, CanvasText 50%, transparent);
+    line-height: 1.4;
   }
 
   .cv__venue {

@@ -1,0 +1,95 @@
+---
+import { withBase } from '../scripts/paths';
+
+interface Props {
+  label: string;
+  anchor: string;
+}
+
+const { label, anchor } = Astro.props;
+const href = withBase(`/cv/#${anchor}`);
+---
+
+<a
+  class="recognition-badge"
+  href={href}
+  aria-label={label}
+  title={label}
+>
+  <span class="recognition-badge__label" aria-hidden="true">{label}</span>
+  <svg
+    class="recognition-badge__icon"
+    viewBox="0 0 14 22"
+    width="23"
+    height="36"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.3"
+    stroke-linecap="round"
+    aria-hidden="true"
+  >
+    <!-- central stem -->
+    <path d="M7 21 C7 21 7 16 7 1" />
+    <!-- lower pair -->
+    <path d="M7 17 C5 15 2 13 3 10" />
+    <path d="M7 17 C9 15 12 13 11 10" />
+    <!-- middle pair -->
+    <path d="M7 12 C5 10 2 8 3 5" />
+    <path d="M7 12 C9 10 12 8 11 5" />
+    <!-- upper pair -->
+    <path d="M7 7 C5.5 5 4 3 5 1" />
+    <path d="M7 7 C8.5 5 10 3 9 1" />
+  </svg>
+</a>
+
+<style>
+  .recognition-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-end;
+    margin-bottom: auto;
+    text-decoration: none;
+    color: color-mix(in oklab, CanvasText 48%, transparent);
+    transition: color 0.2s ease;
+  }
+
+  .recognition-badge:hover,
+  .recognition-badge:focus-visible {
+    color: color-mix(in oklab, CanvasText 80%, transparent);
+    outline: none;
+  }
+
+  .recognition-badge__icon {
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .recognition-badge__label {
+    position: absolute;
+    right: calc(100% + 0.6rem);
+    top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .recognition-badge:hover .recognition-badge__label,
+  .recognition-badge:focus-visible .recognition-badge__label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  /* On touch devices always show the label */
+  @media (hover: none) {
+    .recognition-badge__label {
+      opacity: 0.7;
+      transform: translateY(-50%) translateX(0);
+    }
+  }
+</style>

@@ -4,6 +4,8 @@ import Layout from "../../layouts/Layout.astro";
 import AlbumMedia from "../../components/AlbumMedia.astro";
 import { getAlbums, getAlbum, resolveAlbumMediaUrls } from '../../scripts/content';
 import { withBase } from '../../scripts/paths';
+import RecognitionBadge from '../../components/RecognitionBadge.astro';
+import cv from '../../content/cv.json';
 
 export async function getStaticPaths() {
   return getAlbums('algo').map((album) => ({
@@ -38,6 +40,8 @@ const displayDateSource =
 const demoUrl = (album as any).demoUrl as string | undefined;
 const firstImageSrc = album.media.find((m: any) => m.type === 'image' && m.src)?.src;
 const isPlaceholder = album.placeholder?.enabled;
+const recognition = (cv.recognitions as { slug: string; label: string; anchor: string }[])
+  .find(r => r.slug === slug) ?? null;
 const ogImage = (!isPlaceholder && firstImageSrc && Astro.site)
   ? new URL(firstImageSrc, Astro.site).href
   : undefined;
@@ -60,6 +64,9 @@ const visualArtworkJsonLd = !isPlaceholder ? {
     <script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(visualArtworkJsonLd)} />
   )}
   <section class="project-hero">
+    {recognition && (
+      <RecognitionBadge label={recognition.label} anchor={recognition.anchor} />
+    )}
     <p class="project-hero__eyebrow">Project</p>
     <h1
       class="project-hero__title project-hero__title--plain"

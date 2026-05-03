@@ -28,7 +28,35 @@
       "title": "Depths of Knowledge Vol. 5",
       "venue": "Health Humanities Journal of UNC-Chapel Hill",
       "year": "2025"
+    },
+    {
+      "title": "Adaptations with Vincent",
+      "medium": "Watercolor, ink, colored pencil",
+      "venue": "Wild Onions Humanities Journal — Penn State College of Medicine",
+      "year": "2018"
     }
   ],
-  "forthcoming": []
+  "forthcoming": [],
+  "recognitions": [
+    {
+      "slug": "Depths-of-Knowledge-Vol-4",
+      "label": "Exhibited — Albany Medical Ethics Conference, 2026",
+      "anchor": "exhibitions"
+    },
+    {
+      "slug": "Keeping It Together",
+      "label": "Exhibited — Albany Medical Ethics Conference, 2025",
+      "anchor": "exhibitions"
+    },
+    {
+      "slug": "Walton-Manor",
+      "label": "Awarded — John W. Combs Memorial Award, Penn State College of Medicine, 2018",
+      "anchor": "exhibitions"
+    },
+    {
+      "slug": "Depths-of-Knowledge-Vol-5",
+      "label": "Published — Health Humanities Journal of UNC-Chapel Hill, 2025",
+      "anchor": "publications"
+    }
+  ]
 }

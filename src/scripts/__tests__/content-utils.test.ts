@@ -297,6 +297,22 @@ describe('pickCameraFromText', () => {
     const result = pickCameraFromText(undefined, ['street', 'Canon EOS R5']);
     expect(result.make).toBe('Canon');
   });
+
+  it('falls through to keywords when description firstClause is empty', () => {
+    // description starts with comma → firstClause is '' (falsy) → uses keywords
+    const result = pickCameraFromText(',ignore', 'street;Canon EOS R5');
+    expect(result.make).toBe('Canon');
+  });
+
+  it('uses letter-only keyword candidate when no digit-containing candidate exists', () => {
+    // 'Sony' has no digit → first scan.find (letter+digit) returns undefined → falls to second find (letter only)
+    const result = pickCameraFromText(undefined, 'street;Sony');
+    expect(result.model).toBe('Sony');
+  });
+
+  it('returns empty object when no alphabetic keyword candidate exists', () => {
+    expect(pickCameraFromText(undefined, '123;456')).toEqual({});
+  });
 });
 
 // ─── iPhone focal length estimation ──────────────────────────────────────────
@@ -332,6 +348,10 @@ describe('approximateIphoneFocal', () => {
 
   it('uses physical focal length when camera type is undefined but physical is provided', () => {
     expect(approximateIphoneFocal(undefined, 4)).toBe(28);
+  });
+
+  it('returns undefined when type is unknown and no physical focal length provided', () => {
+    expect(approximateIphoneFocal('Unknown Camera')).toBeUndefined();
   });
 });
 

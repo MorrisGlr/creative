@@ -8,6 +8,27 @@
 
 import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 
+// ─── withBase — no BASE_URL set (tests the || '/' fallback) ──────────────────
+
+describe('withBase with no BASE_URL set', () => {
+  let withBase: (p: string) => string;
+
+  beforeAll(async () => {
+    vi.unstubAllEnvs();
+    vi.resetModules();
+    const mod = await import('../paths');
+    withBase = mod.withBase;
+  });
+
+  afterAll(() => {
+    vi.resetModules();
+  });
+
+  it('defaults to "/" when BASE_URL is not set and still prepends correctly', () => {
+    expect(withBase('about')).toBe('/about');
+  });
+});
+
 // ─── normalizePathname ───────────────────────────────────────────────────────
 // normalizePathname is a pure string function with no env dependency,
 // so we can test it once without any env setup.

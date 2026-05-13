@@ -1,6 +1,7 @@
 # Morris Aguilar — Creative Portfolio
 
 [![codecov](https://codecov.io/gh/MorrisGlr/creative/branch/main/graph/badge.svg)](https://codecov.io/gh/MorrisGlr/creative)
+[![Deployed on Cloudflare](https://img.shields.io/badge/deployed%20on-Cloudflare-F48120?logo=cloudflare&logoColor=white)](https://mementomorris.art)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **→ [View the live portfolio](https://mementomorris.art/)**
@@ -11,7 +12,7 @@ A living archive of creative work across four media: **film and digital photogra
 **carved textbook sculptures**, **algorithmic and generative art**, and **layered paper works**.
 
 There is always a system first. Each medium has its own constraints, and I choose media
-in which those constraints become the subject. [Read the full artist statement →](https://morrisglr.github.io/creative/about/)
+in which those constraints become the subject. [Read the full artist statement →](https://mementomorris.art/about/)
 
 ---
 
@@ -137,15 +138,13 @@ The dominant-color palette bar (the thin strip of extracted tones beneath each i
 
 ## Deployment
 
-This site deploys to GitHub Pages through `.github/workflows/deploy.yml`.
+This site is deployed via Cloudflare Workers at `mementomorris.art`. Cloudflare pulls directly from the `main` branch — no GitHub Actions deploy step is involved.
 
-- Push to `main` triggers the workflow.
-- Astro is configured for Pages with `site` and `base` in `astro.config.mjs`.
-- Deployment status can be checked in the GitHub `Actions` tab and `Settings -> Pages`.
+The CI workflow (`.github/workflows/deploy.yml`) runs unit tests, uploads coverage to Codecov, builds the site, and runs integration tests on every push to `main`.
 
 Configured production URL:
 
-- `https://morrisglr.github.io/creative/`
+- `https://mementomorris.art/`
 
 ## Licensing
 

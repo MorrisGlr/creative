@@ -126,7 +126,7 @@ describe.skipIf(!cvExists)('cv.json', () => {
 
   it('has no unknown top-level keys', () => {
     const parsed = JSON.parse(readFileSync(cvPath, 'utf8'));
-    const allowed = new Set(['education', 'exhibitions', 'publications', 'forthcoming']);
+    const allowed = new Set(['education', 'exhibitions', 'publications', 'forthcoming', 'recognitions']);
     const actual = Object.keys(parsed);
     for (const key of actual) {
       expect(allowed.has(key)).toBe(true);

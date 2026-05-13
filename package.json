@@ -29,6 +29,7 @@
     "@resvg/resvg-js": "^2.6.2",
     "@vitest/coverage-v8": "^4.1.5",
     "cheerio": "^1.2.0",
+    "happy-dom": "^20.9.0",
     "satori": "^0.26.0",
     "sharp": "^0.34.5",
     "vite-imagetools": "^10.0.0",

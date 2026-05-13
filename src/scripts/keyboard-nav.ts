@@ -1,7 +1,7 @@
 const STOP_SELECTOR = '.project-hero, .media-block, .media-caption-block, .catalog-card-wrap';
 const COOLDOWN_MS = 600;
 
-const initGalleryNav = () => {
+export const initGalleryNav = () => {
   const nav = document.querySelector<HTMLElement>('[data-gallery-nav]');
   if (!nav) return;
 

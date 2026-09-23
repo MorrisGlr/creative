@@ -1,0 +1,213 @@
+{
+  "title": "Stand Still",
+  "slug": "Stand-Still",
+  "dateCreated": "2026-01",
+  "temporalCoverage": "2026-01/2026-06",
+  "displayDate": "2026 January - July",
+  "description": "Statues make for good subjects because they do not blink and they know what to do with their hands.",
+  "cover": "DSC03890.jpg",
+  "tags": ["photography", "statues", "digital"],
+  "media": [
+    {
+        "type": "image",
+        "src": "DSC05316.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03890.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. January 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03901.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. January 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC03913.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. January 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC04667.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC04996.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC04998.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05002.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05007.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05227.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05229.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05238.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05243.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05248.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05323.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. February 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05806.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. April 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05845 copy.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. April 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC05845.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. April 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06184.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06192.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06279.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06282.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06283.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06292.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06554.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06575.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06580.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    },
+    {
+        "type": "image",
+        "src": "DSC06652.jpg",
+        "alt": "",
+        "attribution": "Morris A. Aguilar. May 2026.",
+        "caption": ""
+    }
+  ],
+  "related": [],
+  "options": {
+    "parallax": true,
+    "bgFromDominantColor": true
+  }
+}

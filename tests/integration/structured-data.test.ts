@@ -13,6 +13,9 @@ import * as cheerio from 'cheerio';
 
 const dist = resolve(process.cwd(), 'dist');
 
+// Production origin — must match `site` in astro.config.mjs.
+const PROD_ORIGIN = 'https://mementomorris.art/';
+
 function readJsonLdBlocks(relativePath: string): any[] {
   const filePath = resolve(dist, relativePath);
   if (!existsSync(filePath)) return [];
@@ -44,10 +47,10 @@ describe('about/index.html — structured data', () => {
     expect(person?.name).toBeTruthy();
   });
 
-  it('Person block has a url', () => {
+  it('Person block has a url on the production origin', () => {
     const blocks = readJsonLdBlocks('about/index.html');
     const person = blocks.find((b) => b['@type'] === 'Person');
-    expect(person?.url).toBeTruthy();
+    expect(person?.url?.startsWith(PROD_ORIGIN)).toBe(true);
   });
 });
 
@@ -72,10 +75,10 @@ describe('photos/Loop/index.html — structured data', () => {
     expect(artwork?.creator?.name).toBeTruthy();
   });
 
-  it('VisualArtwork block has an image URL', () => {
+  it('VisualArtwork block has an image URL on the production origin', () => {
     const blocks = readJsonLdBlocks('photos/Loop/index.html');
     const artwork = blocks.find((b) => b['@type'] === 'VisualArtwork');
-    expect(artwork?.image).toMatch(/^https?:\/\//);
+    expect(artwork?.image?.startsWith(PROD_ORIGIN)).toBe(true);
   });
 });
 

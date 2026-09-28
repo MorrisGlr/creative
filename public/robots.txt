@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mementomorris.art/sitemap-index.xml

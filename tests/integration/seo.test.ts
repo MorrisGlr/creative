@@ -14,6 +14,11 @@ import * as cheerio from 'cheerio';
 
 const dist = resolve(process.cwd(), 'dist');
 
+// Production origin — must match `site` in astro.config.mjs. Every absolute
+// URL built from Astro.site (canonical, og:url, og:image) must start with this.
+// Guards against the stale `morrisglr.github.io` value that shipped previously.
+const PROD_ORIGIN = 'https://mementomorris.art/';
+
 function loadPage(relativePath: string) {
   const filePath = resolve(dist, relativePath);
   if (!existsSync(filePath)) return null;
@@ -43,10 +48,15 @@ function assertSeoByCherio(label: string, $: ReturnType<typeof cheerio.load> | n
       expect($('meta[property="og:description"]').attr('content')?.trim()).toBeTruthy();
     });
 
-    it('has <meta property="og:image"> with a URL', () => {
+    it('has <meta property="og:image"> on the production origin', () => {
       const ogImage = $('meta[property="og:image"]').attr('content');
       expect(ogImage).toBeTruthy();
-      expect(ogImage).toMatch(/^https?:\/\//);
+      expect(ogImage?.startsWith(PROD_ORIGIN)).toBe(true);
+    });
+
+    it('has <meta property="og:url"> on the production origin', () => {
+      const ogUrl = $('meta[property="og:url"]').attr('content');
+      expect(ogUrl?.startsWith(PROD_ORIGIN)).toBe(true);
     });
 
     it('has <meta property="og:type">', () => {
@@ -57,10 +67,9 @@ function assertSeoByCherio(label: string, $: ReturnType<typeof cheerio.load> | n
       expect($('meta[name="twitter:card"]').attr('content')?.trim()).toBeTruthy();
     });
 
-    it('has <link rel="canonical"> with an absolute URL', () => {
+    it('has <link rel="canonical"> on the production origin', () => {
       const canonical = $('link[rel="canonical"]').attr('href');
-      expect(canonical).toBeTruthy();
-      expect(canonical).toMatch(/^https:\/\//);
+      expect(canonical?.startsWith(PROD_ORIGIN)).toBe(true);
     });
   });
 }

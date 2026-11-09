@@ -3,13 +3,13 @@
 import Layout from "../layouts/Layout.astro";
 import { withBase } from "../scripts/paths";
 import social from "../content/social.json";
+import { getSocialLinks } from "../scripts/social";
 
-const socialLinks = (
-  [
-    social.linkedin ? { label: "LinkedIn", url: social.linkedin } : null,
-    social.github   ? { label: "GitHub",   url: social.github }   : null,
-  ] as const
-).filter((x): x is { label: string; url: string } => x !== null);
+const socialLinks = getSocialLinks(social).map(({ key, label, url, handle }) => ({
+  key,
+  url,
+  label: handle ? `${label} — @${handle}` : label,
+}));
 ---
 
 <Layout
@@ -50,10 +50,11 @@ const socialLinks = (
       <section class="contact__section" aria-label="Elsewhere">
         <h2 class="contact__section-label">Elsewhere</h2>
         <ul class="contact__social-list">
-          {socialLinks.map(({ label, url }) => (
+          {socialLinks.map(({ key, label, url }) => (
             <li>
               <a
                 href={url}
+                data-social={key}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="contact__social-link"

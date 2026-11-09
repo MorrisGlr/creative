@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { withBase } from "../scripts/paths";
 import social from "../content/social.json";
+import { getSameAsUrls } from "../scripts/social";
 import profilePhoto from "../assets/profile.jpg";
 
 const personJsonLd = {
@@ -17,7 +18,7 @@ const personJsonLd = {
     "addressLocality": "Chicago",
     "addressRegion": "IL"
   },
-  "sameAs": [social.linkedin, social.github].filter(Boolean),
+  "sameAs": getSameAsUrls(social),
 };
 ---
 

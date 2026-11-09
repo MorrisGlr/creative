@@ -39,6 +39,26 @@ describe('social.json', () => {
     expect(data.github).toMatch(/^https:\/\//);
   });
 
+  it('has a bluesky key that is a bsky.app profile URL', () => {
+    const data = JSON.parse(readFileSync(filePath, 'utf8'));
+    expect(typeof data.bluesky).toBe('string');
+    expect(data.bluesky).toMatch(/^https:\/\/bsky\.app\/profile\/[^/]+$/);
+  });
+
+  it('has a blueskyHandle that is non-empty and has no leading "@"', () => {
+    const data = JSON.parse(readFileSync(filePath, 'utf8'));
+    expect(typeof data.blueskyHandle).toBe('string');
+    expect(data.blueskyHandle.length).toBeGreaterThan(0);
+    expect(data.blueskyHandle.startsWith('@')).toBe(false);
+  });
+
+  // bluesky and blueskyHandle store the same fact twice — guard against drift.
+  it('blueskyHandle matches the handle in the bluesky profile URL', () => {
+    const data = JSON.parse(readFileSync(filePath, 'utf8'));
+    const urlHandle = new URL(data.bluesky).pathname.split('/').filter(Boolean).pop();
+    expect(urlHandle).toBe(data.blueskyHandle);
+  });
+
   // These fields will be added when the Contact page is implemented.
   // The tests are guarded so they only run when the fields are present,
   // then enforce their format when they exist.

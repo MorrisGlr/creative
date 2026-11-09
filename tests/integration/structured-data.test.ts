@@ -52,6 +52,12 @@ describe('about/index.html — structured data', () => {
     const person = blocks.find((b) => b['@type'] === 'Person');
     expect(person?.url?.startsWith(PROD_ORIGIN)).toBe(true);
   });
+
+  it('Person sameAs includes the Bluesky profile', () => {
+    const blocks = readJsonLdBlocks('about/index.html');
+    const person = blocks.find((b) => b['@type'] === 'Person');
+    expect(person?.sameAs).toContain('https://bsky.app/profile/mementomorris.art');
+  });
 });
 
 // ─── Published project: must have VisualArtwork schema ───────────────────────

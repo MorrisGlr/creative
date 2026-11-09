@@ -90,3 +90,37 @@ describe('footer — CV link (when page is built)', () => {
     expect(cvHref).toMatch(/^\//);
   });
 });
+
+// ─── Social icons ────────────────────────────────────────────────────────────
+// Order is editorial: Bluesky (art-facing) first, then LinkedIn, GitHub.
+
+for (const page of pagesToCheck) {
+  describe(`footer social icons — ${page}`, () => {
+    const $ = loadPage(page);
+
+    it('renders Bluesky, LinkedIn, GitHub in that order', () => {
+      expect($).not.toBeNull();
+      const labels = $!('.site-footer__social a')
+        .toArray()
+        .map((el) => $!(el).attr('aria-label'));
+      expect(labels).toEqual(['Bluesky', 'LinkedIn', 'GitHub']);
+    });
+
+    it('Bluesky icon links to the bsky.app profile and opens in a new tab', () => {
+      expect($).not.toBeNull();
+      const bsky = $!('.site-footer__social a[aria-label="Bluesky"]');
+      expect(bsky.attr('href')).toBe('https://bsky.app/profile/mementomorris.art');
+      expect(bsky.attr('target')).toBe('_blank');
+      expect(bsky.attr('rel')).toContain('noopener');
+    });
+
+    it('every social icon has a non-empty SVG path', () => {
+      expect($).not.toBeNull();
+      const paths = $!('.site-footer__social a svg path')
+        .toArray()
+        .map((el) => $!(el).attr('d') ?? '');
+      expect(paths.length).toBe(3);
+      for (const d of paths) expect(d.length).toBeGreaterThan(0);
+    });
+  });
+}
